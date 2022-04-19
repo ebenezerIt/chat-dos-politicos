@@ -7,8 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   conversation;
+  showChat = false;
 
   onConversationSelected(conversation): void {
     this.conversation = conversation;
+    this.changeShowChat()
+  }
+
+  changeShowChat() {
+    this.showChat = !this.showChat;
   }
 }

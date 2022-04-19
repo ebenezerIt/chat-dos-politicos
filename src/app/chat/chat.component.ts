@@ -9,6 +9,7 @@ import {ParliamentarianDataResponse} from '../client/ParlamentarianResponseDtos'
 export class ChatComponent implements OnInit {
   @Input() conversation: ParliamentarianDataResponse;
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() onClickBack: EventEmitter<any> = new EventEmitter();
   emojiPickerVisible;
   message = '';
   constructor() {}

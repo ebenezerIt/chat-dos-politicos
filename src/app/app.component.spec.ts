@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'whatsapp-clone'`, () => {
+  it(`should have as title 'chat-dos-politicos'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.conversation).toEqual('whatsapp-clone');
+    expect(app.conversation).toEqual('chat-dos-politicos');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('whatsapp-clone app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('chat-dos-politicos app is running!');
   });
 });

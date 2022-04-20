@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "whatsapp-clone": {
+    "chat-dos-politicos": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/whatsapp-clone",
+            "outputPath": "dist/chat-dos-politicos",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "whatsapp-clone:build"
+            "browserTarget": "chat-dos-politicos:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "whatsapp-clone:build:production"
+              "browserTarget": "chat-dos-politicos:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "whatsapp-clone:build"
+            "browserTarget": "chat-dos-politicos:build"
           }
         },
         "test": {
@@ -114,18 +114,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "whatsapp-clone:serve"
+            "devServerTarget": "chat-dos-politicos:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "whatsapp-clone:serve:production"
+              "devServerTarget": "chat-dos-politicos:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "whatsapp-clone",
+  "defaultProject": "chat-dos-politicos",
   "cli": {
     "analytics": "af854128-1d5a-40a1-bf93-35a9e023f989"
   }

@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('whatsapp-clone app is running!');
+    expect(page.getTitleText()).toEqual('chat-dos-politicos app is running!');
   });
 
   afterEach(async () => {

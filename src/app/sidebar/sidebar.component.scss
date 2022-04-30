@@ -17,6 +17,7 @@
       padding-left: 20px;
       padding-right: 20px;
       justify-content: space-between;
+
       .avatarContainer {
         flex-basis: 43px;
         height: 43px;
@@ -141,4 +142,8 @@
       }
     }
   }
+}
+
+.mobile-height {
+  height: 100vh;
 }

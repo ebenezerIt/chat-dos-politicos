@@ -21,8 +21,8 @@ export class ChatComponent implements OnInit {
   }
 
   submitMessage(event): void {
-/*    const value = event.target.value.trim();
     this.message = '';
+/*    const value = event.target.value.trim();
     if (value.length < 1) {
       return false;
     }

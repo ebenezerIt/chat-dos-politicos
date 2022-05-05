@@ -35,8 +35,10 @@ export class SidebarComponent implements OnInit {
           conversation.parliamentarian.latestMessageRead = true;
           const lawVotes = parliamentarianRanking.parliamentarian.lawVotes;
           const latestLawVote = lawVotes[lawVotes.length - 1];
-          // conversation.parliamentarian.latestMessage = latestLawVote.law.number;
-          // conversation.parliamentarian.latestMessageTime = latestLawVote.law.dateVoting;
+
+          conversation.parliamentarian.latestMessage = latestLawVote.law.number;
+          conversation.parliamentarian.latestMessageTime = latestLawVote.law.dateVoting;
+          conversation.parliamentarian.latestLawStatusId = latestLawVote.lawStatusId;
         }
         this.conversationClicked.emit(conversation);
       });

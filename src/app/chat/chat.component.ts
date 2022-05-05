@@ -15,25 +15,24 @@ export class ChatComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log('init');
+    if (!this.conversation.parliamentarian.messages) {
+      this.conversation.parliamentarian.messages = [];
+    }
   }
 
-  submitMessage(event): boolean {
-    const value = event.target.value.trim();
+  submitMessage(event): void {
+/*    const value = event.target.value.trim();
     this.message = '';
     if (value.length < 1) {
       return false;
     }
     this.conversation.parliamentarian.latestMessage = value;
-    if (!this.conversation.parliamentarian.messages) {
-      this.conversation.parliamentarian.messages = [];
-    }
     this.conversation.parliamentarian.messages.unshift({
       id: 1,
       body: value,
       time: '10:21',
       me: true,
-    });
+    });*/
   }
 
   emojiClicked(event): void {

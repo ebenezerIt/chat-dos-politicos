@@ -40,7 +40,7 @@
       <div class="content">
         <div class="conversationHeader">
           <div class="name">{{conversation.scoreRanking}}º {{ conversation.parliamentarian.nickname }} {{conversation.scoreTotal}}</div>
-          <div class="time">{{ conversation.parliamentarian.latestMessageTime}}</div>
+          <div class="time">{{ conversation.parliamentarian.latestMessageTime | date: 'dd/MM/yy'}}</div>
         </div>
         <div class="message">
           <img
@@ -51,6 +51,8 @@
             *ngIf="conversation.parliamentarian.latestMessageRead"
             src="../../assets/images/doubleTickBlue.svg"
           />
+          <span *ngIf="conversation.parliamentarian.latestLawStatusId === 1" style="font-weight: bold;color: green">SIM</span>
+          <span *ngIf="conversation.parliamentarian.latestLawStatusId === 2" style="font-weight: bold;color: red">NÃO</span>
           {{ conversation.parliamentarian.latestMessage }}
         </div>
       </div>

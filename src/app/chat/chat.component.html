@@ -23,6 +23,9 @@
         >
             <div class="messageContent">
                 {{ message.law.number }}
+                <div class="tooltip">👁
+                    <span class="tooltiptext" [innerHtml]="message.law.description"></span>
+                </div>
                 <div class="time">
                     Votou <span *ngIf="message.lawStatusId === 1" style="font-weight: bold;color: green">SIM</span>
                     <span *ngIf="message.lawStatusId === 2" style="font-weight: bold;color: red">NÃO</span>

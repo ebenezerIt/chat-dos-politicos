@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {PoliticosService} from '../client/politicos.service';
-import {ParliamentarianDataResponse, ParliamentarianListResponse} from '../client/ParlamentarianResponseDtos';
+import {PoliticosService} from '../politicos/politicos.service';
+import {ParliamentarianDataResponse, ParliamentarianListResponse} from '../politicos/ParlamentarianResponseDtos';
 
 @Component({
   selector: 'app-sidebar',
@@ -34,9 +34,9 @@ export class SidebarComponent implements OnInit {
           conversation.parliamentarianRanking = parliamentarianRanking;
           conversation.parliamentarian.latestMessageRead = true;
           const lawVotes = parliamentarianRanking.parliamentarian.lawVotes;
-          const latestLawVote = lawVotes[lawVotes.length - 1];
-          // conversation.parliamentarian.latestMessage = latestLawVote.law.number;
-          // conversation.parliamentarian.latestMessageTime = latestLawVote.law.dateVoting;
+          const latestLawVote = lawVotes[0];
+          conversation.parliamentarian.latestMessage = latestLawVote.law.number;
+          conversation.parliamentarian.latestMessageTime = latestLawVote.law.dateVoting;
         }
         this.conversationClicked.emit(conversation);
       });
@@ -47,8 +47,14 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.politicosService.listParliamentarians()
       .subscribe((response: ParliamentarianListResponse) => {
-        console.log(response);
         this.conversations = response.data;
+        this.conversations.forEach(conversation => {
+          if (!conversation.parliamentarian.latestMessage) {
+            // get by id and enrich
+            conversation.parliamentarian.latestMessage = 'MPV 1085/2021 | Mudança nos Serviços de Cartórios';
+            conversation.parliamentarian.latestMessageTime = new Date();
+          }
+        });
       });
   }
 }

@@ -80,7 +80,7 @@ export interface Ranking {
   parliamentarianQuotaMaxYear: number;
 }
 
-export interface Parliamentarian {
+export class Parliamentarian {
   id: number;
   status?: number;
   statusId: number;
@@ -206,7 +206,7 @@ export interface StaffQuota {
   organ?: any;
 }
 
-export interface ParliamentarianDataResponse {
+export class ParliamentarianDataResponse {
   id: number;
   parliamentarianId: number;
   parliamentarian: Parliamentarian;
@@ -241,10 +241,11 @@ export interface ParliamentarianDataResponse {
   staffQuota: StaffQuota;
 }
 
-export interface ParliamentarianListResponse {
+export class ParliamentarianListResponse {
   success: boolean;
   data: ParliamentarianDataResponse[];
   errors: any[];
+  request: Date;
 }
 
 export interface ParliamentariaSingleResponse {

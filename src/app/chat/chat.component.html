@@ -26,7 +26,7 @@
                 <div class="time">
                     Votou <span *ngIf="message.lawStatusId === 1" style="font-weight: bold;color: green">SIM</span>
                     <span *ngIf="message.lawStatusId === 2" style="font-weight: bold;color: red">NÃO</span>
-                    {{ message.law.dateVoting }}
+                    {{ message.law.dateVoting | date:'dd/MM/yyyy'}}
                 </div>
             </div>
         </div>

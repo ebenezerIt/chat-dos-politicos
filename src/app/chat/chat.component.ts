@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ParliamentarianDataResponse} from '../client/ParlamentarianResponseDtos';
+import {ParliamentarianDataResponse} from '../politicos/ParlamentarianResponseDtos';
 
 @Component({
   selector: 'app-chat',

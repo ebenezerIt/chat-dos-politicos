@@ -65,6 +65,7 @@ export class PoliticosService {
     const shrink = new Parliamentarian();
     shrink.id = parliamentarian.id;
     shrink.photo = parliamentarian.photo;
+    shrink.name = parliamentarian.name;
     shrink.nickname = parliamentarian.nickname;
     shrink.latestMessage = parliamentarian.latestMessage;
     shrink.latestMessageRead = parliamentarian.latestMessageRead;

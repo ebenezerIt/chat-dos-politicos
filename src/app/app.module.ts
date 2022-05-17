@@ -12,7 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-  declarations: [AppComponent, SidebarComponent, ChatComponent],
+  declarations: [AppComponent, SidebarComponent, ChatComponent,],
   imports: [
     BrowserModule,
     CommonModule,
@@ -20,7 +20,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     PickerModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

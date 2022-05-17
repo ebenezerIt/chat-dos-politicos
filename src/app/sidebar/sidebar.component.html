@@ -23,8 +23,7 @@
   <div id="sidebarContent">
     <!-- <div id="noConversations">All chats are archived</div> -->
 
-    <div
-      class="conversation"
+    <div class="conversation"
       *ngFor="
         let conversation of !searchText ? conversations : filteredConversations
       "
@@ -32,11 +31,12 @@
     >
     <!--      (click)="conversationClicked.emit(conversation)"-->
       <div class="picture">
-        <img src="{{conversation.parliamentarian.photo}}" />
-<!--        <div class="score">
-          <h2>{{conversation.scoreRanking}}º</h2>
-        </div>-->
+          <img src="{{conversation.parliamentarian.photo}}" />
+          <div class="score">
+            <h2>{{conversation.scoreRanking}}º</h2>
+         </div>
       </div>
+
       <div class="content">
         <div class="conversationHeader">
           <div class="name">{{conversation.scoreRanking}}º {{ conversation.parliamentarian.nickname }} {{conversation.scoreTotal}}</div>
@@ -55,5 +55,4 @@
         </div>
       </div>
     </div>
-  </div>
 </div>

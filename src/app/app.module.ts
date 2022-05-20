@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import {HttpClientModule} from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [AppComponent, SidebarComponent, ChatComponent,],
@@ -21,6 +22,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     PickerModule,
     HttpClientModule,
     FlexLayoutModule,
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent],

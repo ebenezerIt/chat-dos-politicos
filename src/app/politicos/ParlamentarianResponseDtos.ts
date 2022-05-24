@@ -154,6 +154,7 @@ export class Parliamentarian {
   latestMessageTime: Date;
   messages: any[];
   latestMessageRead: boolean;
+  latestLawStatusId: number;
 }
 
 export interface ParliamentarianRanking {
@@ -248,7 +249,7 @@ export class ParliamentarianListResponse {
   request: Date;
 }
 
-export interface ParliamentariaSingleResponse {
+export interface ParliamentarianSingleResponse {
   success: boolean;
   data: ParliamentarianDataResponse;
   errors: any[];

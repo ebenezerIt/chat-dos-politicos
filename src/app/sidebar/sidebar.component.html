@@ -31,11 +31,14 @@
       (click)="handleConversationClicked(conversation)"
     >
     <!--      (click)="conversationClicked.emit(conversation)"-->
+    
       <div class="picture">
-        <img src="{{conversation.parliamentarian.photo}}" />
-<!--        <div class="score">
+       
+        <img src="{{conversation.parliamentarian.photo}}"/>
+      
+       <div class="score">
           <h2>{{conversation.scoreRanking}}º</h2>
-        </div>-->
+        </div>
       </div>
       <div class="content">
         <div class="conversationHeader">
@@ -51,6 +54,8 @@
             *ngIf="conversation.parliamentarian.latestMessageRead"
             src="../../assets/images/doubleTickBlue.svg"
           />
+          <span *ngIf="conversation.parliamentarian.latestLawStatusId === 1" style="font-weight: bold;color: green">SIM</span>
+          <span *ngIf="conversation.parliamentarian.latestLawStatusId === 2" style="font-weight: bold;color: red">NÃO</span>
           {{ conversation.parliamentarian.latestMessage }}
         </div>
       </div>

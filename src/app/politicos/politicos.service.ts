@@ -4,7 +4,7 @@ import {
   Parliamentarian,
   ParliamentarianDataResponse,
   ParliamentarianListResponse,
-  ParliamentariaSingleResponse
+  ParliamentarianSingleResponse
 } from './ParlamentarianResponseDtos';
 import {PoliticosRepository} from './politicos.repository';
 import {LocalStorageRepository} from '../local/local-storage.repository';
@@ -39,7 +39,7 @@ export class PoliticosService {
     return listResponseObservable.pipe(map((parliamentarian: ParliamentarianListResponse) => this.shrinkParliamentarians(parliamentarian)));
   }
 
-  getParliamentarianVotesById(id: number): Observable<ParliamentariaSingleResponse> {
+  getParliamentarianVotesById(id: number): Observable<ParliamentarianSingleResponse> {
     return this.politicosRepository.getParliamentarianVotesById(id);
   }
 

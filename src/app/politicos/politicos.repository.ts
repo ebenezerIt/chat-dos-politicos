@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ParliamentarianListResponse, ParliamentariaSingleResponse} from './ParlamentarianResponseDtos';
+import {ParliamentarianListResponse, ParliamentarianSingleResponse} from './ParlamentarianResponseDtos';
 import {PoliticosClient} from './politicos.client';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class PoliticosRepository {
     return this.politicosClient.listParliamentarians(searchParams);
   }
 
-  getParliamentarianVotesById(id: number): Observable<ParliamentariaSingleResponse> {
+  getParliamentarianVotesById(id: number): Observable<ParliamentarianSingleResponse> {
     console.log(`getParliamentarianVotesById(${id})`);
     return this.politicosClient.getParliamentarianVotesById(id);
   }

@@ -19,10 +19,9 @@
       align-items: center;
       gap: 10px;
       padding-left: 10px;
-      
+
       .picture {
         min-width: 40px;
-        max-width: 40px;
         margin: 0 10px;
         flex-basis: 73px;
         height: 100%;
@@ -172,7 +171,6 @@
 
 .mobile-height {
   height: 100vh;
-
 }
 
 .tooltip {
@@ -214,13 +212,11 @@
   opacity: 1;
 }
 @media (max-width: 600px) {
-    
-  .container .header{
-    background-color:rgb(19, 127, 54);
+  .container .header {
+    background-color: rgb(19, 127, 54);
 
-    .avatarSection .nameSection  {
-    color: #fff;
+    .avatarSection .nameSection {
+      color: #fff;
+    }
   }
-
-}
 }

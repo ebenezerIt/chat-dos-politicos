@@ -15,7 +15,6 @@ export class PoliticosRepository {
     const searchParams = new HttpParams()
       .append('Year',  0)
       .append('Take',  1000)
-      // .append('Position', 0)
       .append('Skip',  0)
       .append('OrderBy',  'scoreRanking')
       .append('Name',  '')
@@ -24,7 +23,6 @@ export class PoliticosRepository {
   }
 
   getParliamentarianVotesById(id: number): Observable<ParliamentarianSingleResponse> {
-    console.log(`getParliamentarianVotesById(${id})`);
     return this.politicosClient.getParliamentarianVotesById(id);
   }
 }

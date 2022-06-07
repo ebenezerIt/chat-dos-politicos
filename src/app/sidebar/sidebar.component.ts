@@ -12,8 +12,12 @@ export class SidebarComponent implements OnInit {
   @Output() conversationClicked: EventEmitter<any> = new EventEmitter();
   searchText: string;
   conversations: ParliamentarianDataResponse[];
+  listSize = 20;
 
   get filteredConversations(): ParliamentarianDataResponse[] {
+    if (!this.searchText) {
+      return this.conversations?.slice(0, this.listSize);
+    }
     return this.conversations.filter((data) => {
       return (
         data.parliamentarian.name
@@ -56,5 +60,9 @@ export class SidebarComponent implements OnInit {
           }
         });
       });
+  }
+
+  onScroll(): void {
+    this.listSize += 10;
   }
 }

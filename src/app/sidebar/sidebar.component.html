@@ -28,22 +28,23 @@
   </div>
 
 
-  <div id="sidebarContent" ngClass.lt-md="mobile-height">
+  <div id="sidebarContent" ngClass.lt-md="mobile-height"
+       infiniteScroll
+       (scrolled)="onScroll()"
+       (scrolledUp)="onScroll()"
+       [infiniteScrollDistance]="2"
+       [infiniteScrollThrottle]="50"
+       [scrollWindow]="false"
+  >
     <!-- <div id="noConversations">All chats are archived</div> -->
 
     <div
       class="conversation"
-      *ngFor="
-        let conversation of !searchText ? conversations : filteredConversations
-      "
+      *ngFor="let conversation of filteredConversations"
       (click)="handleConversationClicked(conversation)"
     >
-    <!--      (click)="conversationClicked.emit(conversation)"-->
-    
       <div class="picture">
-       
         <img src="{{conversation.parliamentarian.photo}}"/>
-      
        <div class="score">
           <h2>{{conversation.scoreRanking}}º</h2>
         </div>

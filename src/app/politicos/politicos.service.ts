@@ -18,7 +18,6 @@ export class PoliticosService {
   }
 
   listParliamentarians(): Observable<ParliamentarianListResponse> {
-    console.log('listParliamentarians');
     const localParliamentariansResponse: ParliamentarianListResponse = this.localStorageRepository.get('listParliamentarians');
     const observableReturn = new Subject<ParliamentarianListResponse>();
 

@@ -28,10 +28,7 @@
     <div
       class="message"
       [ngClass]="{ me: message.me }"
-      *ngFor="
-        let message of conversation.parliamentarianRanking.parliamentarian
-          .lawVotes
-      "
+      *ngFor="let message of conversation.parliamentarianRanking.parliamentarian.lawVotes"
     >
       <div class="messageContent">
         {{ message.law.number }}
@@ -64,7 +61,6 @@
       <img
         (click)="emojiPickerVisible = !emojiPickerVisible"
         src="../../assets/images/smileIcon.svg"
-        º
       />
       <emoji-mart
         (emojiClick)="emojiClicked($event)"

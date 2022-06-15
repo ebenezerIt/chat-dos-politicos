@@ -22,7 +22,7 @@ export class PoliticosService {
     if (!storedDateText) {
       return true;
     }
-    const lastUpdate = JSON.parse(storedDateText);
+    const lastUpdate = new Date(storedDateText);
     return new Date(lastUpdate.toDateString()) < new Date(new Date().toDateString());
   }
 

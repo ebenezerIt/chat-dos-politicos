@@ -17,17 +17,27 @@ export class PoliticosService {
   constructor(private politicosRepository: PoliticosRepository, private localStorageRepository: LocalStorageRepository) {
   }
 
+  isLocalStorageExpired(): boolean {
+    const storedDateText: string | null =  this.localStorageRepository.get('lastUpdate');
+    if (!storedDateText) {
+      return true;
+    }
+    const lastUpdate = JSON.parse(storedDateText);
+    return new Date(lastUpdate.toDateString()) < new Date(new Date().toDateString());
+  }
+
   listParliamentarians(): Observable<ParliamentarianListResponse> {
     const localParliamentariansResponse: ParliamentarianListResponse = this.localStorageRepository.get('listParliamentarians');
     const observableReturn = new Subject<ParliamentarianListResponse>();
 
-    if (localParliamentariansResponse) {
+    if (localParliamentariansResponse && !this.isLocalStorageExpired()) {
       setTimeout(() => observableReturn.next(localParliamentariansResponse), 0);
     } else {
       const listResponseObservable = this.politicosRepository.listParliamentarians();
       this.shrinkParliamentariansList(listResponseObservable)
         .subscribe(parliamentarians => {
           this.localStorageRepository.set('listParliamentarians', parliamentarians);
+          this.localStorageRepository.set('lastUpdate', new Date());
           observableReturn.next(parliamentarians);
         });
     }

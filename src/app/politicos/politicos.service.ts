@@ -78,6 +78,9 @@ export class PoliticosService {
     shrink.nickname = parliamentarian.nickname;
     shrink.latestMessage = parliamentarian.latestMessage;
     shrink.latestMessageRead = parliamentarian.latestMessageRead;
+    shrink.email = parliamentarian.email;
+    shrink.position = parliamentarian.position;
+    shrink.phone = parliamentarian.phone;
     return shrink;
   }
 }

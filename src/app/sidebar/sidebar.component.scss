@@ -116,8 +116,8 @@
           transparent 10%,
           transparent 90%
         );
-        width: 45px;
-        height: 50px;
+        width: 43px;
+        height: 48px;
         border-radius: 800px;
         display: flex;
         -webkit-box-pack: center;
@@ -191,6 +191,8 @@
           z-index: 1;
           top: -5px;
           left: 110%;
+          margin-left: -5px;
+          transition: opacity 0.3s;
           
         }
         .tooltip .tooltiptext::after {

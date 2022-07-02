@@ -12,12 +12,13 @@ export class ChatComponent implements OnInit {
   @Output() onClickBack: EventEmitter<any> = new EventEmitter();
   emojiPickerVisible;
   message = '';
+
   constructor() {}
 
   ngOnInit(): void {
-    if (!this.conversation.parliamentarian.messages) {
-      this.conversation.parliamentarian.messages = [];
-    }
+    // if (!this.conversation.parliamentarian.messages) {
+    //   this.conversation.parliamentarian.messages = [];
+    // }
   }
 
   submitMessage(event): void {

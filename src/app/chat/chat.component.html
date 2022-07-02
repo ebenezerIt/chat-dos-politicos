@@ -8,14 +8,14 @@
           </picture>
       </div>
       <div class="picture">
-        <img src="{{ conversation.parliamentarian.photo }}" />
+        <img src="{{ conversation.parliamentarianRanking.parliamentarian.photo }}" />
 
         <div class="score">
-          <h2>{{conversation.scoreRanking}}º</h2>
+          <h2>{{conversation.parliamentarianRanking.scoreRanking}}º</h2>
         </div>
       </div>
 
-      <div class="nameSection">{{ conversation.parliamentarian.nickname }}</div>
+      <div class="nameSection">{{ conversation.parliamentarianRanking.parliamentarian.nickname }}</div>
     </div>
     <div class="actionButtons">
       <picture>

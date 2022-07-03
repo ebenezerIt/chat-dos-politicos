@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ParliamentarianDataResponse} from '../politicos/ParlamentarianResponseDtos';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../components/dialog-component/dialog-component.component';
 
@@ -14,13 +16,20 @@ export class ChatComponent implements OnInit {
   @Output() onClickBack: EventEmitter<any> = new EventEmitter();
   emojiPickerVisible;
   message = '';
+  paramsSubscription: Subscription;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     // if (!this.conversation.parliamentarian.messages) {
     //   this.conversation.parliamentarian.messages = [];
     // }
+    this.paramsSubscription = this.route.queryParams.subscribe((params) => {
+      if (!params.id) {
+        this.onClickBack.emit()
+      }
+    })
   }
 
   submitMessage(event): void {
@@ -50,5 +59,10 @@ export class ChatComponent implements OnInit {
 
   emojiClicked(event): void {
     this.message += event.emoji.native;
+  }
+
+  clickBack() {
+    this.paramsSubscription.unsubscribe()
+    this.onClickBack.emit()
   }
 }

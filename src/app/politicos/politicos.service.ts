@@ -60,7 +60,6 @@ export class PoliticosService {
             response.data.parliamentarianRanking.parliamentarian.latestMessageRead = true;
             response.data.parliamentarianRanking.parliamentarian.latestMessage = latestLawVote.law.number;
             response.data.parliamentarianRanking.parliamentarian.latestMessageTime = latestLawVote.law.dateVoting;
-            console.log("response.data", response.data)
             subject.next(response.data)
           }})
     return subject.asObservable()

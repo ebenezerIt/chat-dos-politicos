@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PoliticosService } from '../politicos/politicos.service';
 import { ParliamentarianDataResponse, ParliamentarianListResponse } from '../politicos/ParlamentarianResponseDtos';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sidebar',
@@ -15,8 +14,7 @@ export class SidebarComponent implements OnInit {
     conversations: ParliamentarianDataResponse[];
     listSize = 20;
 
-    constructor(private politicosService: PoliticosService,
-                private router: Router) {
+    constructor(private politicosService: PoliticosService) {
     }
 
     ngOnInit(): void {
@@ -51,7 +49,6 @@ export class SidebarComponent implements OnInit {
 
     handleConversationClicked(conversation: ParliamentarianDataResponse): void {
         conversation.parliamentarian.latestMessageRead = true;
-        this.router.navigate(['/'], {queryParams: {id: conversation.parliamentarianId}})
         this.politicosService.getParliamentarianVotesById(conversation.parliamentarianId).subscribe((conversation) => {
             this.conversationClicked.emit(conversation);
         })

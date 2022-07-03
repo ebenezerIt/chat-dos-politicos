@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ParliamentarianDataResponse} from '../politicos/ParlamentarianResponseDtos';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../components/dialog-component/dialog-component.component';
 
 @Component({
   selector: 'app-chat',
@@ -13,7 +15,7 @@ export class ChatComponent implements OnInit {
   emojiPickerVisible;
   message = '';
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     // if (!this.conversation.parliamentarian.messages) {
@@ -34,6 +36,16 @@ export class ChatComponent implements OnInit {
       time: '10:21',
       me: true,
     });*/
+  }
+
+  openDialog(law: any) {
+    console.log("law", law)
+    this.dialog.open(DialogComponent, {
+        data: {
+          message: law.description,
+          title: law.number,
+        },
+    });
   }
 
   emojiClicked(event): void {

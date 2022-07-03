@@ -24,7 +24,7 @@
       </picture>
     </div>
   </div>
-  <div id="body" ngClass.lt-md="mobile-height">
+  <div id="body" ngClass.lt-md="mobile-height" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
     <div
       class="message"
       [ngClass]="{ me: message.me }"

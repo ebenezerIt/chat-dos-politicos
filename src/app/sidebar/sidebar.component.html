@@ -44,7 +44,13 @@
       (click)="handleConversationClicked(conversation)"
     >
       <div class="picture">
-        <img src="{{conversation.parliamentarian.photo}}"/>
+        <div class="tooltip">
+        <span class="tooltiptext">
+          {{ conversation.parliamentarian.position }} {{ conversation.parliamentarian.nickname }} <br />
+          {{ conversation.parliamentarian.phone }} <br />
+          {{ conversation.parliamentarian.email }}</span>
+        <img src="{{conversation.parliamentarian.photo}}" />
+        </div>
        <div class="score">
           <h2>{{conversation.scoreRanking}}º</h2>
         </div>

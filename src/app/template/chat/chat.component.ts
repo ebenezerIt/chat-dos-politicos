@@ -39,7 +39,7 @@ export class ChatComponent implements OnInit {
     }
     this.conversation.parliamentarian.latestMessage = value;
     this.conversation.parliamentarian.messages.unshift({
-      id: 1,
+      id: 1,s
       body: value,
       time: '10:21',
       me: true,

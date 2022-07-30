@@ -1,0 +1,29 @@
+<div id="body" ngClass.lt-md="mobile-padding-msg">
+
+<div
+        class="message"
+        [ngClass]="{ me: message.me }"
+        *ngFor="let message of conversation.parliamentarianRanking.parliamentarian.lawVotes"
+>
+    <div class="messageContent">
+        {{ message.law.number }}
+        <div class="tooltip" (click)="openDialog(message.law)">
+            👁
+        </div>
+        <div class="time">
+            Votou
+            <span
+                    *ngIf="message.lawStatusId === 1"
+                    style="font-weight: bold; color: green"
+            >SIM</span
+            >
+            <span
+                    *ngIf="message.lawStatusId === 2"
+                    style="font-weight: bold; color: red"
+            >NÃO</span
+            >
+            {{ message.law.dateVoting | date: "dd/MM/yyyy" }}
+        </div>
+    </div>
+</div>
+</div>

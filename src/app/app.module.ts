@@ -1,35 +1,21 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { parliamentariansReducer } from './stores/parliamentarians.reducer';
 import { AppComponent } from './app.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { ChatComponent } from './chat/chat.component';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
-import { HttpClientModule } from '@angular/common/http';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { DialogComponent } from './components/dialog-component/dialog-component.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-    declarations: [AppComponent, SidebarComponent, ChatComponent, DialogComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
-        CommonModule,
-        AppRoutingModule,
-        FormsModule,
-        PickerModule,
+        BrowserAnimationsModule,
         HttpClientModule,
-        FlexLayoutModule,
-        InfiniteScrollModule,
-        MatDialogModule,
-        MatButtonModule,
-        BrowserAnimationsModule
+        AppRoutingModule,
+        StoreModule.forRoot({parliamentarians: parliamentariansReducer})
     ],
     providers: [],
     bootstrap: [AppComponent],

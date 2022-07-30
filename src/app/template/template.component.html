@@ -1,0 +1,34 @@
+<div class="background_header"></div>
+<div class="background_body"></div>
+
+<div class="chatContainer" ngClass.lt-md="sm-content" ngClass.gt-sm="auto-margin">
+    <ng-container *ngIf="currentWindowWidth >= 960 else mobile">
+        <div class="web">
+            <app-sidebar
+                    (conversationClicked)="onConversationSelected()"
+            ></app-sidebar>
+            <div id="chat-web" class="chat">
+                <div class="chatPlaceholder" *ngIf="!conversation">
+                    Chat dos Políticos
+                </div>
+
+                <app-chat (onClickBack)="onClickBack()" *ngIf="conversation"></app-chat>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #mobile>
+        <div>
+            <app-sidebar *ngIf="!showChat"
+                         (conversationClicked)="onConversationSelected()"
+            ></app-sidebar>
+            <div id="chat-mobile" *ngIf="showChat" class="chat">
+                <div class="chatPlaceholder" *ngIf="!conversation">
+                    Chat dos Políticos
+                </div>
+
+                <app-chat (onClickBack)="onClickBack()" *ngIf="conversation"></app-chat>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

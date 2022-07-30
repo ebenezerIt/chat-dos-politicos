@@ -1,0 +1,85 @@
+<div class="sidebar">
+    <div class="row1">
+
+        <div class="sidebarHeader">
+            <div class="avatarContainer">
+                <img src="../../../assets/images/noPic.svg"/>
+            </div>
+        </div>
+        <div class="searchBox">
+            <img width="19" src="../../../assets/images/searchIcon.svg"/>
+            <input
+                    [(ngModel)]="searchText"
+                    type="text"
+                    placeholder="Pesquisar..."
+            />
+        </div>
+        <div class="filter" fxLayout.lt-md="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+            <div class="switch">
+                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.POLITICIANS}"
+                     (click)="selectSwitchFilter(SwitchFilterEnum.POLITICIANS)"><span>Dos</span> <span>Politicos</span>
+                </div>
+                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.PARTIES}"
+                     (click)="selectSwitchFilter(SwitchFilterEnum.PARTIES)"><span>Dos</span> <span>Partidos</span></div>
+                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.STATES}"
+                     (click)="selectSwitchFilter(SwitchFilterEnum.STATES)"><span>Dos</span> <span>Estados</span></div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+                <div class="radio-option" (click)="selectRadioFilter(RadioFilterEnum.CHAMBER)" >
+                    <div class="radio" [ngClass]="{selected: selectedRadioChamberEnum}"></div>
+                    <div>CÂMARA</div>
+                </div>
+                <div class="radio-option" (click)="selectRadioFilter(RadioFilterEnum.SENATE)">
+                    <div class="radio"  [ngClass]="{selected: selectedRadioSenateEnum}"></div>
+                    <div>SENADO</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="sidebarContent" ngClass.lt-md="mobile-height"
+         infiniteScroll
+         (scrolled)="onScroll()"
+         (scrolledUp)="onScroll()"
+         [infiniteScrollDistance]="2"
+         [infiniteScrollThrottle]="50"
+         [scrollWindow]="false"
+    >
+        <!-- <div id="noConversations">All chats are archived</div> -->
+
+        <div
+                class="conversation"
+                *ngFor="let conversation of filteredConversations"
+                (click)="handleConversationClicked(conversation)"
+        >
+            <div class="picture">
+                <img src="{{conversation.parliamentarian.photo}}"/>
+                <div class="score">
+                    <h2>{{conversation.scoreRanking}}º</h2>
+                </div>
+            </div>
+            <div class="content">
+                <div class="conversationHeader">
+                    <div class="name"> {{ conversation.parliamentarian.nickname }} {{conversation.scoreTotal}}</div>
+                    <div class="time">{{ conversation.parliamentarian.latestMessageTime | date: 'dd/MM/yy'}}</div>
+                </div>
+                <div class="message">
+                    <img
+                            *ngIf="!conversation.parliamentarian.latestMessageRead"
+                            src="../../../assets/images/doubleTick.svg"
+                    />
+                    <img
+                            *ngIf="conversation.parliamentarian.latestMessageRead"
+                            src="../../../assets/images/doubleTickBlue.svg"
+                    />
+                    <span *ngIf="conversation.parliamentarian.latestLawStatusId === 1"
+                          style="font-weight: bold;color: green">SIM</span>
+                    <span *ngIf="conversation.parliamentarian.latestLawStatusId === 2"
+                          style="font-weight: bold;color: red">NÃO</span>
+                    {{ conversation.parliamentarian.latestMessage }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

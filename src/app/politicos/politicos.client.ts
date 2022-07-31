@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {map, Observable, throwError} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
 import {ParliamentarianListResponse, ParliamentarianSingleResponse} from './ParlamentarianResponseDtos';
 
@@ -39,10 +39,28 @@ export class PoliticosClient {
     };
 
     return this.httpClient.get<ParliamentarianSingleResponse>(this.listParliamentarianVotesUrl, httpOptions)
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-      );
+        .pipe(
+            map(list => list),
+            retry(2),
+            catchError(this.handleError)
+        );
+  }
+
+  getParliamentarianQuotasById(id: number): Observable<ParliamentarianSingleResponse> {
+    const searchParams = new HttpParams()
+        .append('ParliamentarianId',  id)
+        .append('Include',  'Parliamentarian.Quotas')
+        .append('Include',  'Parliamentarian.Staffs');
+    const httpOptions = {
+      headers: new HttpHeaders({ Accept: 'application/json' }),
+      params: searchParams
+    };
+
+    return this.httpClient.get<ParliamentarianSingleResponse>(this.listParliamentarianVotesUrl, httpOptions)
+        .pipe(
+            retry(2),
+            catchError(this.handleError)
+        );
   }
 
   handleError(error: HttpErrorResponse): Observable<never> {

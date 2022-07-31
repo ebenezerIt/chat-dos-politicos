@@ -3,7 +3,7 @@
 <div
         class="message"
         [ngClass]="{ me: message.me }"
-        *ngFor="let message of conversation.parliamentarianRanking.parliamentarian.lawVotes"
+        *ngFor="let message of getSortedVotes(conversation)"
 >
     <div class="messageContent">
         {{ message.law.number }}

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {map, Observable, Subject} from 'rxjs';
 import {
+  Desperdicio,
   Parliamentarian,
   ParliamentarianDataResponse,
   ParliamentarianListResponse,
-  ParliamentarianSingleResponse
 } from './ParlamentarianResponseDtos';
 import {PoliticosRepository} from './politicos.repository';
 import {LocalStorageRepository} from '../local/local-storage.repository';
@@ -60,9 +60,13 @@ export class PoliticosService {
             response.data.parliamentarianRanking.parliamentarian.latestMessageRead = true;
             response.data.parliamentarianRanking.parliamentarian.latestMessage = latestLawVote.law.number;
             response.data.parliamentarianRanking.parliamentarian.latestMessageTime = latestLawVote.law.dateVoting;
-            subject.next(response.data)
-          }})
-    return subject.asObservable()
+            subject.next(response.data);
+          }});
+    return subject.asObservable();
+  }
+
+  getDesperdicioById(id: number): Observable<Desperdicio> {
+    return this.politicosRepository.getDesperdicioById(id);
   }
 
   private shrinkParliamentarians(parliamentarian: ParliamentarianListResponse): ParliamentarianListResponse {

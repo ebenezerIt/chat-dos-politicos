@@ -20,20 +20,19 @@ export class SidebarComponent implements OnInit {
     searchText: string;
     conversations: ParliamentarianDataResponse[];
     listSize = 20;
-    SwitchFilterEnum = SwitchFilterEnum
-    RadioFilterEnum = RadioFilterEnum
-    selectedSwitchFilterEnum: SwitchFilterEnum = SwitchFilterEnum.POLITICIANS
-    selectedRadioChamberEnum = true
-    selectedRadioSenateEnum = true
-    RouteEnum = RouteEnum
+    SwitchFilterEnum = SwitchFilterEnum;
+    RadioFilterEnum = RadioFilterEnum;
+    selectedSwitchFilterEnum: SwitchFilterEnum = SwitchFilterEnum.POLITICIANS;
+    selectedRadioChamberEnum = true;
+    selectedRadioSenateEnum = true;
 
     constructor(private politicosService: PoliticosService,
                 private router: Router,
                 private store: Store<{ parliamentarians: parliamentariansReducerInterface }>) {
 
         store.select('parliamentarians').subscribe(parliamentarians => {
-            this.conversations = parliamentarians.list
-        })
+            this.conversations = parliamentarians.list;
+        });
     }
 
     ngOnInit(): void {
@@ -57,11 +56,15 @@ export class SidebarComponent implements OnInit {
     }
 
     handleConversationClicked(conversation: ParliamentarianDataResponse): void {
-        this.politicosService.getParliamentarianVotesById(conversation.parliamentarianId).subscribe((conversation) => {
-            this.conversationClicked.emit();
-            this.router.navigate([`/${RouteEnum.Votes}`], {queryParams: {id: conversation.parliamentarianRanking.parliamentarianId}})
-            this.store.dispatch(setCurrentConversation({currentConversation: conversation}))
-        })
+        this.politicosService.getParliamentarianVotesById(conversation.parliamentarianId)
+            .subscribe((conversationResponse: ParliamentarianDataResponse) => {
+                this.conversationClicked.emit();
+                this.router.navigate([`/${RouteEnum.Votes}`],
+                    {
+                        queryParams: {id: conversationResponse.parliamentarianRanking.parliamentarianId}
+                    });
+                this.store.dispatch(setCurrentConversation({currentConversation: conversationResponse}));
+            });
     }
 
     onScroll(): void {
@@ -69,16 +72,16 @@ export class SidebarComponent implements OnInit {
     }
 
     selectSwitchFilter(switchFilterEnum: SwitchFilterEnum): void {
-        this.selectedSwitchFilterEnum = switchFilterEnum
+        this.selectedSwitchFilterEnum = switchFilterEnum;
     }
 
     selectRadioFilter(radioFilterEnum: RadioFilterEnum): void {
         if (radioFilterEnum === RadioFilterEnum.SENATE && this.selectedRadioChamberEnum) {
-            this.selectedRadioSenateEnum = !this.selectedRadioSenateEnum
+            this.selectedRadioSenateEnum = !this.selectedRadioSenateEnum;
         }
 
         if (radioFilterEnum === RadioFilterEnum.CHAMBER && this.selectedRadioSenateEnum) {
-            this.selectedRadioChamberEnum = !this.selectedRadioChamberEnum
+            this.selectedRadioChamberEnum = !this.selectedRadioChamberEnum;
         }
     }
 }

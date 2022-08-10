@@ -29,7 +29,7 @@ export class TemplateComponent implements OnInit {
         });
     }
 
-    ngOnInit = () => {
+    ngOnInit(): void {
         this.currentWindowWidth = window.innerWidth;
 
         this.paramsSubscription = this.route.queryParams.subscribe((params) => {

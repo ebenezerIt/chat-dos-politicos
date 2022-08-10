@@ -25,40 +25,39 @@ export class TemplateComponent implements OnInit {
                 private politicosService: PoliticosService,
                 private store: Store<{ parliamentarians: parliamentariansReducerInterface }>) {
         store.select('parliamentarians').subscribe(parliamentarians => {
-            this.conversation = parliamentarians.currentConversation
-        })
+            this.conversation = parliamentarians.currentConversation;
+        });
     }
 
-    ngOnInit() {
+    ngOnInit = () => {
         this.currentWindowWidth = window.innerWidth;
 
         this.paramsSubscription = this.route.queryParams.subscribe((params) => {
             if (params.id) {
                 this.politicosService.getParliamentarianVotesById(params.id).subscribe((conversation) => {
-                    this.store.dispatch(setCurrentConversation({currentConversation: conversation}))
-                    this.changeShowChat()
-                    this.paramsSubscription.unsubscribe()
-                })
+                    this.store.dispatch(setCurrentConversation({currentConversation: conversation}));
+                    this.changeShowChat();
+                    this.paramsSubscription.unsubscribe();
+                });
             }
-        })
+        });
     }
 
     onConversationSelected(): void {
-        this.changeShowChat()
-        this.paramsSubscription.unsubscribe()
+        this.changeShowChat();
+        this.paramsSubscription?.unsubscribe();
     }
 
-    changeShowChat() {
+    changeShowChat(): void {
         this.showChat = !this.showChat;
     }
 
-    onClickBack() {
-        this.router.navigate(['/'], {queryParams: {}})
-        this.changeShowChat()
+    onClickBack(): void {
+        this.router.navigate(['/'], {queryParams: {}});
+        this.changeShowChat();
     }
 
     selectSwitchChat(routeEnum: RouteEnum): void {
-        this.router.navigate([`/${routeEnum}`], {queryParamsHandling: "preserve"})
+        this.router.navigate([`/${routeEnum}`], {queryParamsHandling: 'preserve'});
     }
-
 }

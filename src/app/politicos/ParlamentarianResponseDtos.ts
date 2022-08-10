@@ -254,3 +254,27 @@ export interface ParliamentarianSingleResponse {
   data: ParliamentarianDataResponse;
   errors: any[];
 }
+
+export class Desperdicio {
+  nome: string;
+  pontos: number;
+  cotaParlamentarTotal: number;
+  contaParlamentarGastou: number;
+  cotaParlamentarEconomizou: number;
+  cotaGabineteTotal: number;
+  cotaGabineteGastou: number;
+  cotaGabineteEconomizou: number;
+  acessoresQuantidade: any;
+  acessoresGastoTotal: any;
+  acessoresGastoMedio: number;
+  cotaTotal: number;
+  cotaTotalGastou: number;
+  cotaTotalEconomizou: number;
+  gastos: Gasto[];
+}
+
+export class Gasto {
+  tipo: string;
+  valor: number;
+  data: any;
+}

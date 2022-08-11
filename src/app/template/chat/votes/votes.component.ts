@@ -33,7 +33,7 @@ export class VotesComponent implements OnInit {
     });
   }
 
-  getSortedVotes(conversation: ParliamentarianDataResponse): LawVote[] {
+  getSortedVotes(): LawVote[] {
     const sortedVotes = [...this.conversation.parliamentarianRanking.parliamentarian.lawVotes];
     return sortedVotes
         .sort((vote1, vote2) => {

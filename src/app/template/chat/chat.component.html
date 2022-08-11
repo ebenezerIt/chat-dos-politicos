@@ -17,44 +17,26 @@
 
       <div class="nameSection">{{ conversation?.parliamentarianRanking.parliamentarian.nickname }}</div>
     </div>
-<!--      <div class="switch">-->
-<!--        <div class="option" [ngClass]="{selected: false}"-->
-<!--             (click)="selectSwitchChat(RouteEnum.Votes)"><span>Votos</span>-->
-<!--        </div>-->
-<!--        <div class="option" [ngClass]="{selected: false}"-->
-<!--             (click)="selectSwitchChat(RouteEnum.Spending)"><span>Gastos</span>-->
-<!--        </div>-->
-<!--        <div class="option" [ngClass]="{selected: false}"-->
-<!--             (click)="selectSwitchChat(RouteEnum.Lawsuit)"><span>Processos</span>-->
-<!--        </div>-->
-<!--      </div>-->
+
   </div>
   <div id="body" ngClass.lt-md="mobile-height" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
     <router-outlet></router-outlet>
   </div>
-  <div id="footer">
-    <div id="smileyIcon">
-      <img
-        (click)="emojiPickerVisible = !emojiPickerVisible"
-        src="../../../assets/images/smileIcon.svg"
-      />
-      <emoji-mart
-        (emojiClick)="emojiClicked($event)"
-        *ngIf="emojiPickerVisible"
-        style="position: absolute; bottom: 50px"
-        [darkMode]="false"
-        title="Pick your emoji…"
-        emoji="point_up"
-      ></emoji-mart>
-    </div>
-    <div id="textarea">
-      <textarea
-        [(ngModel)]="message"
-        (keyup.enter)="submitMessage($event)"
-      ></textarea>
-    </div>
-    <div id="micIcon">
-      <img src="../../../assets/images/voiceIcon.svg" />
-    </div>
+  <div ngClass.lt-md="mobile-footer" ngClass.gt-sm="footer">
+        <div class="switch">
+          <div class="option"
+               routerLinkActive="selected"
+               [routerLink]="'/'+RouteEnum.Votes" queryParamsHandling="preserve"><span>Votos</span>
+          </div>
+          <div class="option"
+               routerLinkActive="selected"
+               [routerLink]="'/'+RouteEnum.Spending" queryParamsHandling="preserve"><span>Gastos</span>
+          </div>
+          <div class="option"
+               routerLinkActive="selected"
+               [routerLink]="'/'+RouteEnum.Lawsuit" queryParamsHandling="preserve"><span>Processos</span>
+          </div>
+        </div>
+
   </div>
 </div>

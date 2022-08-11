@@ -2,8 +2,7 @@
 
 <div
         class="message"
-        [ngClass]="{ me: message.me }"
-        *ngFor="let message of getSortedVotes(conversation)"
+        *ngFor="let message of getSortedVotes()"
 >
     <div class="messageContent">
         {{ message.law.number }}

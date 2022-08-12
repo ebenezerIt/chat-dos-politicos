@@ -7,6 +7,11 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { LOCALE_ID } from '@angular/core';
+import localePt from '@angular/common/locales/pt';
+import {registerLocaleData} from '@angular/common';
+registerLocaleData(localePt)
+
 
 @NgModule({
     declarations: [AppComponent],
@@ -17,8 +22,10 @@ import { HttpClientModule } from '@angular/common/http';
         AppRoutingModule,
         StoreModule.forRoot({parliamentarians: parliamentariansReducer})
     ],
-    providers: [],
-    bootstrap: [AppComponent],
+    providers: [{
+        provide: LOCALE_ID,
+        useValue: "pt-BR"
+    }],    bootstrap: [AppComponent],
 })
 export class AppModule {
 }

@@ -15,15 +15,16 @@
             />
         </div>
         <div class="filter" fxLayout.lt-md="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
-            <div class="switch">
-                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.POLITICIANS}"
-                     (click)="selectSwitchFilter(SwitchFilterEnum.POLITICIANS)"><span>Dos</span> <span>Politicos</span>
-                </div>
-                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.PARTIES}"
-                     (click)="selectSwitchFilter(SwitchFilterEnum.PARTIES)"><span>Dos</span> <span>Partidos</span></div>
-                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.STATES}"
-                     (click)="selectSwitchFilter(SwitchFilterEnum.STATES)"><span>Dos</span> <span>Estados</span></div>
-            </div>
+<!--           @TODO  -->
+<!--            <div class="switch">-->
+<!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.POLITICIANS}"-->
+<!--                     (click)="selectSwitchFilter(SwitchFilterEnum.POLITICIANS)"><span>Dos</span> <span>Politicos</span>-->
+<!--                </div>-->
+<!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.PARTIES}"-->
+<!--                     (click)="selectSwitchFilter(SwitchFilterEnum.PARTIES)"><span>Dos</span> <span>Partidos</span></div>-->
+<!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.STATES}"-->
+<!--                     (click)="selectSwitchFilter(SwitchFilterEnum.STATES)"><span>Dos</span> <span>Estados</span></div>-->
+<!--            </div>-->
             <div fxLayout="row" fxLayoutGap="5px">
                 <div class="radio-option" (click)="selectRadioFilter(RadioFilterEnum.CHAMBER)" >
                     <div class="radio" [ngClass]="{selected: selectedRadioChamberEnum}"></div>
@@ -61,8 +62,8 @@
             </div>
             <div class="content">
                 <div class="conversationHeader">
-                    <div class="name"> {{ conversation.parliamentarian.nickname }} {{conversation.scoreTotal}}</div>
-                    <div class="time">{{ conversation.parliamentarian.latestMessageTime | date: 'dd/MM/yy'}}</div>
+                    <div class="name"> {{ conversation.parliamentarian.nickname }} </div>
+                    <div class="time">{{conversation.scoreTotal}}</div>
                 </div>
                 <div class="message">
                     <img
@@ -77,7 +78,7 @@
                           style="font-weight: bold;color: green">SIM</span>
                     <span *ngIf="conversation.parliamentarian.latestLawStatusId === 2"
                           style="font-weight: bold;color: red">NÃO</span>
-                    {{ conversation.parliamentarian.latestMessage }}
+                    {{ conversation.parliamentarian.position }} {{ conversation.parliamentarian.party.prefix }} - {{conversation.parliamentarian.state.prefix}}
                 </div>
             </div>
         </div>

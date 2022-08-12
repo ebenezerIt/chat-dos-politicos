@@ -30,15 +30,15 @@ export class PoliticosMapper {
         desperdicio.cotaGabineteEconomizou = (desperdicio.cotaGabineteTotal - desperdicio.cotaGabineteGastou);
         desperdicio.cotaTotal = parliamentarianRanking.parliamentarianQuotaTotal;
         desperdicio.cotaTotalGastou = (desperdicio.contaParlamentarGastou + desperdicio.cotaGabineteGastou);
-        desperdicio.cotaTotalEconomizou = (desperdicio.cotaTotal - desperdicio.cotaTotalGastou);
+        desperdicio.cotaTotalEconomizou = Math.round((desperdicio.cotaTotal - desperdicio.cotaTotalGastou) * 100) / 100;
         desperdicio.gastos = quotas.map(quota => ({
             tipo: quota.type,
             valor: quota.amount,
             data: quota.date
         }));
-        desperdicio.acessoresQuantidade = staffs?.[0].count;
-        desperdicio.acessoresGastoTotal = staffs?.[0].amount;
-        desperdicio.acessoresGastoMedio = (desperdicio.acessoresQuantidade / desperdicio.acessoresQuantidade);
+        desperdicio.acessoresQuantidade = staffs?.[0]?.count;
+        desperdicio.acessoresGastoTotal = staffs?.[0]?.amount;
+        desperdicio.acessoresGastoMedio = (desperdicio.acessoresGastoTotal / desperdicio.acessoresQuantidade);
 
         return desperdicio;
     }

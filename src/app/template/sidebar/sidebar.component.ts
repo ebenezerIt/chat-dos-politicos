@@ -41,9 +41,9 @@ export class SidebarComponent implements OnInit {
 
     get filteredConversations(): ParliamentarianDataResponse[] {
         if (!this.searchText) {
-            return this.conversations?.slice(0, this.listSize);
+            return this.filterByPosition(this.conversations?.slice(0, this.listSize));
         }
-        return this.conversations.filter((data) => {
+        return this.filterByPosition(this.conversations.filter((data) => {
             return (
                 data.parliamentarian.name
                     .toLowerCase()
@@ -52,7 +52,28 @@ export class SidebarComponent implements OnInit {
                     .toLowerCase()
                     .includes(this.searchText.toLowerCase())
             );
-        });
+        }));
+    }
+
+    filterByPosition(parliamentarians: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] {
+
+        if (this.selectedRadioChamberEnum && this.selectedRadioSenateEnum) {
+            return parliamentarians
+        }
+
+        if (this.selectedRadioChamberEnum) {
+            return parliamentarians.filter(data => {
+               return data.parliamentarian.position === 'Deputado Federal'
+            })
+        }
+
+        if (this.selectedRadioSenateEnum) {
+            return parliamentarians.filter(data => {
+               return data.parliamentarian.position === 'Senador'
+            })
+        }
+
+
     }
 
     handleConversationClicked(conversation: ParliamentarianDataResponse): void {

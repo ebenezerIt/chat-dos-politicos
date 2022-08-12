@@ -49,8 +49,8 @@ export class PoliticosClient {
   getParliamentarianQuotasById(id: number): Observable<ParliamentarianSingleResponse> {
     const searchParams = new HttpParams()
         .append('ParliamentarianId',  id)
-        .append('Include',  'Parliamentarian.Quotas')
-        .append('Include',  'Parliamentarian.Staffs');
+        .append('Year',  0)
+        .append('Include',  'Parliamentarian.Quotas,Parliamentarian.Staffs')
     const httpOptions = {
       headers: new HttpHeaders({ Accept: 'application/json' }),
       params: searchParams

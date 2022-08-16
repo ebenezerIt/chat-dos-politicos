@@ -4,7 +4,8 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from '../../stores/parliamentarians.reducer';
 import { RouteEnum } from '../../enums/route-enum';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { setCurrentConversation } from '../../stores/parliamentarians.actions';
 
 @Component({
   selector: 'app-chat',
@@ -20,7 +21,8 @@ export class ChatComponent implements OnInit {
   paramsSubscription: Subscription;
   RouteEnum = RouteEnum
 
-  constructor(private store: Store<{ parliamentarians: parliamentariansReducerInterface }>,
+  constructor(private route: ActivatedRoute,
+              store: Store<{ parliamentarians: parliamentariansReducerInterface }>,
               private router: Router) {
 
     store.select('parliamentarians').subscribe(parliamentarians => {
@@ -29,6 +31,11 @@ export class ChatComponent implements OnInit {
   }
   ngOnInit(): void {
 
+    this.paramsSubscription = this.route.queryParams.subscribe((params) => {
+      if (!params.id) {
+        this.clickBack();
+      }
+    });
   }
 
   submitMessage(event): void {
@@ -52,6 +59,7 @@ export class ChatComponent implements OnInit {
 
   clickBack() {
     this.onClickBack.emit()
+    this.paramsSubscription.unsubscribe();
   }
 
   selectSwitchChat(routeEnum: RouteEnum): void {

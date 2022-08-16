@@ -14,27 +14,56 @@
                     placeholder="Pesquisar..."
             />
         </div>
-        <div class="filter" fxLayout.lt-md="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
-<!--           @TODO  -->
-<!--            <div class="switch">-->
-<!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.POLITICIANS}"-->
-<!--                     (click)="selectSwitchFilter(SwitchFilterEnum.POLITICIANS)"><span>Dos</span> <span>Politicos</span>-->
-<!--                </div>-->
-<!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.PARTIES}"-->
-<!--                     (click)="selectSwitchFilter(SwitchFilterEnum.PARTIES)"><span>Dos</span> <span>Partidos</span></div>-->
-<!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.STATES}"-->
-<!--                     (click)="selectSwitchFilter(SwitchFilterEnum.STATES)"><span>Dos</span> <span>Estados</span></div>-->
-<!--            </div>-->
-            <div fxLayout="row" fxLayoutGap="5px">
-                <div class="radio-option" (click)="selectRadioFilter(RadioFilterEnum.CHAMBER)" >
+        <div class="filter" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+            <!--           @TODO  -->
+            <!--            <div class="switch">-->
+            <!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.POLITICIANS}"-->
+            <!--                     (click)="selectSwitchFilter(SwitchFilterEnum.POLITICIANS)"><span>Dos</span> <span>Politicos</span>-->
+            <!--                </div>-->
+            <!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.PARTIES}"-->
+            <!--                     (click)="selectSwitchFilter(SwitchFilterEnum.PARTIES)"><span>Dos</span> <span>Partidos</span></div>-->
+            <!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.STATES}"-->
+            <!--                     (click)="selectSwitchFilter(SwitchFilterEnum.STATES)"><span>Dos</span> <span>Estados</span></div>-->
+            <!--            </div>-->
+
+            <div fxLayout="column" style="color: #137f36">
+                <select style="border: 2px solid #137f36; padding: 3px; border-radius: 20px; color: #137f36 "
+                        [(ngModel)]="selectedState">
+                    <option value="">Por Estados</option>
+                    <option value="">Todos</option>
+                    <ng-container *ngFor="let option of states">
+                        <option [value]="option.sigla">{{option.sigla}}</option>
+                    </ng-container>
+                </select>
+
+                <div style="padding-top: 10px; cursor: pointer" (click)="changeBestWorst()">
+
+                    <ng-container *ngIf="fromBestToWorst else fromWorst">
+                     <span style="color: green">
+                    Do <b>MELHOR</b> Para Pior ⬇
+                    </span>
+                    </ng-container>
+
+                    <ng-template #fromWorst>
+                    <span style="color: #d10202">
+                        Do <b>PIOR</b> Para Melhor ⬆
+                    </span>
+                    </ng-template>
+
+                </div>
+
+            </div>
+            <div fxLayout="column" fxLayoutGap="5px">
+                <div class="radio-option" (click)="selectRadioFilter(RadioFilterEnum.CHAMBER)">
                     <div class="radio" [ngClass]="{selected: selectedRadioChamberEnum}"></div>
                     <div>CÂMARA</div>
                 </div>
                 <div class="radio-option" (click)="selectRadioFilter(RadioFilterEnum.SENATE)">
-                    <div class="radio"  [ngClass]="{selected: selectedRadioSenateEnum}"></div>
+                    <div class="radio" [ngClass]="{selected: selectedRadioSenateEnum}"></div>
                     <div>SENADO</div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -46,17 +75,18 @@
          [infiniteScrollDistance]="2"
          [infiniteScrollThrottle]="50"
          [scrollWindow]="false"
+         fxLayout="column"
     >
         <!-- <div id="noConversations">All chats are archived</div> -->
 
-        <div
-                class="conversation"
-                *ngFor="let conversation of filteredConversations"
-                (click)="handleConversationClicked(conversation)"
+        <div class="conversation"
+             *ngFor="let conversation of filteredConversations"
+             (click)="handleConversationClicked(conversation)"
         >
             <div class="picture">
                 <img src="{{conversation.parliamentarian.photo}}"/>
-                <div class="score">
+                <div class="score"
+                     [ngClass]="{'good': conversation.scoreRanking <= 150, 'regular': conversation.scoreRanking > 150 && conversation.scoreRanking <= 350, 'bad': conversation.scoreRanking > 350 }">
                     <h2>{{conversation.scoreRanking}}º</h2>
                 </div>
             </div>
@@ -78,7 +108,8 @@
                           style="font-weight: bold;color: green">SIM</span>
                     <span *ngIf="conversation.parliamentarian.latestLawStatusId === 2"
                           style="font-weight: bold;color: red">NÃO</span>
-                    {{ conversation.parliamentarian.position }} {{ conversation.parliamentarian.party.prefix }} - {{conversation.parliamentarian.state.prefix}}
+                    {{ conversation.parliamentarian.position }} {{ conversation.parliamentarian.party.prefix }}
+                    - {{conversation.parliamentarian.state.prefix}}
                 </div>
             </div>
         </div>

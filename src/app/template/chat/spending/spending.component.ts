@@ -28,7 +28,8 @@ export class SpendingComponent implements OnInit {
     ngOnInit(): void {
         this.politicosService.getDesperdicioById(this.conversation.parliamentarianRanking.parliamentarianId).subscribe((expenses) => {
             this.expenses = expenses
-            console.log("expenses", this.expenses)
+            // @TODO
+            // console.log("expenses", this.expenses)
             this.loadChart();
         })
 

@@ -6,13 +6,15 @@ import { SpendingComponent } from './chat/spending/spending.component';
 import { LawsuitComponent } from './chat/lawsuit/lawsuit.component';
 
 const routes: Routes = [
-      {path: RouteEnum.Votes, component: VotesComponent},
-      {path: RouteEnum.Spending, component: SpendingComponent},
-      {path: RouteEnum.Lawsuit, component: LawsuitComponent}
+    {path: RouteEnum.Votes, component: VotesComponent},
+    {path: RouteEnum.Spending, component: SpendingComponent},
+    {path: RouteEnum.Lawsuit, component: LawsuitComponent},
+    {path: '**', redirectTo: '/'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class TemplateRoutingModule { }
+export class TemplateRoutingModule {
+}

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, } from '@angular/core';
 import { PoliticosService } from '../../politicos/politicos.service';
 import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianResponseDtos';
 import { SwitchFilterEnum } from '../../enums/switch-filter-enum';
@@ -9,13 +9,17 @@ import { setCurrentConversation } from '../../stores/parliamentarians.actions';
 import { Router } from '@angular/router';
 import { RouteEnum } from '../../enums/route-enum';
 
+type Filter = {
+    (data: ParliamentarianDataResponse[]): ParliamentarianDataResponse[]
+}
+
+
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-
     @Output() conversationClicked: EventEmitter<any> = new EventEmitter();
     searchText: string;
     conversations: ParliamentarianDataResponse[];
@@ -25,6 +29,124 @@ export class SidebarComponent implements OnInit {
     selectedSwitchFilterEnum: SwitchFilterEnum = SwitchFilterEnum.POLITICIANS;
     selectedRadioChamberEnum = true;
     selectedRadioSenateEnum = true;
+    fromBestToWorst = true
+    selectedState = ''
+    states = [
+        {
+            "sigla": "AC",
+            "nome": "Acre",
+        },
+        {
+            "sigla": "AL",
+            "nome": "Alagoas",
+        },
+        {
+            "sigla": "AM",
+            "nome": "Amazonas",
+        },
+        {
+            "sigla": "AP",
+            "nome": "Amapá",
+        },
+        {
+            "sigla": "BA",
+            "nome": "Bahia",
+        },
+        {
+            "sigla": "CE",
+            "nome": "Ceará",
+        },
+        {
+            "sigla": "DF",
+            "nome": "Distrito Federal",
+        },
+        {
+            "sigla": "ES",
+            "nome": "Espírito Santo",
+        },
+        {
+            "sigla": "GO",
+            "nome": "Goiás",
+        },
+        {
+            "sigla": "MA",
+            "nome": "Maranhão",
+        },
+        {
+            "sigla": "MG",
+            "nome": "Minas Gerais",
+        },
+        {
+            "sigla": "MS",
+            "nome": "Mato Grosso do Sul",
+        },
+        {
+            "sigla": "MT",
+            "nome": "Mato Grosso",
+        },
+        {
+            "sigla": "PA",
+            "nome": "Pará",
+        },
+        {
+            "sigla": "PB",
+            "nome": "Paraíba",
+        },
+        {
+            "sigla": "PE",
+            "nome": "Pernambuco",
+        },
+        {
+            "sigla": "PI",
+            "nome": "Piauí",
+        },
+        {
+            "sigla": "PR",
+            "nome": "Paraná",
+        },
+        {
+            "sigla": "RJ",
+            "nome": "Rio de Janeiro",
+        },
+        {
+            "sigla": "RN",
+            "nome": "Rio Grande do Norte",
+        },
+        {
+            "sigla": "RO",
+            "nome": "Rondônia",
+        },
+        {
+            "sigla": "RR",
+            "nome": "Roraima",
+        },
+        {
+            "sigla": "RS",
+            "nome": "Rio Grande do Sul",
+        },
+        {
+            "sigla": "SC",
+            "nome": "Santa Catarina",
+        },
+        {
+            "sigla": "SE",
+            "nome": "Sergipe",
+        },
+        {
+            "sigla": "SP",
+            "nome": "São Paulo",
+        },
+        {
+            "sigla": "TO",
+            "nome": "Tocantins",
+        }
+    ]
+
+    filters: Filter[] = [
+        this.filterByState(),
+        this.filterByPosition(),
+        this.filterBySearchText(),
+    ]
 
     constructor(private politicosService: PoliticosService,
                 private router: Router,
@@ -36,44 +158,67 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
     }
 
     get filteredConversations(): ParliamentarianDataResponse[] {
-        if (!this.searchText) {
-            return this.filterByPosition(this.conversations?.slice(0, this.listSize));
-        }
-        return this.filterByPosition(this.conversations.filter((data) => {
-            return (
-                data.parliamentarian.name
-                    .toLowerCase()
-                    .includes(this.searchText.toLowerCase()) ||
-                data.parliamentarian.nickname
-                    .toLowerCase()
-                    .includes(this.searchText.toLowerCase())
-            );
-        }));
+        let list = [...this.conversations];
+
+        if (!this.fromBestToWorst) list.reverse();
+
+        this.filters.forEach((filter: Filter) => {
+            list = filter(list);
+        })
+
+        return list
     }
 
-    filterByPosition(parliamentarians: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] {
+    filterBySearchText(): Filter {
 
-        if (this.selectedRadioChamberEnum && this.selectedRadioSenateEnum) {
-            return parliamentarians
+        return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
+
+            if (!this.searchText) return list?.slice(0, this.listSize);
+
+            return list.filter((data) => {
+                return (
+                    data.parliamentarian.name
+                        .toLowerCase()
+                        .includes(this.searchText.toLowerCase()) ||
+                    data.parliamentarian.nickname
+                        .toLowerCase()
+                        .includes(this.searchText.toLowerCase())
+                );
+            });
         }
+    }
 
-        if (this.selectedRadioChamberEnum) {
-            return parliamentarians.filter(data => {
-               return data.parliamentarian.position === 'Deputado Federal'
+    filterByPosition(): Filter {
+
+        return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
+
+            if (this.selectedRadioChamberEnum && this.selectedRadioSenateEnum) return list
+
+            if (this.selectedRadioChamberEnum) return list.filter(data => {
+                return data.parliamentarian.position === 'Deputado Federal';
+            })
+
+            if (this.selectedRadioSenateEnum) return list.filter(data => {
+                return data.parliamentarian.position === 'Senador';
+            })
+
+            return list
+        }
+    }
+
+    filterByState(): Filter {
+
+        return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
+
+            if (!this.selectedState) return list
+
+            return list.filter(data => {
+                return data.parliamentarian.state.prefix === this.selectedState
             })
         }
-
-        if (this.selectedRadioSenateEnum) {
-            return parliamentarians.filter(data => {
-               return data.parliamentarian.position === 'Senador'
-            })
-        }
-
-
     }
 
     handleConversationClicked(conversation: ParliamentarianDataResponse): void {
@@ -104,5 +249,9 @@ export class SidebarComponent implements OnInit {
         if (radioFilterEnum === RadioFilterEnum.CHAMBER && this.selectedRadioSenateEnum) {
             this.selectedRadioChamberEnum = !this.selectedRadioChamberEnum;
         }
+    }
+
+    changeBestWorst(): void {
+        this.fromBestToWorst = !this.fromBestToWorst;
     }
 }

@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PoliticosService } from './politicos/politicos.service';
 import {  ParliamentarianListResponse } from './politicos/ParlamentarianResponseDtos';
-import {  setList } from './stores/parliamentarians.actions';
+import {  setList } from './stores/parliamentarians/parliamentarians.actions';
 import { Store } from '@ngrx/store';
-import { parliamentariansReducerInterface } from './stores/parliamentarians.reducer';
+import { parliamentariansReducerInterface } from './stores/parliamentarians/parliamentarians.reducer';
 
 @Component({
     selector: 'app-root',

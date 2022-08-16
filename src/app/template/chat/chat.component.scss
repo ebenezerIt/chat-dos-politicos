@@ -39,13 +39,6 @@
         }
       }
       .score {
-        background: linear-gradient(
-          to top,
-          rgb(19, 127, 54) 14%,
-          rgb(19, 127, 54) 25%,
-          transparent 10%,
-          transparent 90%
-        );
         width: 45px;
         height: 50px;
         border-radius: 800px;
@@ -56,6 +49,38 @@
         position: absolute;
         align-self: center;
       }
+
+
+      .good {
+        background: linear-gradient(
+                        to top,
+                        rgb(19, 127, 54) 14%,
+                        rgb(19, 127, 54) 25%,
+                        transparent 10%,
+                        transparent 90%
+        );
+      }
+
+      .regular {
+        background: linear-gradient(
+                        to top,
+                        #ebbc02 14%,
+                        #ebbc02 25%,
+                        transparent 10%,
+                        transparent 90%
+        );
+      }
+
+      .bad {
+        background: linear-gradient(
+                        to top,
+                        #d10202 14%,
+                        #d10202 25%,
+                        transparent 10%,
+                        transparent 90%
+        );
+      }
+
 
       h2 {
         margin: 0px;

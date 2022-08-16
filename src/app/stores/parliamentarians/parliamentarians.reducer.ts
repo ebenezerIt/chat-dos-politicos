@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { filter, setCurrentConversation, setList } from './parliamentarians.actions';
-import { ParliamentarianDataResponse } from '../politicos/ParlamentarianResponseDtos';
+import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianResponseDtos';
 
 
 export interface parliamentariansReducerInterface {

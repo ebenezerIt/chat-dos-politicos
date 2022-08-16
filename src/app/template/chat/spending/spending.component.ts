@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PoliticosService } from '../../../politicos/politicos.service';
 import { Store } from '@ngrx/store';
-import { parliamentariansReducerInterface } from '../../../stores/parliamentarians.reducer';
+import { parliamentariansReducerInterface } from '../../../stores/parliamentarians/parliamentarians.reducer';
 import * as extenso from 'extenso'
 import { Chart, registerables } from 'chart.js';
 import { EmptyObject } from 'chart.js/types/basic';
+import { routesReducerInterface } from '../../../stores/routes/route.reducer';
+import { setSelectedRoute } from '../../../stores/routes/route.actions';
+import { RouteEnum } from '../../../enums/route-enum';
 
 Chart.register(...registerables);
 
@@ -16,23 +19,27 @@ Chart.register(...registerables);
 export class SpendingComponent implements OnInit {
     conversation;
     expenses;
+    myChart;
 
     constructor(private politicosService: PoliticosService,
-                private store: Store<{ parliamentarians: parliamentariansReducerInterface }>) {
+                private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: routesReducerInterface }>) {
         store.select('parliamentarians').subscribe(parliamentarians => {
             this.conversation = parliamentarians.currentConversation;
-        })
+            this.politicosService.getDesperdicioById(this.conversation.parliamentarianRanking.parliamentarianId).subscribe((expenses) => {
+                this.expenses = expenses
+                // @TODO
+                // console.log("expenses", this.expenses)
+                if (this.myChart) this.myChart.destroy();
+                this.loadChart();
+            })
+        });
+
+        store.dispatch(setSelectedRoute({route: RouteEnum.Spending}));
+
     }
 
 
     ngOnInit(): void {
-        this.politicosService.getDesperdicioById(this.conversation.parliamentarianRanking.parliamentarianId).subscribe((expenses) => {
-            this.expenses = expenses
-            // @TODO
-            // console.log("expenses", this.expenses)
-            this.loadChart();
-        })
-
     }
 
     reaisPorExtenso(amount): string {
@@ -79,7 +86,7 @@ export class SpendingComponent implements OnInit {
             }
         };
 
-        const myChart = new Chart(ctx, {
+        this.myChart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: [

@@ -20,7 +20,6 @@ export const parliamentariansReducer = createReducer(
     on(filter, (state, { filteredList }) => ({...state, filteredList: filteredList})),
     on(setList, (state, { list }) => ({...state, list: list})),
     on(setCurrentConversation, (state, { currentConversation }) => {
-        console.log("STATELIST", state.list)
         const newList = []
         state.list.map(conversation => {
             if (conversation && conversation.parliamentarianId === currentConversation.parliamentarianRanking.parliamentarianId) {

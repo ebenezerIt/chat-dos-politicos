@@ -4,10 +4,11 @@ import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianRespo
 import { SwitchFilterEnum } from '../../enums/switch-filter-enum';
 import { RadioFilterEnum } from '../../enums/radio-filter-enum';
 import { Store } from '@ngrx/store';
-import { parliamentariansReducerInterface } from '../../stores/parliamentarians.reducer';
-import { setCurrentConversation } from '../../stores/parliamentarians.actions';
+import { parliamentariansReducerInterface } from '../../stores/parliamentarians/parliamentarians.reducer';
+import { setCurrentConversation } from '../../stores/parliamentarians/parliamentarians.actions';
 import { Router } from '@angular/router';
 import { RouteEnum } from '../../enums/route-enum';
+import { routesReducerInterface } from '../../stores/routes/route.reducer';
 
 type Filter = {
     (data: ParliamentarianDataResponse[]): ParliamentarianDataResponse[]
@@ -30,7 +31,8 @@ export class SidebarComponent implements OnInit {
     selectedRadioChamberEnum = true;
     selectedRadioSenateEnum = true;
     fromBestToWorst = true
-    selectedState = ''
+    selectedState = '';
+    selectedRoute: RouteEnum;
     states = [
         {
             "sigla": "AC",
@@ -140,20 +142,23 @@ export class SidebarComponent implements OnInit {
             "sigla": "TO",
             "nome": "Tocantins",
         }
-    ]
+    ];
 
     filters: Filter[] = [
         this.filterByState(),
         this.filterByPosition(),
         this.filterBySearchText(),
-    ]
+    ];
 
     constructor(private politicosService: PoliticosService,
                 private router: Router,
-                private store: Store<{ parliamentarians: parliamentariansReducerInterface }>) {
+                private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: routesReducerInterface }>) {
 
         store.select('parliamentarians').subscribe(parliamentarians => {
             this.conversations = parliamentarians.list;
+        });
+        store.select('route').subscribe(route => {
+            this.selectedRoute = route.selectedRoute;
         });
     }
 
@@ -225,7 +230,7 @@ export class SidebarComponent implements OnInit {
         this.politicosService.getParliamentarianVotesById(conversation.parliamentarianId)
             .subscribe((conversationResponse: ParliamentarianDataResponse) => {
                 this.conversationClicked.emit();
-                this.router.navigate([`/${RouteEnum.Votes}`],
+                this.router.navigate([`/${this.selectedRoute}`],
                     {
                         queryParams: {id: conversationResponse.parliamentarianRanking.parliamentarianId}
                     });

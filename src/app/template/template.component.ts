@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PoliticosService } from '../politicos/politicos.service';
 import { Store } from '@ngrx/store';
-import { parliamentariansReducerInterface } from '../stores/parliamentarians.reducer';
+import { parliamentariansReducerInterface } from '../stores/parliamentarians/parliamentarians.reducer';
 import { Subscription } from 'rxjs';
-import { setCurrentConversation } from '../stores/parliamentarians.actions';
+import { setCurrentConversation } from '../stores/parliamentarians/parliamentarians.actions';
 import { RouteEnum } from '../enums/route-enum';
 
 @Component({

@@ -2,10 +2,9 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ParliamentarianDataResponse} from '../../politicos/ParlamentarianResponseDtos';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { parliamentariansReducerInterface } from '../../stores/parliamentarians.reducer';
+import { parliamentariansReducerInterface } from '../../stores/parliamentarians/parliamentarians.reducer';
 import { RouteEnum } from '../../enums/route-enum';
 import { ActivatedRoute, Router } from '@angular/router';
-import { setCurrentConversation } from '../../stores/parliamentarians.actions';
 
 @Component({
   selector: 'app-chat',

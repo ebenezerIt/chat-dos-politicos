@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ParliamentarianDataResponse } from '../politicos/ParlamentarianResponseDtos';
+import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianResponseDtos';
 
 export const filter = createAction('[Sidebar Component] Filter', props<{ filteredList: ParliamentarianDataResponse[] }>());
 export const setList = createAction('[Sidebar Component] SetList', props<{ list: ParliamentarianDataResponse[] }>());

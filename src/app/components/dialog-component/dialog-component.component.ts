@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -7,15 +7,24 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-component.component.scss']
 })
 export class DialogComponent implements OnInit {
+  private inited;
 
   constructor(
       public dialogRef: MatDialogRef<any>,
       @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
+   this.dialogRef.afterOpened().subscribe(() => {
+      this.inited = true;
+    });
+
   }
 
+  @HostListener('window:click')
   onNoClick(): void {
-    this.dialogRef.close();
+    if (this.inited) {
+      this.dialogRef.close();
+    }
+    
   }
 }

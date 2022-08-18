@@ -52,4 +52,5 @@ export class VotesComponent implements OnInit {
           return 0;
         });
   }
+  
 }

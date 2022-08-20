@@ -16,6 +16,8 @@ import { TemplateComponent } from './template.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ChatComponent } from './chat/chat.component';
 import { TemplateRoutingModule } from './template-routing.module';
+import { FilterStorageService } from '../services/filter-storage.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [
@@ -35,7 +37,11 @@ import { TemplateRoutingModule } from './template-routing.module';
         MatDialogModule,
         MatButtonModule,
         TemplateRoutingModule,
+        MatIconModule
     ],
+    providers: [
+        FilterStorageService
+    ]
 })
 export class TemplateModule {
 }

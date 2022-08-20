@@ -7,11 +7,13 @@
             </div>
         </div>
         <div class="searchBox">
-            <img width="19" src="../../../assets/images/searchIcon.svg"/>
+            <img class="search icon" width="19" src="../../../assets/images/searchIcon.svg"/>
+            <img *ngIf="filter.searchText" (click)="clearSearchText()" class="close icon" width="19" src="../../../assets/images/closeIcon.svg"/>
             <input
-                    [(ngModel)]="searchText"
+                    [(ngModel)]="filter.searchText"
                     type="text"
                     placeholder="Pesquisar..."
+                    (ngModelChange)="onChangeSearchText()"
             />
         </div>
         <div class="filter" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
@@ -28,7 +30,7 @@
 
             <div fxLayout="column" style="color: #137f36">
                 <select style="border: 2px solid #137f36; padding: 3px; border-radius: 20px; color: #137f36 "
-                        [(ngModel)]="selectedState">
+                        [(ngModel)]="filter.state">
                     <option value="">Por Estados</option>
                     <option value="">Todos</option>
                     <ng-container *ngFor="let option of states">
@@ -38,7 +40,7 @@
 
                 <div style="padding-top: 10px; cursor: pointer" (click)="changeBestWorst()">
 
-                    <ng-container *ngIf="fromBestToWorst else fromWorst">
+                    <ng-container *ngIf="filter.fromBestToWorse else fromWorst">
                      <span style="color: green">
                     Do <b>MELHOR</b> Para Pior ⬇
                     </span>
@@ -55,11 +57,11 @@
             </div>
             <div fxLayout="column" fxLayoutGap="5px">
                 <div class="radio-option" (click)="selectRadioFilter(RadioFilterEnum.CHAMBER)">
-                    <div class="radio" [ngClass]="{selected: selectedRadioChamberEnum}"></div>
+                    <div class="radio" [ngClass]="{selected: filter.chamber}"></div>
                     <div>CÂMARA</div>
                 </div>
                 <div class="radio-option" (click)="selectRadioFilter(RadioFilterEnum.SENATE)">
-                    <div class="radio" [ngClass]="{selected: selectedRadioSenateEnum}"></div>
+                    <div class="radio" [ngClass]="{selected: filter.senate}"></div>
                     <div>SENADO</div>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class LocalStorageRepository {
+export class LocalStorage {
 
     private readonly storage: Storage;
 
@@ -43,4 +43,16 @@ export class LocalStorageRepository {
         return false;
     }
 
+    isLocalStorageExpired(): boolean {
+        const storedDateText: string | null =  this.get('lastUpdate');
+        if (!storedDateText) {
+            return true;
+        }
+        const lastUpdate = new Date(storedDateText);
+        return new Date(lastUpdate.toDateString()) < new Date(new Date().toDateString());
+    }
+
+    setLastUpdate(): void {
+        this.set('lastUpdate', new Date());
+    }
 }

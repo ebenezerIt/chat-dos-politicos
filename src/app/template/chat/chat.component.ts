@@ -3,7 +3,7 @@ import {ParliamentarianDataResponse} from '../../politicos/ParlamentarianRespons
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from '../../stores/parliamentarians/parliamentarians.reducer';
-import { RouteEnum } from '../../enums/route-enum';
+import { RouteEnum } from '../../constants/route-enum';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -18,15 +18,15 @@ export class ChatComponent implements OnInit {
   emojiPickerVisible;
   message = '';
   paramsSubscription: Subscription;
-  RouteEnum = RouteEnum
+  RouteEnum = RouteEnum;
 
   constructor(private route: ActivatedRoute,
               store: Store<{ parliamentarians: parliamentariansReducerInterface }>,
               private router: Router) {
 
     store.select('parliamentarians').subscribe(parliamentarians => {
-      this.conversation = parliamentarians.currentConversation
-    })
+      this.conversation = parliamentarians.currentConversation;
+    });
   }
   ngOnInit(): void {
 
@@ -56,12 +56,12 @@ export class ChatComponent implements OnInit {
     this.message += event.emoji.native;
   }
 
-  clickBack() {
-    this.onClickBack.emit()
+  clickBack(): void {
+    this.onClickBack.emit();
     this.paramsSubscription.unsubscribe();
   }
 
   selectSwitchChat(routeEnum: RouteEnum): void {
-    this.router.navigate([`/${routeEnum}`], {queryParamsHandling: "preserve"})
+    this.router.navigate([`/${routeEnum}`], {queryParamsHandling: 'preserve'});
   }
 }

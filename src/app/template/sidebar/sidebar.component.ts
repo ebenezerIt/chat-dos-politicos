@@ -1,18 +1,19 @@
 import { Component, EventEmitter, OnInit, Output, } from '@angular/core';
 import { PoliticosService } from '../../politicos/politicos.service';
 import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianResponseDtos';
-import { SwitchFilterEnum } from '../../enums/switch-filter-enum';
-import { RadioFilterEnum } from '../../enums/radio-filter-enum';
+import { SwitchFilterEnum } from '../../constants/switch-filter-enum';
+import { RadioFilterEnum } from '../../constants/radio-filter-enum';
 import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from '../../stores/parliamentarians/parliamentarians.reducer';
 import { setCurrentConversation } from '../../stores/parliamentarians/parliamentarians.actions';
 import { Router } from '@angular/router';
-import { RouteEnum } from '../../enums/route-enum';
-import { routesReducerInterface } from '../../stores/routes/route.reducer';
+import { RouteEnum } from '../../constants/route-enum';
+import { RoutesReducerInterface } from '../../stores/routes/route.reducer';
+import { ESTADOS } from '../../constants/estados-constant';
 
 type Filter = {
     (data: ParliamentarianDataResponse[]): ParliamentarianDataResponse[]
-}
+};
 
 
 @Component({
@@ -25,124 +26,14 @@ export class SidebarComponent implements OnInit {
     searchText: string;
     conversations: ParliamentarianDataResponse[];
     listSize = 20;
-    SwitchFilterEnum = SwitchFilterEnum;
     RadioFilterEnum = RadioFilterEnum;
     selectedSwitchFilterEnum: SwitchFilterEnum = SwitchFilterEnum.POLITICIANS;
     selectedRadioChamberEnum = true;
     selectedRadioSenateEnum = true;
-    fromBestToWorst = true
+    fromBestToWorst = true;
     selectedState = '';
     selectedRoute: RouteEnum;
-    states = [
-        {
-            "sigla": "AC",
-            "nome": "Acre",
-        },
-        {
-            "sigla": "AL",
-            "nome": "Alagoas",
-        },
-        {
-            "sigla": "AM",
-            "nome": "Amazonas",
-        },
-        {
-            "sigla": "AP",
-            "nome": "Amapá",
-        },
-        {
-            "sigla": "BA",
-            "nome": "Bahia",
-        },
-        {
-            "sigla": "CE",
-            "nome": "Ceará",
-        },
-        {
-            "sigla": "DF",
-            "nome": "Distrito Federal",
-        },
-        {
-            "sigla": "ES",
-            "nome": "Espírito Santo",
-        },
-        {
-            "sigla": "GO",
-            "nome": "Goiás",
-        },
-        {
-            "sigla": "MA",
-            "nome": "Maranhão",
-        },
-        {
-            "sigla": "MG",
-            "nome": "Minas Gerais",
-        },
-        {
-            "sigla": "MS",
-            "nome": "Mato Grosso do Sul",
-        },
-        {
-            "sigla": "MT",
-            "nome": "Mato Grosso",
-        },
-        {
-            "sigla": "PA",
-            "nome": "Pará",
-        },
-        {
-            "sigla": "PB",
-            "nome": "Paraíba",
-        },
-        {
-            "sigla": "PE",
-            "nome": "Pernambuco",
-        },
-        {
-            "sigla": "PI",
-            "nome": "Piauí",
-        },
-        {
-            "sigla": "PR",
-            "nome": "Paraná",
-        },
-        {
-            "sigla": "RJ",
-            "nome": "Rio de Janeiro",
-        },
-        {
-            "sigla": "RN",
-            "nome": "Rio Grande do Norte",
-        },
-        {
-            "sigla": "RO",
-            "nome": "Rondônia",
-        },
-        {
-            "sigla": "RR",
-            "nome": "Roraima",
-        },
-        {
-            "sigla": "RS",
-            "nome": "Rio Grande do Sul",
-        },
-        {
-            "sigla": "SC",
-            "nome": "Santa Catarina",
-        },
-        {
-            "sigla": "SE",
-            "nome": "Sergipe",
-        },
-        {
-            "sigla": "SP",
-            "nome": "São Paulo",
-        },
-        {
-            "sigla": "TO",
-            "nome": "Tocantins",
-        }
-    ];
+    states = ESTADOS;
 
     filters: Filter[] = [
         this.filterByState(),
@@ -152,7 +43,7 @@ export class SidebarComponent implements OnInit {
 
     constructor(private politicosService: PoliticosService,
                 private router: Router,
-                private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: routesReducerInterface }>) {
+                private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: RoutesReducerInterface }>) {
 
         store.select('parliamentarians').subscribe(parliamentarians => {
             this.conversations = parliamentarians.list;
@@ -168,20 +59,24 @@ export class SidebarComponent implements OnInit {
     get filteredConversations(): ParliamentarianDataResponse[] {
         let list = [...this.conversations];
 
-        if (!this.fromBestToWorst) list.reverse();
+        if (!this.fromBestToWorst) {
+            list.reverse();
+        }
 
         this.filters.forEach((filter: Filter) => {
             list = filter(list);
-        })
+        });
 
-        return list
+        return list;
     }
 
     filterBySearchText(): Filter {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
 
-            if (!this.searchText) return list?.slice(0, this.listSize);
+            if (!this.searchText) {
+                return list?.slice(0, this.listSize);
+            }
 
             return list.filter((data) => {
                 return (
@@ -193,37 +88,45 @@ export class SidebarComponent implements OnInit {
                         .includes(this.searchText.toLowerCase())
                 );
             });
-        }
+        };
     }
 
     filterByPosition(): Filter {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
 
-            if (this.selectedRadioChamberEnum && this.selectedRadioSenateEnum) return list
+            if (this.selectedRadioChamberEnum && this.selectedRadioSenateEnum) {
+                return list;
+            }
 
-            if (this.selectedRadioChamberEnum) return list.filter(data => {
-                return data.parliamentarian.position === 'Deputado Federal';
-            })
+            if (this.selectedRadioChamberEnum) {
+                return list.filter(data => {
+                    return data.parliamentarian.position === 'Deputado Federal';
+                });
+            }
 
-            if (this.selectedRadioSenateEnum) return list.filter(data => {
-                return data.parliamentarian.position === 'Senador';
-            })
+            if (this.selectedRadioSenateEnum) {
+                return list.filter(data => {
+                    return data.parliamentarian.position === 'Senador';
+                });
+            }
 
-            return list
-        }
+            return list;
+        };
     }
 
     filterByState(): Filter {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
 
-            if (!this.selectedState) return list
+            if (!this.selectedState) {
+                return list;
+            }
 
             return list.filter(data => {
-                return data.parliamentarian.state.prefix === this.selectedState
-            })
-        }
+                return data.parliamentarian.state.prefix === this.selectedState;
+            });
+        };
     }
 
     handleConversationClicked(conversation: ParliamentarianDataResponse): void {

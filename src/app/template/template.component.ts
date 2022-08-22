@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from '../stores/parliamentarians/parliamentarians.reducer';
 import { Subscription } from 'rxjs';
 import { setCurrentConversation } from '../stores/parliamentarians/parliamentarians.actions';
-import { RouteEnum } from '../enums/route-enum';
+import { RouteEnum } from '../constants/route-enum';
 
 @Component({
     selector: 'app-template',

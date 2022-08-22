@@ -255,7 +255,7 @@ export interface ParliamentarianSingleResponse {
   errors: any[];
 }
 
-export class Desperdicio {
+export class Expenditure {
   nome: string;
   pontos: number;
   cotaParlamentarTotal: number;
@@ -270,11 +270,18 @@ export class Desperdicio {
   cotaTotal: number;
   cotaTotalGastou: number;
   cotaTotalEconomizou: number;
-  gastos: Gasto[];
+  expenses: Expense[];
+  stateQuota: StateQuota;
+  staffQuota: StaffQuota;
 }
 
-export class Gasto {
+export class Expense {
   tipo: string;
   valor: number;
   data: any;
+}
+
+export class Estado {
+  sigla: string;
+  nome: string;
 }

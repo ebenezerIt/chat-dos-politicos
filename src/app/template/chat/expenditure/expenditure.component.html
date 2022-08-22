@@ -4,25 +4,25 @@
          style="background-color: white; color: #767676; padding: 15px; border-radius: 15px">
         <div>
             <span>Limite para <b style="color: #ebbc02">gastar </b> <b>POR ANO</b>:  </span>
-            <span style="color: #ebbc02"><b>{{ expenses?.cotaTotal | currency: 'BRL'}}</b></span>
+            <span style="color: #ebbc02"><b>{{ expenditure?.cotaTotal | currency: 'BRL'}}</b></span>
         </div>
-        <span style="font-size: 12px; color: #040404">{{reaisPorExtenso(expenses?.cotaTotal)}}</span>
+        <span style="font-size: 12px; color: #040404">{{reaisPorExtenso(expenditure?.cotaTotal)}}</span>
     </div>
     <div fxLayout="column" fxLayoutGap="15px"
          style="background-color: white; color: #767676; padding: 15px; border-radius: 15px">
         <div>
             <span>Valor <b style="color: #d10202">gasto</b> até agora:  </span>
-            <span style="color: #d10202"><b>{{ expenses?.cotaTotalGastou | currency: 'BRL'}}</b></span>
+            <span style="color: #d10202"><b>{{ expenditure?.cotaTotalGastou | currency: 'BRL'}}</b></span>
         </div>
-        <span style="font-size: 12px; color: #040404">{{reaisPorExtenso(expenses?.cotaTotalGastou)}}</span>
+        <span style="font-size: 12px; color: #040404">{{reaisPorExtenso(expenditure?.cotaTotalGastou)}}</span>
     </div>
     <div fxLayout="column" fxLayoutGap="15px"
          style="background-color: white; color: #767676; padding: 15px; border-radius: 15px">
         <div>
             <span>Valor <b style="color: green ">economizado</b> até agora:  </span>
-            <span style="color: green "><b>{{ expenses?.cotaTotalEconomizou | currency: 'BRL'}}</b></span>
+            <span style="color: green "><b>{{ expenditure?.cotaTotalEconomizou | currency: 'BRL'}}</b></span>
         </div>
-        <span style="font-size: 12px; color: #040404">{{reaisPorExtenso(expenses?.cotaTotalEconomizou)}}</span>
+        <span style="font-size: 12px; color: #040404">{{reaisPorExtenso(expenditure?.cotaTotalEconomizou)}}</span>
     </div>
     </div>
     <div style="padding: 10px;" [ngStyle.lt-md]="{'min-height': '500px'}" fxLayoutAlign="center start">

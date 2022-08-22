@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { LawVote, ParliamentarianDataResponse } from '../../../politicos/ParlamentarianResponseDtos';
 import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from '../../../stores/parliamentarians/parliamentarians.reducer';
-import { routesReducerInterface } from '../../../stores/routes/route.reducer';
+import { RoutesReducerInterface } from '../../../stores/routes/route.reducer';
 import { setSelectedRoute } from '../../../stores/routes/route.actions';
-import { RouteEnum } from '../../../enums/route-enum';
+import { RouteEnum } from '../../../constants/route-enum';
 
 @Component({
   selector: 'app-votes',
@@ -17,13 +17,13 @@ export class VotesComponent implements OnInit {
   conversation: ParliamentarianDataResponse;
 
   constructor(public dialog: MatDialog,
-              private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: routesReducerInterface }>) {
+              private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: RoutesReducerInterface }>) {
 
     store.select('parliamentarians').subscribe(parliamentarians => {
       this.conversation = parliamentarians.currentConversation;
     });
 
-    store.dispatch(setSelectedRoute({route: RouteEnum.Votes}));
+    store.dispatch(setSelectedRoute({route: RouteEnum.VOTES}));
 
   }
 

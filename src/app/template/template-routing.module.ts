@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RouteEnum } from '../enums/route-enum';
+import { RouteEnum } from '../constants/route-enum';
 import { VotesComponent } from './chat/votes/votes.component';
-import { SpendingComponent } from './chat/spending/spending.component';
+import { ExpenditureComponent } from './chat/expenditure/expenditure.component';
 import { LawsuitComponent } from './chat/lawsuit/lawsuit.component';
 
 const routes: Routes = [
-    {path: RouteEnum.Votes, component: VotesComponent},
-    {path: RouteEnum.Spending, component: SpendingComponent},
-    {path: RouteEnum.Lawsuit, component: LawsuitComponent},
+    {path: RouteEnum.VOTES, component: VotesComponent},
+    {path: RouteEnum.EXPENDITURE, component: ExpenditureComponent},
+    {path: RouteEnum.LAWSUIT, component: LawsuitComponent},
     {path: '**', redirectTo: '/'}
 ];
 

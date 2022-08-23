@@ -1,19 +1,20 @@
-import { Component, EventEmitter, OnInit, Output, } from '@angular/core';
-import { PoliticosService } from '../../politicos/politicos.service';
-import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianResponseDtos';
-import { SwitchFilterEnum } from '../../enums/switch-filter-enum';
-import { RadioFilterEnum } from '../../enums/radio-filter-enum';
-import { Store } from '@ngrx/store';
-import { parliamentariansReducerInterface } from '../../stores/parliamentarians/parliamentarians.reducer';
-import { setCurrentConversation } from '../../stores/parliamentarians/parliamentarians.actions';
-import { Router } from '@angular/router';
-import { RouteEnum } from '../../enums/route-enum';
-import { routesReducerInterface } from '../../stores/routes/route.reducer';
-import { Filter, FilterStorageService } from '../../services/filter-storage.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {PoliticosService} from '../../politicos/politicos.service';
+import {ParliamentarianDataResponse} from '../../politicos/ParlamentarianResponseDtos';
+import {SwitchFilterEnum} from '../../constants/switch-filter-enum';
+import {RadioFilterEnum} from '../../constants/radio-filter-enum';
+import {Store} from '@ngrx/store';
+import {parliamentariansReducerInterface} from '../../stores/parliamentarians/parliamentarians.reducer';
+import {setCurrentConversation} from '../../stores/parliamentarians/parliamentarians.actions';
+import {Router} from '@angular/router';
+import {RouteEnum} from '../../constants/route-enum';
+import {RoutesReducerInterface} from '../../stores/routes/route.reducer';
+import {Filter, FilterStorageService} from '../../services/filter-storage.service';
+import {ESTADOS} from '../../constants/estados-constant';
 
 type FilterFunction = {
     (data: ParliamentarianDataResponse[]): ParliamentarianDataResponse[]
-}
+};
 
 
 @Component({
@@ -25,131 +26,21 @@ export class SidebarComponent implements OnInit {
     @Output() conversationClicked: EventEmitter<any> = new EventEmitter();
     conversations: ParliamentarianDataResponse[];
     listSize = 20;
-    SwitchFilterEnum = SwitchFilterEnum;
     RadioFilterEnum = RadioFilterEnum;
     selectedSwitchFilterEnum: SwitchFilterEnum = SwitchFilterEnum.POLITICIANS;
-    filter: Filter
+    filter: Filter;
     selectedRoute: RouteEnum;
-    states = [
-        {
-            "sigla": "AC",
-            "nome": "Acre",
-        },
-        {
-            "sigla": "AL",
-            "nome": "Alagoas",
-        },
-        {
-            "sigla": "AM",
-            "nome": "Amazonas",
-        },
-        {
-            "sigla": "AP",
-            "nome": "Amapá",
-        },
-        {
-            "sigla": "BA",
-            "nome": "Bahia",
-        },
-        {
-            "sigla": "CE",
-            "nome": "Ceará",
-        },
-        {
-            "sigla": "DF",
-            "nome": "Distrito Federal",
-        },
-        {
-            "sigla": "ES",
-            "nome": "Espírito Santo",
-        },
-        {
-            "sigla": "GO",
-            "nome": "Goiás",
-        },
-        {
-            "sigla": "MA",
-            "nome": "Maranhão",
-        },
-        {
-            "sigla": "MG",
-            "nome": "Minas Gerais",
-        },
-        {
-            "sigla": "MS",
-            "nome": "Mato Grosso do Sul",
-        },
-        {
-            "sigla": "MT",
-            "nome": "Mato Grosso",
-        },
-        {
-            "sigla": "PA",
-            "nome": "Pará",
-        },
-        {
-            "sigla": "PB",
-            "nome": "Paraíba",
-        },
-        {
-            "sigla": "PE",
-            "nome": "Pernambuco",
-        },
-        {
-            "sigla": "PI",
-            "nome": "Piauí",
-        },
-        {
-            "sigla": "PR",
-            "nome": "Paraná",
-        },
-        {
-            "sigla": "RJ",
-            "nome": "Rio de Janeiro",
-        },
-        {
-            "sigla": "RN",
-            "nome": "Rio Grande do Norte",
-        },
-        {
-            "sigla": "RO",
-            "nome": "Rondônia",
-        },
-        {
-            "sigla": "RR",
-            "nome": "Roraima",
-        },
-        {
-            "sigla": "RS",
-            "nome": "Rio Grande do Sul",
-        },
-        {
-            "sigla": "SC",
-            "nome": "Santa Catarina",
-        },
-        {
-            "sigla": "SE",
-            "nome": "Sergipe",
-        },
-        {
-            "sigla": "SP",
-            "nome": "São Paulo",
-        },
-        {
-            "sigla": "TO",
-            "nome": "Tocantins",
-        }
-    ];
+    states = ESTADOS;
 
     filterFunctions: FilterFunction[] = [
         this.filterByState(),
         this.filterByPosition(),
-        this.filterBySearchText(),
+        this.filterBySearchText()
     ];
 
     constructor(private politicosService: PoliticosService,
                 private router: Router,
-                private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: routesReducerInterface }>,
+                private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: RoutesReducerInterface }>,
                 private filterStorageService: FilterStorageService) {
 
         store.select('parliamentarians').subscribe(parliamentarians => {
@@ -159,7 +50,7 @@ export class SidebarComponent implements OnInit {
             this.selectedRoute = route.selectedRoute;
         });
 
-        this.filter = this.filterStorageService.userFilters
+        this.filter = this.filterStorageService.userFilters;
     }
 
     ngOnInit(): void {
@@ -168,20 +59,23 @@ export class SidebarComponent implements OnInit {
     get filteredConversations(): ParliamentarianDataResponse[] {
         let list = [...this.conversations];
 
-        if (!this.filter.fromBestToWorse) list.reverse();
+        if (!this.filter.fromBestToWorse) {
+            list.reverse();
+        }
 
         this.filterFunctions.forEach((filter: FilterFunction) => {
             list = filter(list);
-        })
+        });
 
-        return list
+        return list;
     }
 
     filterBySearchText(): FilterFunction {
-
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
 
-            if (!this.filter.searchText) return list?.slice(0, this.listSize);
+            if (!this.filter.searchText) {
+                return list?.slice(0, this.listSize);
+            }
 
             return list.filter((data) => {
                 return (
@@ -193,37 +87,46 @@ export class SidebarComponent implements OnInit {
                         .includes(this.filter.searchText.toLowerCase())
                 );
             });
-        }
+        };
     }
 
     filterByPosition(): FilterFunction {
-
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
+            console.log('filter', this.filter);
+            console.log('FIXME1', this.filter.chamber);
+            console.log('FIXME2', this.filter.senate);
+            if (this.filter.chamber && this.filter.senate) {
+                return list;
+            }
 
-            if (this.filter.chamber && this.filter.state) return list
+            if (this.filter.chamber) {
+                return list.filter(data => {
+                    return data.parliamentarian.position === 'Deputado Federal';
+                });
+            }
 
-            if (this.filter.chamber) return list.filter(data => {
-                return data.parliamentarian.position === 'Deputado Federal';
-            })
+            if (this.filter.senate) {
+                return list.filter(data => {
+                    return data.parliamentarian.position === 'Senador';
+                });
+            }
 
-            if (this.filter.state) return list.filter(data => {
-                return data.parliamentarian.position === 'Senador';
-            })
-
-            return list
-        }
+            return list;
+        };
     }
 
     filterByState(): FilterFunction {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
 
-            if (!this.filter.state) return list
+            if (!this.filter.state) {
+                return list;
+            }
 
             return list.filter(data => {
-                return data.parliamentarian.state.prefix === this.filter.state
-            })
-        }
+                return data.parliamentarian.state.prefix === this.filter.state;
+            });
+        };
     }
 
     handleConversationClicked(conversation: ParliamentarianDataResponse): void {
@@ -247,6 +150,7 @@ export class SidebarComponent implements OnInit {
     }
 
     selectRadioFilter(radioFilterEnum: RadioFilterEnum): void {
+        console.log('senate--->', this.filter.senate, !this.filter.senate);
         if (radioFilterEnum === RadioFilterEnum.SENATE && this.filter.chamber) {
             this.filter.senate = !this.filter.senate;
         }
@@ -254,21 +158,20 @@ export class SidebarComponent implements OnInit {
         if (radioFilterEnum === RadioFilterEnum.CHAMBER && this.filter.senate) {
             this.filter.chamber = !this.filter.chamber;
         }
-        this.filterStorageService.setUserFilters(this.filter)
+        this.filterStorageService.setUserFilters(this.filter);
     }
 
     changeBestWorst(): void {
         this.filter.fromBestToWorse = !this.filter.fromBestToWorse;
-        this.filterStorageService.setUserFilters(this.filter)
+        this.filterStorageService.setUserFilters(this.filter);
     }
 
     onChangeSearchText(): void {
-        this.filterStorageService.setUserFilters(this.filter)
-
+        this.filterStorageService.setUserFilters(this.filter);
     }
 
     clearSearchText(): void {
-        this.filter.searchText = ''
+        this.filter.searchText = '';
         this.onChangeSearchText();
     }
 }

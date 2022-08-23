@@ -1,15 +1,12 @@
 import {Injectable} from '@angular/core';
-import {HttpParams} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
-import {Desperdicio, ParliamentarianListResponse, ParliamentarianSingleResponse} from './ParlamentarianResponseDtos';
-import {PoliticosClient} from './politicos.client';
+import {Expenditure, ParliamentarianSingleResponse} from './ParlamentarianResponseDtos';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PoliticosMapper {
 
-    toDesperdicio(parliamentarianSingleResponse: ParliamentarianSingleResponse): Desperdicio {
+    toExpenditure(parliamentarianSingleResponse: ParliamentarianSingleResponse): Expenditure {
         const parliamentarianRanking = parliamentarianSingleResponse.data.parliamentarianRanking;
         const parliamentarian = parliamentarianSingleResponse.data.parliamentarianRanking.parliamentarian;
         const staffs = parliamentarian.staffs;
@@ -17,29 +14,31 @@ export class PoliticosMapper {
         const staffQuota = parliamentarianSingleResponse.data.staffQuota;
         const quotas = parliamentarian.quotas;
 
-        const desperdicio = new Desperdicio();
+        const expenditure = new Expenditure();
 
-        desperdicio.nome = parliamentarian.nickname;
-        desperdicio.pontos = parliamentarianRanking.scoreWastage;
+        expenditure.nome = parliamentarian.nickname;
+        expenditure.pontos = parliamentarianRanking.scoreWastage;
 
-        desperdicio.cotaParlamentarTotal = parliamentarianRanking.parliamentarianQuotaMaxYear;
-        desperdicio.contaParlamentarGastou = parliamentarianRanking.parliamentarian.quotaAmountSum;
-        desperdicio.cotaParlamentarEconomizou = (desperdicio.cotaParlamentarTotal - desperdicio.contaParlamentarGastou);
-        desperdicio.cotaGabineteTotal = parliamentarianRanking.parliamentarianStaffMaxYear;
-        desperdicio.cotaGabineteGastou = parliamentarianRanking.parliamentarianStaffAmountUsed;
-        desperdicio.cotaGabineteEconomizou = (desperdicio.cotaGabineteTotal - desperdicio.cotaGabineteGastou);
-        desperdicio.cotaTotal = parliamentarianRanking.parliamentarianQuotaTotal;
-        desperdicio.cotaTotalGastou = (desperdicio.contaParlamentarGastou + desperdicio.cotaGabineteGastou);
-        desperdicio.cotaTotalEconomizou = Math.round((desperdicio.cotaTotal - desperdicio.cotaTotalGastou) * 100) / 100;
-        desperdicio.gastos = quotas.map(quota => ({
+        expenditure.cotaParlamentarTotal = parliamentarianRanking.parliamentarianQuotaMaxYear;
+        expenditure.contaParlamentarGastou = parliamentarianRanking.parliamentarian.quotaAmountSum;
+        expenditure.cotaParlamentarEconomizou = (expenditure.cotaParlamentarTotal - expenditure.contaParlamentarGastou);
+        expenditure.cotaGabineteTotal = parliamentarianRanking.parliamentarianStaffMaxYear;
+        expenditure.cotaGabineteGastou = parliamentarianRanking.parliamentarianStaffAmountUsed;
+        expenditure.cotaGabineteEconomizou = (expenditure.cotaGabineteTotal - expenditure.cotaGabineteGastou);
+        expenditure.cotaTotal = parliamentarianRanking.parliamentarianQuotaTotal;
+        expenditure.cotaTotalGastou = (expenditure.contaParlamentarGastou + expenditure.cotaGabineteGastou);
+        expenditure.cotaTotalEconomizou = Math.round((expenditure.cotaTotal - expenditure.cotaTotalGastou) * 100) / 100;
+        expenditure.expenses = quotas.map(quota => ({
             tipo: quota.type,
             valor: quota.amount,
             data: quota.date
         }));
-        desperdicio.acessoresQuantidade = staffs?.[0]?.count;
-        desperdicio.acessoresGastoTotal = staffs?.[0]?.amount;
-        desperdicio.acessoresGastoMedio = (desperdicio.acessoresGastoTotal / desperdicio.acessoresQuantidade);
+        expenditure.acessoresQuantidade = staffs?.[0]?.count;
+        expenditure.acessoresGastoTotal = staffs?.[0]?.amount;
+        expenditure.acessoresGastoMedio = (expenditure.acessoresGastoTotal / expenditure.acessoresQuantidade);
+        expenditure.stateQuota = stateQuota;
+        expenditure.staffQuota = staffQuota;
 
-        return desperdicio;
+        return expenditure;
     }
 }

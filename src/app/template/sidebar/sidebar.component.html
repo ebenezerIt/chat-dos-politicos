@@ -31,8 +31,7 @@
             <div fxLayout="column" style="color: #137f36">
                 <select style="border: 2px solid #137f36; padding: 3px; border-radius: 20px; color: #137f36 "
                         [(ngModel)]="filter.state">
-                    <option value="">Por Estados</option>
-                    <option value="">Todos</option>
+                    <option value="">Todos Estados</option>
                     <ng-container *ngFor="let option of states">
                         <option [value]="option.sigla">{{option.sigla}}</option>
                     </ng-container>

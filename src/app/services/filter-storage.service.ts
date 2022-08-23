@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { StorageEnum } from '../enums/storage-enum';
-
-
+import { StorageEnum } from '../constants/storage-enum';
 
 export interface Filter {
-    fromBestToWorse: boolean,
-    chamber: boolean,
-    senate: boolean,
-    state: string,
-    searchText: string
+    fromBestToWorse: boolean;
+    chamber: boolean;
+    senate: boolean;
+    state: string;
+    searchText: string;
 }
 
 @Injectable({
@@ -24,23 +22,23 @@ export class FilterStorageService {
       chamber:  true,
       senate: true,
       state: '',
-      searchText: 'gle'
-  }
+      searchText: ''
+  };
 
   get userFilters(): Filter  {
     let filter =  JSON.parse(localStorage.getItem(StorageEnum.FILTER));
 
     if (!filter) {
-      localStorage.setItem(StorageEnum.FILTER, JSON.stringify(FilterStorageService.INITIAL_STORAGE))
-      filter = FilterStorageService.INITIAL_STORAGE
+      localStorage.setItem(StorageEnum.FILTER, JSON.stringify(FilterStorageService.INITIAL_STORAGE));
+      filter = FilterStorageService.INITIAL_STORAGE;
     }
 
-    return filter
-  };
+    return filter;
+  }
 
 
   setUserFilters(filter: Filter): void {
-    localStorage.setItem(StorageEnum.FILTER, JSON.stringify(filter))
+    localStorage.setItem(StorageEnum.FILTER, JSON.stringify(filter));
   }
 
 }

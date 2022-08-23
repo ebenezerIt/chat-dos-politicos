@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, } from '@angular/core';
+import { Component, EventEmitter, Output, } from '@angular/core';
 import { PoliticosService } from '../../politicos/politicos.service';
 import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianResponseDtos';
 import { SwitchFilterEnum } from '../../constants/switch-filter-enum';
@@ -22,7 +22,7 @@ type FilterFunction = {
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
     @Output() conversationClicked: EventEmitter<any> = new EventEmitter();
     conversations: ParliamentarianDataResponse[];
     listSize = 20;
@@ -55,9 +55,6 @@ export class SidebarComponent implements OnInit {
         });
 
         this.filter = this.filterStorageService.userFilters;
-    }
-
-    ngOnInit(): void {
     }
 
     get filteredConversations(): ParliamentarianDataResponse[] {

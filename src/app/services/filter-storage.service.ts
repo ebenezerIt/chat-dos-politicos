@@ -17,8 +17,6 @@ export interface Filter {
 
 export class FilterStorageService {
 
-  constructor() { }
-
   public static INITIAL_STORAGE: Filter = {
       fromBestToWorse: true,
       chamber:  true,
@@ -31,16 +29,16 @@ export class FilterStorageService {
     let filter =  JSON.parse(localStorage.getItem(StorageEnum.FILTER));
 
     if (!filter) {
-      localStorage.setItem(StorageEnum.FILTER, JSON.stringify(FilterStorageService.INITIAL_STORAGE))
-      filter = FilterStorageService.INITIAL_STORAGE
+      localStorage.setItem(StorageEnum.FILTER, JSON.stringify(FilterStorageService.INITIAL_STORAGE));
+      filter = FilterStorageService.INITIAL_STORAGE;
     }
 
-    return filter
-  };
+    return filter;
+  }
 
 
   setUserFilters(filter: Filter): void {
-    localStorage.setItem(StorageEnum.FILTER, JSON.stringify(filter))
+    localStorage.setItem(StorageEnum.FILTER, JSON.stringify(filter));
   }
 
 }

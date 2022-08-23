@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DialogComponent } from '../../../components/dialog-component/dialog-component.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LawVote, ParliamentarianDataResponse } from '../../../politicos/ParlamentarianResponseDtos';
@@ -13,7 +13,7 @@ import { RouteEnum } from '../../../constants/route-enum';
   templateUrl: './votes.component.html',
   styleUrls: ['./votes.component.scss']
 })
-export class VotesComponent implements OnInit {
+export class VotesComponent {
   conversation: ParliamentarianDataResponse;
 
   constructor(public dialog: MatDialog,
@@ -25,9 +25,6 @@ export class VotesComponent implements OnInit {
 
     store.dispatch(setSelectedRoute({route: RouteEnum.VOTES}));
 
-  }
-
-  ngOnInit(): void {
   }
 
   openDialog(law: any): void {

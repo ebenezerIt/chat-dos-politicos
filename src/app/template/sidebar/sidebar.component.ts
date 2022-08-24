@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, } from '@angular/core';
+import { Component, EventEmitter, Output, } from '@angular/core';
 import { PoliticosService } from '../../politicos/politicos.service';
 import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianResponseDtos';
 import { SwitchFilterEnum } from '../../constants/switch-filter-enum';
@@ -8,10 +8,11 @@ import { parliamentariansReducerInterface } from '../../stores/parliamentarians/
 import { setCurrentConversation } from '../../stores/parliamentarians/parliamentarians.actions';
 import { Router } from '@angular/router';
 import { RouteEnum } from '../../constants/route-enum';
+import { Filter, FilterStorageService } from '../../services/filter-storage.service';
 import { RoutesReducerInterface } from '../../stores/routes/route.reducer';
 import { ESTADOS } from '../../constants/estados-constant';
 
-type Filter = {
+type FilterFunction = {
     (data: ParliamentarianDataResponse[]): ParliamentarianDataResponse[]
 };
 
@@ -21,9 +22,8 @@ type Filter = {
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
     @Output() conversationClicked: EventEmitter<any> = new EventEmitter();
-    searchText: string;
     conversations: ParliamentarianDataResponse[];
     listSize = 20;
     RadioFilterEnum = RadioFilterEnum;
@@ -32,10 +32,11 @@ export class SidebarComponent implements OnInit {
     selectedRadioSenateEnum = true;
     fromBestToWorst = true;
     selectedState = '';
+    filter: Filter
     selectedRoute: RouteEnum;
     states = ESTADOS;
 
-    filters: Filter[] = [
+    filterFunctions: FilterFunction[] = [
         this.filterByState(),
         this.filterByPosition(),
         this.filterBySearchText(),
@@ -43,7 +44,8 @@ export class SidebarComponent implements OnInit {
 
     constructor(private politicosService: PoliticosService,
                 private router: Router,
-                private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: RoutesReducerInterface }>) {
+                private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: RoutesReducerInterface }>,
+                private filterStorageService: FilterStorageService) {
 
         store.select('parliamentarians').subscribe(parliamentarians => {
             this.conversations = parliamentarians.list;
@@ -51,82 +53,69 @@ export class SidebarComponent implements OnInit {
         store.select('route').subscribe(route => {
             this.selectedRoute = route.selectedRoute;
         });
-    }
 
-    ngOnInit(): void {
+        this.filter = this.filterStorageService.userFilters;
     }
 
     get filteredConversations(): ParliamentarianDataResponse[] {
         let list = [...this.conversations];
 
-        if (!this.fromBestToWorst) {
-            list.reverse();
-        }
+        if (!this.filter.fromBestToWorse) list.reverse();
 
-        this.filters.forEach((filter: Filter) => {
+        this.filterFunctions.forEach((filter: FilterFunction) => {
             list = filter(list);
         });
 
         return list;
     }
 
-    filterBySearchText(): Filter {
+    filterBySearchText(): FilterFunction {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
 
-            if (!this.searchText) {
-                return list?.slice(0, this.listSize);
-            }
+            if (!this.filter.searchText) return list?.slice(0, this.listSize);
 
             return list.filter((data) => {
                 return (
                     data.parliamentarian.name
                         .toLowerCase()
-                        .includes(this.searchText.toLowerCase()) ||
+                        .includes(this.filter.searchText.toLowerCase()) ||
                     data.parliamentarian.nickname
                         .toLowerCase()
-                        .includes(this.searchText.toLowerCase())
+                        .includes(this.filter.searchText.toLowerCase())
                 );
             });
         };
     }
 
-    filterByPosition(): Filter {
+    filterByPosition(): FilterFunction {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
 
-            if (this.selectedRadioChamberEnum && this.selectedRadioSenateEnum) {
-                return list;
-            }
+            if (this.filter.chamber && this.filter.senate) return list;
 
-            if (this.selectedRadioChamberEnum) {
-                return list.filter(data => {
-                    return data.parliamentarian.position === 'Deputado Federal';
-                });
-            }
+            if (this.filter.chamber) return list.filter(data => {
+                return data.parliamentarian.position === 'Deputado Federal';
+            });
 
-            if (this.selectedRadioSenateEnum) {
-                return list.filter(data => {
-                    return data.parliamentarian.position === 'Senador';
-                });
-            }
+            if (this.filter.senate) return list.filter(data => {
+                return data.parliamentarian.position === 'Senador';
+            });
 
             return list;
-        };
+        }
     }
 
-    filterByState(): Filter {
+    filterByState(): FilterFunction {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
 
-            if (!this.selectedState) {
-                return list;
-            }
+            if (!this.filter.state) return list;
 
             return list.filter(data => {
-                return data.parliamentarian.state.prefix === this.selectedState;
+                return data.parliamentarian.state.prefix === this.filter.state;
             });
-        };
+        }
     }
 
     handleConversationClicked(conversation: ParliamentarianDataResponse): void {
@@ -150,16 +139,33 @@ export class SidebarComponent implements OnInit {
     }
 
     selectRadioFilter(radioFilterEnum: RadioFilterEnum): void {
-        if (radioFilterEnum === RadioFilterEnum.SENATE && this.selectedRadioChamberEnum) {
-            this.selectedRadioSenateEnum = !this.selectedRadioSenateEnum;
+        if (radioFilterEnum === RadioFilterEnum.SENATE && this.filter.chamber) {
+            this.filter.senate = !this.filter.senate;
         }
 
-        if (radioFilterEnum === RadioFilterEnum.CHAMBER && this.selectedRadioSenateEnum) {
-            this.selectedRadioChamberEnum = !this.selectedRadioChamberEnum;
+        if (radioFilterEnum === RadioFilterEnum.CHAMBER && this.filter.senate) {
+            this.filter.chamber = !this.filter.chamber;
         }
+        this.filterStorageService.setUserFilters(this.filter);
     }
 
     changeBestWorst(): void {
-        this.fromBestToWorst = !this.fromBestToWorst;
+        this.filter.fromBestToWorse = !this.filter.fromBestToWorse;
+        this.filterStorageService.setUserFilters(this.filter);
+    }
+
+    onChangeSearchText(): void {
+        this.filterStorageService.setUserFilters(this.filter);
+
+    }
+
+    onChangeState(): void {
+        this.filterStorageService.setUserFilters(this.filter);
+
+    }
+
+    clearSearchText(): void {
+        this.filter.searchText = '';
+        this.onChangeSearchText();
     }
 }

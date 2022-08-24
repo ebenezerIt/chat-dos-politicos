@@ -49,10 +49,19 @@
       border-bottom: 1px solid #e1e4e5;
       display: flex;
       align-items: center;
+      position: relative;
 
-      img {
+      .icon {
         position: absolute;
+      }
+
+      .search {
         left: 30px;
+      }
+
+      .close {
+        right: 30px;
+        cursor: pointer;
       }
 
       input {
@@ -283,6 +292,7 @@
     .selected {
       background-color: #137f36;
     }
+
     .selected::before {
       position: absolute;
       right: 18px;

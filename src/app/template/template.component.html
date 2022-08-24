@@ -8,9 +8,7 @@
                     (conversationClicked)="onConversationSelected()"
             ></app-sidebar>
             <div id="chat-web" class="chat">
-                <div class="chatPlaceholder" *ngIf="!conversation">
-                    Chat dos Políticos
-                </div>
+                <app-intro *ngIf="!conversation"></app-intro>
 
                 <app-chat (onClickBack)="onClickBack()" *ngIf="conversation"></app-chat>
             </div>
@@ -18,15 +16,15 @@
     </ng-container>
     <ng-template #mobile>
         <div>
-            <app-sidebar *ngIf="!showChat"
+            <app-sidebar *ngIf="!showChat && !welcomeIntro"
                          (conversationClicked)="onConversationSelected()"
             ></app-sidebar>
+            <div class="chatPlaceholder" *ngIf="!conversation && welcomeIntro">
+                <app-intro></app-intro>
+            </div>
             <div id="chat-mobile" *ngIf="showChat" class="chat">
-                <div class="chatPlaceholder" *ngIf="!conversation">
-                    Chat dos Políticos
-                </div>
 
-                <app-chat (onClickBack)="onClickBack()" *ngIf="conversation"></app-chat>
+                <app-chat (onClickBack)="onClickBack()" *ngIf="conversation && !welcomeIntro"></app-chat>
             </div>
         </div>
     </ng-template>

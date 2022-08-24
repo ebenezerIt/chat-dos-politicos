@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from '../stores/parliamentarians/parliamentarians.reducer';
 import { Subscription } from 'rxjs';
 import { setCurrentConversation } from '../stores/parliamentarians/parliamentarians.actions';
+import { StorageEnum } from '../enums/storage-enum';
 import { RouteEnum } from '../constants/route-enum';
 
 @Component({
@@ -17,6 +18,7 @@ export class TemplateComponent implements OnInit {
     showChat = false;
     paramsSubscription: Subscription;
     openChat = true;
+    welcomeIntro = true
     RouteEnum = RouteEnum;
     public currentWindowWidth: number;
 
@@ -27,6 +29,8 @@ export class TemplateComponent implements OnInit {
         store.select('parliamentarians').subscribe(parliamentarians => {
             this.conversation = parliamentarians.currentConversation;
         });
+
+        if (JSON.parse(localStorage.getItem(StorageEnum.WELCOME_INTRO))) this.welcomeIntro = false
     }
 
     ngOnInit(): void {

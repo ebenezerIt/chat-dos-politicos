@@ -102,7 +102,7 @@ export const ESTADOS: readonly Estado[] = [
         nome: 'Sergipe'
     },
     {
-        sigla: 'P',
+        sigla: 'SP',
         nome: 'São Paulo'
     },
     {

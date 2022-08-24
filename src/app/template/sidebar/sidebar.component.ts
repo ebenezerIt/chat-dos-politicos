@@ -92,13 +92,13 @@ export class SidebarComponent {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
 
-            if (this.filter.chamber && this.filter.state) return list;
+            if (this.filter.chamber && this.filter.senate) return list;
 
             if (this.filter.chamber) return list.filter(data => {
                 return data.parliamentarian.position === 'Deputado Federal';
             });
 
-            if (this.filter.state) return list.filter(data => {
+            if (this.filter.senate) return list.filter(data => {
                 return data.parliamentarian.position === 'Senador';
             });
 

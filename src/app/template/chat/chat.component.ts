@@ -5,6 +5,9 @@ import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from '../../stores/parliamentarians.reducer';
 import { RouteEnum } from '../../enums/route-enum';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogContatosComponent } from 'src/app/dialog-contatos/dialog-contatos.component';
+
 
 @Component({
   selector: 'app-chat',
@@ -19,9 +22,11 @@ export class ChatComponent implements OnInit {
   message = '';
   paramsSubscription: Subscription;
   RouteEnum = RouteEnum
+  dialogRef: any;
 
   constructor(private store: Store<{ parliamentarians: parliamentariansReducerInterface }>,
-              private router: Router) {
+              private router: Router,
+              public dialog: MatDialog) {
 
     store.select('parliamentarians').subscribe(parliamentarians => {
       this.conversation = parliamentarians.currentConversation
@@ -57,4 +62,25 @@ export class ChatComponent implements OnInit {
   selectSwitchChat(routeEnum: RouteEnum): void {
     this.router.navigate([`/${routeEnum}`], {queryParamsHandling: "preserve"})
   }
+
+  openDialog2(){
+    let message = this.dialog.open(DialogContatosComponent, {
+      width: '200px',
+      data: {
+        nickname: this.conversation.parliamentarianRanking.parliamentarian.nickname,
+        phone: this.conversation.parliamentarianRanking.parliamentarian.phone,
+        email: this.conversation.parliamentarianRanking.parliamentarian.email,
+        facebook: this.conversation.parliamentarianRanking.parliamentarian.facebook,
+        instagram: this.conversation.parliamentarianRanking.parliamentarian.instagram,
+        twitter: this.conversation.parliamentarianRanking.parliamentarian.twitter,
+        youtube: this.conversation.parliamentarianRanking.parliamentarian.youtube,
+      
+      }
+
+    })};
+    
+    cancel(): void {
+      this.dialogRef.close();
+    }
+  
 }

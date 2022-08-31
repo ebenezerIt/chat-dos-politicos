@@ -158,6 +158,7 @@ export class Parliamentarian {
 }
 
 export interface ParliamentarianRanking {
+  law: any;
   id: number;
   parliamentarianId: number;
   parliamentarian: Parliamentarian;

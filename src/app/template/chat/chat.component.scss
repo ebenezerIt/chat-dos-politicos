@@ -21,6 +21,12 @@
       gap: 10px;
       padding-left: 10px;
 
+      .mat-button {
+        width: 70%;
+        min-width: "150";
+        min-height: "25";
+      }
+
       .picture {
         min-width: 40px;
         margin: 0 10px;
@@ -58,13 +64,14 @@
       }
 
       h2 {
-        margin: 0px;
+        margin: -12px;
         padding: 0px;
         color: rgb(255, 255, 255);
         border-radius: 0px 0px 800px 800px;
         font-family: nunito;
         font-weight: 700;
         font-size: 12px;
+        position: relative;
       }
       .nameSection {
         flex-grow: 1;

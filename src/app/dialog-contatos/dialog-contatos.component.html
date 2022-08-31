@@ -1,0 +1,55 @@
+<h1 mat-dialog-title class="title">Dados </h1>
+<div mat-dialog-content class="contatos">
+  <div class="DadosContainer">
+      <mat-icon class="icon">person</mat-icon> 
+      <h2 class="content"> Nome Civil: </h2> 
+      <h3 class="namePolitico"> {{ data.nickname }} </h3>
+  </div>
+  <div class="DadosContainer" *ngIf="data.phone;">
+    <mat-icon class="icon"> call</mat-icon>
+    <h3 class="content"> Telefone: </h3>  
+    <a href="tel:{{ data.phone }}">
+      <p class="name">(99) {{ data.phone }} </p>
+    </a>
+  </div>
+  <div class="DadosContainer" *ngIf="data.email;">
+    <mat-icon class="icon"> email</mat-icon>
+    <h3 class="content"> E-mail: </h3> 
+    <a href="mailto:{{ data.email }}">
+      <p class="name"> {{ data.email }} </p>
+    </a>
+  </div>
+  <div class="DadosContainer" *ngIf="data.facebook;">
+    <div class="icon">
+      <img src="../../assets/images/facebook.svg">
+    </div>
+      <h3 class="content"> Facebook: </h3>
+      <a href="{{ data.facebook }}" target="_blank">
+        <p class="name"> {{ data.facebook }} </p>
+      </a>
+  </div>
+  <div class="DadosContainer" *ngIf="data.instagram;">
+    <img src="../../assets/images/instagram.svg" />
+    <h3 class="content">Instagram: </h3>
+    <a href="{{ data.instagram }}">
+      <p class="name"> {{ data.instagram }} </p>
+    </a>
+  </div>
+  <div class="DadosContainer" *ngIf="data.twitter;">
+    <img src="../../assets/images/twitter.svg" />
+    <h3 class="content">Twitter:</h3>
+    <a href="{{ data.twitter }}" target="_blank">
+      <p class="name">{{ data.twitter }}</p>
+    </a>
+  </div>
+  <div class="DadosContainer" *ngIf="data.youtube;">
+    <img src="../../assets/images/youtube.svg" />
+    <h3 class="content">Youtube:</h3>
+    <a href="{{ data.youtube }}" target="_blank">
+      <p class="name"> {{ data.youtube }} </p>
+    </a>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="cancel()">Fechar</button>
+</div>

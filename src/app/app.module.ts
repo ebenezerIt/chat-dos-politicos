@@ -10,16 +10,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { LOCALE_ID } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
+import { DialogContatosComponent } from './dialog-contatos/dialog-contatos.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
+
 registerLocaleData(localePt)
 
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, DialogContatosComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         AppRoutingModule,
+        MatDialogModule,
+        MatIconModule,
         StoreModule.forRoot({parliamentarians: parliamentariansReducer})
     ],
     providers: [{

@@ -7,14 +7,15 @@
             <img src="../../../assets/images/chevron-back.svg" />
           </picture>
       </div>
-      <div class="picture">
-        <img src="{{ conversation?.parliamentarianRanking.parliamentarian.photo }}" />
-
-        <div class="score">
-          <h2>{{conversation?.parliamentarianRanking.scoreRanking}}º</h2>
+      <button mat-button (click)="openDialog2()">
+        <div class="picture">
+          <img src="{{ conversation?.parliamentarianRanking.parliamentarian.photo }}" />
+          <div class="score">
+            <h2>{{conversation?.parliamentarianRanking.scoreRanking}}º</h2>
+          </div>
         </div>
-      </div>
-
+      </button>
+    
       <div class="nameSection">{{ conversation?.parliamentarianRanking.parliamentarian.nickname }}</div>
     </div>
 

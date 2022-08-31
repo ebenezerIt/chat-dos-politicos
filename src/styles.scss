@@ -18,22 +18,29 @@ mat-dialog-container {
   left: 10%;
   height: unset !important;
   min-height: min-content !important;
-  width: 80vw !important;
+  width: 50vw !important;
   margin: auto !important;
   background-color: white;
   z-index: 100000;
   overflow: hidden !important;
   border: 1px solid green;
 
+
   mat-dialog-content {
-  overflow-x: hidden !important;
+    overflow-x: hidden !important;
     padding: 10px !important;
-    max-height: 40vh !important;
+    max-height: 50vh !important;
   }
+
 
   .mat-dialog-actions {
     justify-content: flex-end;
   }
+
+}
+
+.svg {
+  color: rgb(19, 127, 54);
 }
 
 

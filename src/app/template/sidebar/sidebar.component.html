@@ -1,14 +1,13 @@
 <div class="sidebar">
-    <div class="row1">
+    <div fxLayout="column">
 
         <div class="sidebarHeader">
-            <div class="avatarContainer">
-                <img src="../../../assets/images/noPic.svg"/>
-            </div>
+            <app-story-component></app-story-component>
         </div>
         <div class="searchBox">
-            <img class="search icon" width="19" src="../../../assets/images/searchIcon.svg"/>
-            <img *ngIf="filter.searchText" (click)="clearSearchText()" class="close icon" width="19" src="../../../assets/images/closeIcon.svg"/>
+            <img class="search icon" width="19" alt="search" src="../../../assets/images/searchIcon.svg"/>
+            <img *ngIf="filter.searchText" (click)="clearSearchText()" class="close icon" width="19"
+                 alt="close" src="../../../assets/images/closeIcon.svg"/>
             <input
                     [(ngModel)]="filter.searchText"
                     type="text"
@@ -42,13 +41,13 @@
 
                     <ng-container *ngIf="filter.fromBestToWorse else fromWorst">
                      <span style="color: green">
-                    Do <b>MELHOR</b> Para Pior ⬇
+                    Do <strong>MELHOR</strong> Para Pior ⬇
                     </span>
                     </ng-container>
 
                     <ng-template #fromWorst>
                     <span style="color: #d10202">
-                        Do <b>PIOR</b> Para Melhor ⬆
+                        Do <strong>PIOR</strong> Para Melhor ⬆
                     </span>
                     </ng-template>
 
@@ -86,7 +85,7 @@
              (click)="handleConversationClicked(conversation)"
         >
             <div class="picture">
-                <img src="{{conversation.parliamentarian.photo}}"/>
+                <img alt="photo" src="{{conversation.parliamentarian.photo}}"/>
                 <div class="score"
                      [ngClass]="{'good': conversation.scoreRanking <= 150, 'regular': conversation.scoreRanking > 150 && conversation.scoreRanking <= 350, 'bad': conversation.scoreRanking > 350 }">
                     <h2>{{conversation.scoreRanking}}º</h2>
@@ -98,13 +97,13 @@
                     <div class="time">{{conversation.scoreTotal}}</div>
                 </div>
                 <div class="message">
-                    <img
-                            *ngIf="!conversation.parliamentarian.latestMessageRead"
-                            src="../../../assets/images/doubleTick.svg"
+                    <img alt="unread"
+                         *ngIf="!conversation.parliamentarian.latestMessageRead"
+                         src="../../../assets/images/doubleTick.svg"
                     />
-                    <img
-                            *ngIf="conversation.parliamentarian.latestMessageRead"
-                            src="../../../assets/images/doubleTickBlue.svg"
+                    <img alt="read"
+                         *ngIf="conversation.parliamentarian.latestMessageRead"
+                         src="../../../assets/images/doubleTickBlue.svg"
                     />
                     <span *ngIf="conversation.parliamentarian.latestLawStatusId === 1"
                           style="font-weight: bold;color: green">SIM</span>

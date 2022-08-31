@@ -17,6 +17,9 @@ import { ChatComponent } from './chat/chat.component';
 import { TemplateRoutingModule } from './template-routing.module';
 import { IntroComponent } from '../components/intro/intro.component';
 import { FilterStorageService } from '../services/filter-storage.service';
+import { StoryComponent } from '../components/story-component/story-component.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [
@@ -27,7 +30,8 @@ import { FilterStorageService } from '../services/filter-storage.service';
         ExpenditureComponent,
         VotesComponent,
         LawsuitComponent,
-        IntroComponent
+        IntroComponent,
+        StoryComponent
     ],
     imports: [
         CommonModule,
@@ -38,6 +42,8 @@ import { FilterStorageService } from '../services/filter-storage.service';
         MatDialogModule,
         MatButtonModule,
         TemplateRoutingModule,
+        NgxSkeletonLoaderModule,
+        MatIconModule
     ],
     providers: [
         FilterStorageService

@@ -22,7 +22,7 @@ export class FilterStorageService {
       chamber:  true,
       senate: true,
       state: '',
-      searchText: 'gle'
+      searchText: ''
   }
 
   get userFilters(): Filter  {

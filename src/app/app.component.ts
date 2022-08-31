@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { PoliticosService } from './politicos/politicos.service';
 import {  ParliamentarianListResponse } from './politicos/ParlamentarianResponseDtos';
 import {  setList } from './stores/parliamentarians/parliamentarians.actions';
 import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from './stores/parliamentarians/parliamentarians.reducer';
+import { filter } from 'rxjs';
+
+declare let gtag: Function;
 
 @Component({
     selector: 'app-root',
@@ -29,6 +32,18 @@ export class AppComponent {
                 });
                 store.dispatch(setList({list: resp}))
             });
+        this.setUpAnalytics();
     }
 
+
+    setUpAnalytics() {
+        this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+            .subscribe((event: NavigationEnd) => {
+                gtag('config', 'G-H1W9SCH7FF',
+                    {
+                        page_path: event.urlAfterRedirects
+                    }
+                );
+            });
+    }
 }

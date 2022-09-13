@@ -74,20 +74,20 @@ export class PoliticosRepository {
         const shrink = new ParliamentarianListResponse();
         shrink.data = parliamentarian.data;
         shrink.request = new Date();
-        shrink.data = parliamentarian.data.map(it => this.shrinkParliamentariansData(it));
+        shrink.data = parliamentarian.data.map(it => PoliticosRepository.shrinkParliamentariansData(it));
         return shrink;
     }
 
-    private shrinkParliamentariansData(parliamentarianData: ParliamentarianDataResponse): ParliamentarianDataResponse {
+    private static shrinkParliamentariansData(parliamentarianData: ParliamentarianDataResponse): ParliamentarianDataResponse {
         const shrink = new ParliamentarianDataResponse();
         shrink.parliamentarianId = parliamentarianData.parliamentarianId;
         shrink.scoreRanking = parliamentarianData.scoreRanking;
         shrink.scoreTotal = parliamentarianData.scoreTotal;
-        shrink.parliamentarian = this.shrinkParliamentarian(parliamentarianData.parliamentarian);
+        shrink.parliamentarian = PoliticosRepository.shrinkParliamentarian(parliamentarianData.parliamentarian);
         return shrink;
     }
 
-    private                                 shrinkParliamentarian(parliamentarian: Parliamentarian): Parliamentarian {
+    private static shrinkParliamentarian(parliamentarian: Parliamentarian): Parliamentarian {
         const shrink = new Parliamentarian();
         shrink.id = parliamentarian.id;
         shrink.photo = parliamentarian.photo;
@@ -98,6 +98,7 @@ export class PoliticosRepository {
         shrink.latestMessageRead = parliamentarian.latestMessageRead;
         shrink.party = parliamentarian.party;
         shrink.state = parliamentarian.state;
+        shrink.isReelection = parliamentarian.isReelection;
         return shrink;
     }
 }

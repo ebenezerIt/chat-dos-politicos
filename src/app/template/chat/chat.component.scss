@@ -9,7 +9,7 @@
   .header {
     min-height: 67px;
     background-color: #eeeeee;
-    box-shadow: 2px 0px 4px #ccc;
+    box-shadow: 2px 0 4px #ccc;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -83,10 +83,10 @@
 
 
       h2 {
-        margin: 0px;
-        padding: 0px;
+        margin: 0;
+        padding: 0;
         color: rgb(255, 255, 255);
-        border-radius: 0px 0px 800px 800px;
+        border-radius: 0 0 800px 800px;
         font-family: nunito;
         font-weight: 700;
         font-size: 12px;
@@ -96,8 +96,20 @@
         color: #545454;
         display: flex;
         align-items: center;
-        padding-left: 10px;
         white-space: pre;
+      }
+      .chip {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        width: 95px;
+        font-size: 7px;
+        color: white;
+        padding: 4px 10px;
+        background-color: #ff5a00;
+        border-radius: 25px;
+        text-transform: uppercase;
       }
     }
 

@@ -93,7 +93,10 @@
             </div>
             <div class="content">
                 <div class="conversationHeader">
-                    <div class="name"> {{ conversation.parliamentarian.nickname }} </div>
+                    <div fxLayout="column">
+                        <div class="name"> {{ conversation.parliamentarian.nickname }} </div>
+                        <div *ngIf="conversation.parliamentarian.isReelection" class="chip">CANDIDATO A REELEIÇÃO</div>
+                    </div>
                     <div class="time">{{conversation.scoreTotal}}</div>
                 </div>
                 <div class="message">

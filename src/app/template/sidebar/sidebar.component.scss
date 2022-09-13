@@ -76,7 +76,6 @@
     padding: 5px;
 
     .conversation {
-      height: 67px;
       display: flex;
       padding-right: 5px;
       cursor: pointer;
@@ -165,10 +164,23 @@
 
           .name {
             color: #040404;
-            width: 250px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+          }
+
+
+          .chip {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 7px;
+            color: white;
+            padding: 4px 10px;
+            background-color: #ff5a00;
+            border-radius: 25px;
+            text-transform: uppercase;
           }
 
           .time {

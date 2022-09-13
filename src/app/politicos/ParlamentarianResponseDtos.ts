@@ -121,6 +121,7 @@ export class Parliamentarian {
   isPresident: boolean;
   cutHousingAllowance: boolean;
   cutRetirement: boolean;
+  isReelection: boolean;
   requestedFamilyPassport: boolean;
   totalPassportFamilyMembers: number;
   quotaAmountSum: number;

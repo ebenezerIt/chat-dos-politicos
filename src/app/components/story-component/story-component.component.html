@@ -1,7 +1,7 @@
 <div class="mb-2 hidden-scroll story-container w-100"
      fxLayout="row" fxLayoutAlign="start start"
      fxLayoutGap="7px">
-    <ng-container *ngIf="!loading">
+    <ng-container *ngIf="!loading else skeleton">
         <ng-container *ngFor="let story of stories; let index = index">
             <div fxLayout="column" fxLayoutAlign="center center">
                 <div class="story-style shadow-sm"
@@ -14,16 +14,18 @@
             </div>
         </ng-container>
     </ng-container>
-    <ngx-skeleton-loader [theme]=skeletonStory animation="true"></ngx-skeleton-loader>
-    <ngx-skeleton-loader [theme]=skeletonStory animation="true"></ngx-skeleton-loader>
-    <ngx-skeleton-loader [theme]=skeletonStory animation="true"></ngx-skeleton-loader>
-    <ngx-skeleton-loader [theme]=skeletonStory animation="true"></ngx-skeleton-loader>
-    <ngx-skeleton-loader [theme]=skeletonStory animation="true"></ngx-skeleton-loader>
-    <ngx-skeleton-loader [theme]=skeletonStory animation="true"></ngx-skeleton-loader>
+    <ng-template #skeleton>
+        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
+        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
+        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
+        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
+        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
+        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
+    </ng-template>
 </div>
 
 <div
-        style="position: fixed; top: 0; left: 0; height: 100vh; width: 100vw; background-color: black; z-index: 100;"
+        style="position: fixed; top: 0; left: 0; height: 100%; min-height: 100vh;   min-height: -webkit-fill-available;  width: 100vw; background-color: black; z-index: 100;"
         *ngIf="showStory" fxLayoutAlign="center center">
     <div class="story-mode" ngClass.gt-sm="dsk-mode" ngClass.lt-md="mbl-mode">
         <div style="z-index: 200; width: 100%; margin: 0 5px; position: absolute; top: 5px;">
@@ -85,15 +87,18 @@
                     <!--                     [ngClass]="{'animation': index === positionSelectedStory}"-->
 
 
-                    <div style="height: 100%; width: 100%; padding: 25px 30px 100px 10px; color: white; text-align: left"
-                         fxLayoutAlign="start end">
-                        <div style="padding: 15px 10px; background-color: rgba(4, 4, 4, 0.7); border-radius: 12px"
-                             fxLayout="column">
-                            <h3>{{selectedStory.stories[positionSelectedStory].title}}</h3>
-                            <span>
+                    <ng-container
+                            *ngIf="selectedStory.stories[positionSelectedStory].title || selectedStory.stories[positionSelectedStory].description">
+                        <div style="height: 100%; width: 100vw; color: white;   text-shadow: 1px 1px black; line-height: 200%; text-align: center; white-space: pre-line;"
+                             fxLayoutAlign="start end">
+                            <div style="padding: 100px 10px 70px; width: 100%;background: rgb(0,0,0, 1);background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.7) 35%,  rgba(0,0,0,0.5) 60%,  rgba(0,0,0,0.2) 90%, rgba(0,0,0,0) 100%);"
+                                 fxLayout="column">
+                                <h3>{{selectedStory.stories[positionSelectedStory].title}}</h3>
+                                <span>
                             {{selectedStory.stories[positionSelectedStory].description}}</span>
+                            </div>
                         </div>
-                    </div>
+                    </ng-container>
 
                 </div>
             </ng-container>

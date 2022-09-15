@@ -13,48 +13,37 @@ export class StoryComponent implements OnInit, AfterViewInit {
         },
         stories: [
             {
-                title: 'Quem Somos',
-                description: 'O Chat é baseado em um sistema de Pontuação criado pelo Ranking dos Políticos, A pontuação dos políticos é definida de acordo com sua atuação no combate à corrupção, aos privilégios e ao desperdício da máquina pública. Para apurar isso, são avaliados os dados sobre presenças nas sessões, economia de verbas, processos judiciais e votações dos parlamentares nas decisões mais importantes do Congresso, saiba mais.',
-                img: 'assets/images/story.png'
+                title: 'Quem São? \n O Que Andam fazendo?',
+                description: '',
+                img: 'assets/images/1.png'
             },
             {
-                title: 'Titulo',
-                description: 'Descrição',
-                img: 'assets/images/story.png'
+                title: 'No que votam? \n Quanto gastam do teu dinheiro?',
+                description: '',
+                img: 'assets/images/2.png'
             },
             {
-                title: 'Titulo',
-                description: 'Descrição',
-                img: 'assets/images/story.png'
+                title: 'Como conseguir monitorar e fiscalizar isso de um jeito simples e fácil?',
+                description: '',
+                img: 'assets/images/3.png'
+            },
+            {
+                title: 'O chat dos políticos foi desenvolvido pra isso!',
+                description: '',
+                img: 'assets/images/4.png'
+            },
+            {
+                title: 'Com uma interface amigável, informa de maneira clara e simples o que eles estão fazendo',
+                description: '',
+                img: 'assets/images/5.png'
+            },
+            {
+                title: 'Com isso \n queremos trazer \n mais \n informação \n e \n engajamento \n para aquilo \n que \n dita o rumo \n da \n nossa nação',
+                description: '',
+                img: 'assets/images/6.png'
             },
         ]
     },
-        {
-            story: {
-                name: "Votos",
-                logo: 'assets/images/story.png'
-            },
-            stories: [{
-                title: 'Titulo vai aqui',
-                description: 'aqui tera uma descrição sobre o assunto',
-                img: 'assets/images/story.png'
-            },
-            ]
-        },
-        {
-            story: {
-               name: "Gastos",
-                logo: 'assets/images/story.png'
-            },
-            stories: [
-                {
-                    title: 'Quanto gasta um Senador',
-                    description: 'No Chat você tem acesso aos gastos gerais de cada membro da câmara federal',
-                    img: 'assets/images/story.png'
-                },
-
-            ]
-        },
     ]
 
     loading = true;
@@ -86,7 +75,7 @@ export class StoryComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         setTimeout(() => {
             this.loading = false;
-        }, 1000);
+        }, 2000);
     }
 
     ngAfterViewInit() {
@@ -166,10 +155,10 @@ export class StoryComponent implements OnInit, AfterViewInit {
 
     checkNextStoryContent = (): void => {
         const contentStoryLength = this.stories.length;
+        this.positionSelectedStory = 0;
         if (this.currentContentStoryIndex < (contentStoryLength - 1)) {
             this.currentContentStoryIndex++;
             this.selectedStory = this.stories[this.currentContentStoryIndex];
-            this.positionSelectedStory = 0;
         } else {
             this.showStory = false;
         }

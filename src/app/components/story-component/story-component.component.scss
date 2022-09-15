@@ -23,11 +23,15 @@
 }
 
 .mbl-mode {
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   width: 100vw;
 
   .container-mode {
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
     width: 100vw;
   }
 }

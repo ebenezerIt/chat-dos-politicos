@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar" ngClass.gt-sm="desktop-height" ngClass.lt-md="mobile-height">
     <div fxLayout="column">
 
         <div class="sidebarHeader">
@@ -69,7 +69,7 @@
     </div>
 
 
-    <div id="sidebarContent" ngClass.lt-md="mobile-height"
+    <div id="sidebarContent"
          infiniteScroll
          (scrolled)="onScroll()"
          (scrolledUp)="onScroll()"
@@ -78,44 +78,48 @@
          [scrollWindow]="false"
          fxLayout="column"
     >
-        <!-- <div id="noConversations">All chats are archived</div> -->
-
-        <div class="conversation"
-             *ngFor="let conversation of filteredConversations"
-             (click)="handleConversationClicked(conversation)"
-        >
-            <div class="picture">
-                <img alt="photo" src="{{conversation.parliamentarian.photo}}"/>
-                <div class="score"
-                     [ngClass]="{'good': conversation.scoreRanking <= 150, 'regular': conversation.scoreRanking > 150 && conversation.scoreRanking <= 350, 'bad': conversation.scoreRanking > 350 }">
-                    <h2>{{conversation.scoreRanking}}º</h2>
-                </div>
-            </div>
-            <div class="content">
-                <div class="conversationHeader">
-                    <div fxLayout="column">
-                        <div class="name"> {{ conversation.parliamentarian.nickname }} </div>
-                        <div *ngIf="conversation.parliamentarian.isReelection" class="chip">CANDIDATO A REELEIÇÃO</div>
+        <ng-container *ngIf="filteredConversations.length; else isLoading">
+            <div class="conversation"
+                 *ngFor="let conversation of filteredConversations"
+                 (click)="handleConversationClicked(conversation)"
+            >
+                <div class="picture">
+                    <img alt="photo" src="{{conversation.parliamentarian.photo}}"/>
+                    <div class="score"
+                         [ngClass]="{'good': conversation.scoreRanking <= 150, 'regular': conversation.scoreRanking > 150 && conversation.scoreRanking <= 350, 'bad': conversation.scoreRanking > 350 }">
+                        <h2>{{conversation.scoreRanking}}º</h2>
                     </div>
-                    <div class="time">{{conversation.scoreTotal}}</div>
                 </div>
-                <div class="message">
-                    <img alt="unread"
-                         *ngIf="!conversation.parliamentarian.latestMessageRead"
-                         src="../../../assets/images/doubleTick.svg"
-                    />
-                    <img alt="read"
-                         *ngIf="conversation.parliamentarian.latestMessageRead"
-                         src="../../../assets/images/doubleTickBlue.svg"
-                    />
-                    <span *ngIf="conversation.parliamentarian.latestLawStatusId === 1"
-                          style="font-weight: bold;color: green">SIM</span>
-                    <span *ngIf="conversation.parliamentarian.latestLawStatusId === 2"
-                          style="font-weight: bold;color: red">NÃO</span>
-                    {{ conversation.parliamentarian.position }} {{ conversation.parliamentarian.party.prefix }}
-                    - {{conversation.parliamentarian.state.prefix}}
+                <div class="content">
+                    <div class="conversationHeader">
+                        <div fxLayout="column">
+                            <div class="name"> {{ conversation.parliamentarian.nickname }} </div>
+                            <div *ngIf="conversation.parliamentarian.isReelection" class="chip">CANDIDATO A REELEIÇÃO
+                            </div>
+                        </div>
+                        <div class="time">{{conversation.scoreTotal}}</div>
+                    </div>
+                    <div class="message">
+                        <img alt="unread"
+                             *ngIf="!conversation.parliamentarian.latestMessageRead"
+                             src="../../../assets/images/doubleTick.svg"
+                        />
+                        <img alt="read"
+                             *ngIf="conversation.parliamentarian.latestMessageRead"
+                             src="../../../assets/images/doubleTickBlue.svg"
+                        />
+                        <span *ngIf="conversation.parliamentarian.latestLawStatusId === 1"
+                              style="font-weight: bold;color: green">SIM</span>
+                        <span *ngIf="conversation.parliamentarian.latestLawStatusId === 2"
+                              style="font-weight: bold;color: red">NÃO</span>
+                        {{ conversation.parliamentarian.position }} {{ conversation.parliamentarian.party.prefix }}
+                        - {{conversation.parliamentarian.state.prefix}}
+                    </div>
                 </div>
             </div>
-        </div>
+        </ng-container>
+        <ng-template #isLoading>
+            <app-skeleton-user-list></app-skeleton-user-list>
+        </ng-template>
     </div>
 </div>

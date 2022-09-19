@@ -119,13 +119,13 @@ export class SidebarComponent {
     }
 
     handleConversationClicked(conversation: ParliamentarianDataResponse): void {
+        this.conversationClicked.emit();
+        this.router.navigate([`/${this.selectedRoute}`],
+            {
+                queryParams: {id: conversation.parliamentarianId}
+            });
         this.politicosService.getParliamentarianVotesById(conversation.parliamentarianId)
             .subscribe((conversationResponse: ParliamentarianDataResponse) => {
-                this.conversationClicked.emit();
-                this.router.navigate([`/${this.selectedRoute}`],
-                    {
-                        queryParams: {id: conversationResponse.parliamentarianRanking.parliamentarianId}
-                    });
                 this.store.dispatch(setCurrentConversation({currentConversation: conversationResponse}));
             });
     }

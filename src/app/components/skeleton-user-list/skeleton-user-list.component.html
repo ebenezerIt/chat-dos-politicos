@@ -1,0 +1,35 @@
+<ng-container *ngFor="let index of index">
+
+    <div class="item pt-3 pb-5" fxLayout="column">
+
+        <div fxLayout="row" fxLayoutGap="15px">
+            <div class="shadow-sm user-img">
+
+            </div>
+            <div class="w-100 mb-4" fxLayout="row"
+                 fxLayoutAlign="start start"
+                 fxLayoutGap="15px"
+                 routerLink="/">
+                <ngx-skeleton-loader
+                        [theme]="{'border-radius': '50%', height: '50px', width: '50px' }"
+                >
+                </ngx-skeleton-loader>
+                <div fxLayout="column" fxLayoutGap="5px">
+                    <div fxLayout="row" fxLayoutGap="10px">
+                        <ngx-skeleton-loader
+                                [theme]="{'border-radius': '15px', height: '10px', width: '80px' }">
+                        </ngx-skeleton-loader>
+
+                        <ngx-skeleton-loader
+                                [theme]="{'border-radius': '15px', height: '10px', width: '50px' }">
+                        </ngx-skeleton-loader>
+                    </div>
+                    <ngx-skeleton-loader
+                            [theme]="{'border-radius': '15px', 'margin-top': '5px', height: '10px', width: '70px' }">
+                    </ngx-skeleton-loader>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-container>

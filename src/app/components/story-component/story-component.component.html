@@ -53,7 +53,7 @@
                 <mat-icon>play_arrow</mat-icon>
             </div>
             <ng-container style="color: white; font-size: 21px">
-                <div style="z-index: 200; position: absolute; top: 50%; width: 500px; cursor: pointer" fxLayout="row"
+                <div  fxHide.lt-lg style="z-index: 200; position: absolute; top: 50%; width: 500px; cursor: pointer" fxLayout="row"
                      fxLayoutAlign="space-between center">
                     <div (click)="previousStory()"
                          style="background-color: #979797; border-radius: 50%; width: 45px; height: 45px; margin-top: 7px; color: #040404; cursor: pointer"
@@ -102,9 +102,9 @@
 
                 </div>
             </ng-container>
-            <div style="position: fixed; left: 0; bottom: 0;  width: 50%; height: 85%;"
+            <div style="position: fixed; left: 0; bottom: 0;  width: 50%; height: 85%; z-index: 500"
                  (click)="previousStory()"></div>
-            <div style="position: fixed; right: 0; bottom:0;  width: 50%; height: 85%;"
+            <div style="position: fixed; right: 0; bottom:0;  width: 50%; height: 85%; z-index: 500"
                  (click)="nextStory()"></div>
         </div>
     </div>

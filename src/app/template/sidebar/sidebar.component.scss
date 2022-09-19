@@ -1,65 +1,60 @@
 .sidebar {
-  width: 100%;
-  height: 100%;
   border-right: 1px solid #e1e4e5;
   display: flex;
   flex-direction: column;
 
-    .sidebarHeader {
-      //flex-basis: 67px;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      //padding-left: 20px;
-      //padding-right: 20px;
-      justify-content: space-between;
-      overflow-x: scroll;
-      overflow-y: unset;
-      background-color: rgb(19, 127, 54);
+  .sidebarHeader {
+    //flex-basis: 67px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    //padding-left: 20px;
+    //padding-right: 20px;
+    justify-content: space-between;
+    overflow-x: scroll;
+    overflow-y: unset;
+    background-color: rgb(19, 127, 54);
+  }
 
 
+  .searchBox {
+    height: 50px;
+    padding: 0 20px;
+    background-color: #fbfbfb;
+    border-bottom: 1px solid #e1e4e5;
+    display: flex;
+    align-items: center;
+    position: relative;
 
+    .icon {
+      position: absolute;
     }
 
+    .search {
+      left: 30px;
+    }
 
-    .searchBox {
-      height: 50px;
-      padding: 0 20px;
-      background-color: #fbfbfb;
-      border-bottom: 1px solid #e1e4e5;
-      display: flex;
-      align-items: center;
-      position: relative;
+    .close {
+      right: 30px;
+      cursor: pointer;
+    }
 
-      .icon {
-        position: absolute;
-      }
+    input {
+      width: 100%;
+      border: none;
+      border-radius: 20px;
+      height: 70%;
+      padding-left: 40px;
+      color: #a4a4a4;
+      outline: none;
+      box-shadow: 0 0 3px #efefef;
 
-      .search {
-        left: 30px;
-      }
-
-      .close {
-        right: 30px;
-        cursor: pointer;
-      }
-
-      input {
-        width: 100%;
-        border: none;
-        border-radius: 20px;
-        height: 70%;
-        padding-left: 40px;
+      &::placeholder {
         color: #a4a4a4;
-        outline: none;
-        box-shadow: 0 0 3px #efefef;
-
-        &::placeholder {
-          color: #a4a4a4;
-          font-weight: 100;
-        }
+        font-weight: 100;
       }
+    }
   }
 
   #noConversations {
@@ -212,21 +207,25 @@
 }
 
 .mobile-height {
-  height: 77vh;
+  position: fixed; top: 0; left: 0; height: 100%; min-height: 100vh;   min-height: -webkit-fill-available;  width: 100vw;
+}
 
+.desktop-height {
+  height: 100%;
 }
 
 @media (max-width: 600px) {
 
   .sidebar .sidebarHeader {
     background-color: rgb(19, 127, 54);
-    padding-bottom: 5px ;
+    padding-bottom: 5px;
   }
   .sidebar .row1 .searchBox {
     background-color: rgb(19, 127, 54);
   }
 
 }
+
 @media (min-width: 601px) {
   .sidebarHeader::-webkit-scrollbar {
     background-color: rgb(19, 127, 54);

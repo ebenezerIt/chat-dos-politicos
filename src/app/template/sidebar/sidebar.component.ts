@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, } from '@angular/core';
+import { Component, EventEmitter, Input, Output, } from '@angular/core';
 import { PoliticosService } from '../../politicos/politicos.service';
 import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianResponseDtos';
 import { SwitchFilterEnum } from '../../constants/switch-filter-enum';
@@ -24,6 +24,7 @@ type FilterFunction = {
 })
 export class SidebarComponent {
     @Output() conversationClicked: EventEmitter<any> = new EventEmitter();
+    @Input() loading: boolean = false
     conversations: ParliamentarianDataResponse[];
     listSize = 20;
     RadioFilterEnum = RadioFilterEnum;

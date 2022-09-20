@@ -78,7 +78,7 @@
          [scrollWindow]="false"
          fxLayout="column"
     >
-        <ng-container *ngIf="filteredConversations.length; else isLoading">
+        <ng-container *ngIf="filteredConversations.length && !loading; else isLoading">
             <div class="conversation"
                  *ngFor="let conversation of filteredConversations"
                  (click)="handleConversationClicked(conversation)"

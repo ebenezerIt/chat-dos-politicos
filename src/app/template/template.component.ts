@@ -21,6 +21,7 @@ export class TemplateComponent implements OnInit {
     welcomeIntro = true
     RouteEnum = RouteEnum;
     public currentWindowWidth: number;
+    loading = false;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -38,10 +39,12 @@ export class TemplateComponent implements OnInit {
 
         this.paramsSubscription = this.route.queryParams.subscribe((params) => {
             if (params.id) {
+                this.loading = true;
                 this.politicosService.getParliamentarianVotesById(params.id).subscribe((conversation) => {
                     this.store.dispatch(setCurrentConversation({currentConversation: conversation}));
                     this.changeShowChat();
                     this.paramsSubscription.unsubscribe();
+                    this.loading = false
                 });
             }
         });

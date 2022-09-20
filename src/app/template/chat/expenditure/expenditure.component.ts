@@ -27,6 +27,7 @@ export class ExpenditureComponent {
             this.politicosService.getExpenditureById(this.conversation.parliamentarianRanking.parliamentarianId)
                 .subscribe((expenditure) => {
                     this.expenditure = expenditure;
+                    if (this.myChart) this.myChart.destroy();
                     this.loadChart();
                 });
         });

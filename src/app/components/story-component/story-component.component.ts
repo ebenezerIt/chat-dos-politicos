@@ -13,6 +13,9 @@ export class StoryComponent implements OnInit, AfterViewInit {
         },
         stories: [
             {
+                img: 'assets/images/9.png'
+            },
+            {
                 title: 'Quem são? \n O que andam fazendo?',
                 description: '',
                 img: 'assets/images/1.png'
@@ -27,7 +30,7 @@ export class StoryComponent implements OnInit, AfterViewInit {
                 img: 'assets/images/4.png'
             },
             {
-                title: 'Não existia uma maneira muito simples de encontrar essas respostas...',
+                title: 'Não existia uma maneira rápida, simples e fácil de encontrar essas respostas...',
                 description: '',
                 img: 'assets/images/5.png'
             },
@@ -35,7 +38,7 @@ export class StoryComponent implements OnInit, AfterViewInit {
                 img: 'assets/images/6.png'
             },
             {
-                title: 'Com uma interface amigável, informa de maneira clara e simples o que eles estão fazendo.',
+                title: 'Com uma interface amigável, informa de maneira clara e objetiva o que eles estão fazendo.',
                 description: '',
                 img: 'assets/images/7.png'
             },
@@ -43,9 +46,6 @@ export class StoryComponent implements OnInit, AfterViewInit {
                 title: 'Queremos trazer  mais  informação  e  engajamento  para aquilo  que  dita o rumo  da nossa nação.',
                 description: '',
                 img: 'assets/images/8.png'
-            },
-            {
-                img: 'assets/images/9.png'
             },
         ]
     },{
@@ -56,11 +56,6 @@ export class StoryComponent implements OnInit, AfterViewInit {
         stories: [
             {
                 img: 'assets/images/t1.png'
-            },
-            {
-                img: 'assets/images/t2.png',
-                title: 'Estamos desenvolvendo novas funcionalidades constantemente, ' +
-                    'você pode se tornar um apoiador, sugerir e ajudar a definir quais serão as próximas funcionalidades'
             },
             {
                 img: 'assets/images/t3.png'
@@ -80,6 +75,11 @@ export class StoryComponent implements OnInit, AfterViewInit {
             {
                 img: 'assets/images/t8.png'
             },
+            {
+                img: 'assets/images/t2.png',
+                title: 'Estamos desenvolvendo novas funcionalidades constantemente, ' +
+                    'você pode se tornar um apoiador, sugerir e ajudar a definir quais serão as próximas funcionalidades'
+            }
         ]
     },
     ]

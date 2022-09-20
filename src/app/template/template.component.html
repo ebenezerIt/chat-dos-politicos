@@ -5,6 +5,7 @@
     <ng-container *ngIf="currentWindowWidth >= 960 else mobile">
         <div class="web">
             <app-sidebar
+                    [loading]="loading"
                     (conversationClicked)="onConversationSelected()"
             ></app-sidebar>
             <div id="chat-web" class="chat">
@@ -17,6 +18,7 @@
     <ng-template #mobile>
         <div>
             <app-sidebar *ngIf="!showChat && !welcomeIntro"
+                         [loading]="loading"
                          (conversationClicked)="onConversationSelected()"
             ></app-sidebar>
             <div class="chatPlaceholder" *ngIf="!conversation && welcomeIntro">

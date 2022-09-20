@@ -2,7 +2,7 @@
 @import "~@ctrl/ngx-emoji-mart/picker";
 
 body {
-  margin: 0px;
+  margin: 0;
   font-family: sans-serif;
   color: #a2a3a4;
 
@@ -36,4 +36,6 @@ mat-dialog-container {
   }
 }
 
-
+.w-100 {
+  width: 100%;
+}

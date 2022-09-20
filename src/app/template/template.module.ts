@@ -21,6 +21,7 @@ import { StoryComponent } from '../components/story-component/story-component.co
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatIconModule } from '@angular/material/icon';
 import { SkeletonUserListComponent } from '../components/skeleton-user-list/skeleton-user-list.component';
+import { SkeletonMessageListComponent } from '../components/skeleton-message-list/skeleton-message-list.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { SkeletonUserListComponent } from '../components/skeleton-user-list/skel
         LawsuitComponent,
         IntroComponent,
         StoryComponent,
-        SkeletonUserListComponent
+        SkeletonUserListComponent,
+        SkeletonMessageListComponent
     ],
     imports: [
         CommonModule,

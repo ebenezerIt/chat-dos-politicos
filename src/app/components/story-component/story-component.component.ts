@@ -13,34 +13,72 @@ export class StoryComponent implements OnInit, AfterViewInit {
         },
         stories: [
             {
-                title: 'Quem São? \n O Que Andam fazendo?',
+                title: 'Quem são? \n O que andam fazendo?',
                 description: '',
                 img: 'assets/images/1.png'
             },
             {
-                title: 'No que votam? \n Quanto gastam do teu dinheiro?',
-                description: '',
                 img: 'assets/images/2.png'
             },
             {
-                title: 'Como conseguir monitorar e fiscalizar isso de um jeito simples e fácil?',
-                description: '',
                 img: 'assets/images/3.png'
             },
             {
-                title: 'O chat dos políticos foi desenvolvido pra isso!',
-                description: '',
                 img: 'assets/images/4.png'
             },
             {
-                title: 'Com uma interface amigável, informa de maneira clara e simples o que eles estão fazendo',
+                title: 'Não existia uma maneira muito simples de encontrar essas respostas...',
                 description: '',
                 img: 'assets/images/5.png'
             },
             {
-                title: 'Com isso \n queremos trazer \n mais \n informação \n e \n engajamento \n para aquilo \n que \n dita o rumo \n da \n nossa nação',
-                description: '',
                 img: 'assets/images/6.png'
+            },
+            {
+                title: 'Com uma interface amigável, informa de maneira clara e simples o que eles estão fazendo.',
+                description: '',
+                img: 'assets/images/7.png'
+            },
+            {
+                title: 'Queremos trazer  mais  informação  e  engajamento  para aquilo  que  dita o rumo  da nossa nação.',
+                description: '',
+                img: 'assets/images/8.png'
+            },
+            {
+                img: 'assets/images/9.png'
+            },
+        ]
+    },{
+        story: {
+            name: "Tutorial",
+            logo: 'assets/images/t1.png'
+        },
+        stories: [
+            {
+                img: 'assets/images/t1.png'
+            },
+            {
+                img: 'assets/images/t2.png',
+                title: 'Estamos desenvolvendo novas funcionalidades constantemente, ' +
+                    'você pode se tornar um apoiador, sugerir e ajudar a definir quais serão as próximas funcionalidades'
+            },
+            {
+                img: 'assets/images/t3.png'
+            },
+            {
+                img: 'assets/images/t4.png'
+            },
+            {
+                img: 'assets/images/t5.png'
+            },
+            {
+                img: 'assets/images/t6.png'
+            },
+            {
+                img: 'assets/images/t7.png'
+            },
+            {
+                img: 'assets/images/t8.png'
             },
         ]
     },
@@ -68,14 +106,14 @@ export class StoryComponent implements OnInit, AfterViewInit {
         height: '70px',
         width: '70px',
         'background-color': '#e1e1e1',
-        margin: '0',
+        margin: '0 0 10px',
         border: '1px solid #d1d1d1'
     };
 
     ngOnInit(): void {
         setTimeout(() => {
             this.loading = false;
-        }, 2000);
+        }, 1000);
     }
 
     ngAfterViewInit() {

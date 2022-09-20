@@ -24,7 +24,13 @@
             </div>
             <div id="chat-mobile" *ngIf="showChat" class="chat">
 
-                <app-chat (onClickBack)="onClickBack()" *ngIf="conversation && !welcomeIntro"></app-chat>
+                <ng-container *ngIf="welcomeIntro; else chat">
+                    <app-intro></app-intro>
+
+                </ng-container>
+                <ng-template #chat>
+                    <app-chat (onClickBack)="onClickBack()" *ngIf="conversation"></app-chat>
+                </ng-template>
             </div>
         </div>
     </ng-template>

@@ -143,18 +143,19 @@
     bottom: 0;
     width: 100%;
     background-color: #E7DFDC;
-    padding: 15px 0;
+    padding: 10px 0;
   }
 
 
   .switch {
-    height: 40px;
+    height: 30px;
     width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
 
     .option {
+      font-size: 15px;
       cursor: pointer;
       border-radius: 800px;
       display: flex;
@@ -183,7 +184,7 @@
 }
 
 .mobile-height {
-  height: 100vh;
+  position: fixed; top: 0; left: 0; height: 100%; min-height: 100vh;   min-height: -webkit-fill-available;  width: 100vw;
 }
 
 .tooltip {

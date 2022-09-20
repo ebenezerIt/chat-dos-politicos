@@ -20,6 +20,7 @@ import { FilterStorageService } from '../services/filter-storage.service';
 import { StoryComponent } from '../components/story-component/story-component.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatIconModule } from '@angular/material/icon';
+import { SkeletonUserListComponent } from '../components/skeleton-user-list/skeleton-user-list.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { MatIconModule } from '@angular/material/icon';
         VotesComponent,
         LawsuitComponent,
         IntroComponent,
-        StoryComponent
+        StoryComponent,
+        SkeletonUserListComponent
     ],
     imports: [
         CommonModule,
@@ -47,6 +49,7 @@ import { MatIconModule } from '@angular/material/icon';
     ],
     providers: [
         FilterStorageService
+
     ]
 })
 export class TemplateModule {

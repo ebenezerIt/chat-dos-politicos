@@ -9,7 +9,7 @@
   .header {
     min-height: 67px;
     background-color: #eeeeee;
-    box-shadow: 2px 0px 4px #ccc;
+    box-shadow: 2px 0 4px #ccc;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -171,7 +171,9 @@
 }
 
 .mobile-height {
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 
 .tooltip {

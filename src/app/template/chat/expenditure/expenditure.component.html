@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="15px" [ngStyle.lt-md]="{'min-height': '100vh'}">
+<div fxLayout="column" fxLayoutGap="15px">
     <div fxLayout="column" fxLayoutGap="15px">
     <div fxLayout="column" fxLayoutGap="15px"
          style="background-color: white; color: #767676; padding: 15px; border-radius: 15px">
@@ -25,11 +25,12 @@
         <span style="font-size: 12px; color: #040404">{{reaisPorExtenso(expenditure?.cotaTotalEconomizou)}}</span>
     </div>
     </div>
-    <div style="padding: 10px;" [ngStyle.lt-md]="{'min-height': '500px'}" fxLayoutAlign="center start">
+    <div style="padding: 10px;" fxLayoutAlign="center start">
         <div [ngStyle.lt-md]="{'width': '80vw'}">
         <canvas id="chart">
 
         </canvas>
         </div>
     </div>
+    <div  [ngStyle.lt-md]="{'height': '30px'}" style="width: 100%"></div>
 </div>

@@ -1,1 +1,31 @@
-<p>lawsuit works!</p>
+<div fxLayout="column-reverse" fxLayoutGap="15px">
+    <ng-container *ngIf="!loading; else skeleton">
+        <div fxLayoutAlign="center start"
+             class="container"
+             ngClass.lt-md="mobile">
+            <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="10px"
+                 style="height: 100%; text-align: center; padding: 15px">
+                <span style="font-size: 20px">
+                    Essa funcionalidade está sendo desenvolvida!
+                </span>
+                <span>
+                    Você pode ficar por dentro de todas as funcionalidades que ainda serão lançada
+                        Se tornando um apoiador!
+                </span>
+                <div fxLayout="column" fxLayoutGap="10px">
+                <span>
+                    Acesse nosso canal no Telegram!
+                </span>
+                    <span style="padding: 5px 10px; border-radius: 25px; background-color: #137f36">
+                    <a style="color: white" target="_blank" href="https://t.me/+45m9OuxYWCNkNjlh">Telegram</a>
+                </span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <div [ngStyle.lt-md]="{'height': '30px'}" style="width: 100%"></div>
+    <ng-template #skeleton>
+        <app-skeleton-msg-list [index]="3"></app-skeleton-msg-list>
+    </ng-template>
+</div>

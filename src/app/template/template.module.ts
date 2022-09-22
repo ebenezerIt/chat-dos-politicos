@@ -22,6 +22,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatIconModule } from '@angular/material/icon';
 import { SkeletonUserListComponent } from '../components/skeleton-user-list/skeleton-user-list.component';
 import { SkeletonMessageListComponent } from '../components/skeleton-message-list/skeleton-message-list.component';
+import { ShareButtonComponent } from '../components/share-button/share-button.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { SkeletonMessageListComponent } from '../components/skeleton-message-lis
         IntroComponent,
         StoryComponent,
         SkeletonUserListComponent,
-        SkeletonMessageListComponent
+        SkeletonMessageListComponent,
+        ShareButtonComponent
     ],
     imports: [
         CommonModule,
@@ -51,7 +53,9 @@ import { SkeletonMessageListComponent } from '../components/skeleton-message-lis
     ],
     providers: [
         FilterStorageService
-
+    ],
+    entryComponents: [
+        DialogComponent
     ]
 })
 export class TemplateModule {

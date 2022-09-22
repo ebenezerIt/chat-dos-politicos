@@ -13,6 +13,7 @@
 
                 <app-chat (onClickBack)="onClickBack()" *ngIf="conversation"></app-chat>
             </div>
+            <app-share-button fxHide.lt-md [bottom]="'60px'"></app-share-button>
         </div>
     </ng-container>
     <ng-template #mobile>

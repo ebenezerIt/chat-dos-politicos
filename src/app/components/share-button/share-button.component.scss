@@ -1,0 +1,61 @@
+.wrapper {
+  position: relative;
+}
+
+.wrapper :is(.btn, .link) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  color: white;
+  border-radius: 50%;
+}
+
+.btn {
+  position: absolute;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: outline .25s;
+  background-color: green;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+  outline: none;
+  width: 50px;
+  height: 50px;
+}
+
+.active .btn,
+.btn:hover {
+  background-color: green;
+}
+
+.item {
+  position: absolute;
+  list-style: none;
+  transition: transform .5s;
+  left: 0;
+  bottom: -34px;
+  transition-delay: var(--d);
+  background-color: green;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.wrapper.active .item:nth-child(1) {
+  transform: translateY(-60px);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+
+}
+
+.wrapper.active .item:nth-child(2) {
+  transform: translateY(-120px);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+}
+
+.wrapper.active .item:nth-child(3) {
+  transform: translateY(-180px);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+}
+

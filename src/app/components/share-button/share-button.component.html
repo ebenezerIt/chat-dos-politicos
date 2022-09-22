@@ -1,0 +1,35 @@
+<div fxLayoutAlign="center center" style="
+    position: fixed;
+    right: 30px;
+    color: white;
+    opacity: 0.8;"
+     [ngStyle]="{'bottom': bottom}"
+>
+    <div class="wrapper">
+        <button class="btn"  (click)="toggleOptions($event)">
+            <mat-icon>share</mat-icon>
+        </button>
+        <ul class="list">
+            <li class="item">
+                <a target="_blank"
+                   [href]="'https://api.whatsapp.com/send?text=Agora dá para acompanhar sem desculpas o que os senadores' +
+                ' e deputados estão fazendo! Chat dos políticos deixou super prático, ' +
+                 'olha só como! https://chatdospoliticos.org'"
+                   data-text="Basta acessar https://chatdospoliticos.org">
+                    <img style="fill: white" alt="WhatsApp" width="100%" src="assets/images/whatsapp.png">
+                </a>
+            </li>
+            <li fxLayoutAlign="center center" class="item" style="--d: .15s;">
+
+                <a target="_blank" href="https://m.facebook.com/sharer/sharer.php?u=https://chatdospoliticos.org">
+                    <img style="margin: 8px 8px 4px" alt="Facebook" width="70%" src="assets/images/facebook-png.png">
+                </a>
+            </li>
+            <li class="item" style="--d: .35s;">
+                <a target="_blank" href="https://t.me/+45m9OuxYWCNkNjlh">
+                    <img style="margin:10px 8px 4px" alt="Telegram" width="60%" src="assets/images/telegram.png">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

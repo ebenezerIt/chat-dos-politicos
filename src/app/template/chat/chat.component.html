@@ -26,6 +26,9 @@
 
     </div>
     <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
+
+        <app-share-button fxHide.gt-sm></app-share-button>
+
         <router-outlet></router-outlet>
     </div>
     <div ngClass.lt-md="mobile-footer" ngClass.gt-sm="footer">

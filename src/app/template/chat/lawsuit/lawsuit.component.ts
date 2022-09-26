@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Processes } from '../../../politicos/ParlamentarianResponseDtos';
+import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { parliamentariansReducerInterface } from '../../../stores/parliamentarians/parliamentarians.reducer';
+import { RoutesReducerInterface } from '../../../stores/routes/route.reducer';
+import { setSelectedRoute } from '../../../stores/routes/route.actions';
+import { RouteEnum } from '../../../constants/route-enum';
 
 @Component({
   selector: 'app-lawsuit',
@@ -7,7 +14,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LawsuitComponent implements OnInit{
 
-  loading = true
+  loading = true;
+  processes: Processes[];
+
+  constructor(public dialog: MatDialog,
+              private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: RoutesReducerInterface }>) {
+
+    store.select('parliamentarians').subscribe(parliamentarians => {
+      this.processes = parliamentarians.currentConversation.parliamentarianRanking.parliamentarian.processes;
+      this.processes.push()
+    });
+
+    store.dispatch(setSelectedRoute({route: RouteEnum.LAWSUIT}));
+
+  }
 
   ngOnInit() {
     setTimeout(() => {

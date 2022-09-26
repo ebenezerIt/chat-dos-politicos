@@ -1,0 +1,64 @@
+<div id="body" ngClass.lt-md="mobile-padding-msg">
+
+    <ng-container *ngIf="currentLaw; else skeleton">
+
+        <ng-container *ngIf="filteredLawVotes.length; else noVotes"
+        >
+            <ng-container
+                    *ngFor="let law of filteredLawVotes"
+            >
+                <div class="conversation"
+                     (click)="handleParliamentarianClicked(law.parliamentarian)">
+                    <div class="picture">
+                        <img alt="photo" src="{{law.parliamentarian.photo}}"/>
+                        <div class="score"
+                             [ngClass]="{'good': law.parliamentarian.ranking[0].scoreRanking <= 150,
+                          'regular': law.parliamentarian.ranking[0].scoreRanking > 150 && law.parliamentarian.ranking[0].scoreRanking <= 350,
+                           'bad': law.parliamentarian.ranking[0].scoreRanking > 350 }">
+                            <h2>{{law.parliamentarian.ranking[0].scoreRanking}}º</h2>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="conversationHeader">
+                            <div fxLayout="column" fxLayoutGap="5px">
+                                <div class="name"> {{ law.parliamentarian.nickname }} </div>
+                                <div *ngIf="law.parliamentarian.isReelection" class="chip">CANDIDATO A
+                                    REELEIÇÃO
+                                </div>
+                            </div>
+                            <div class="time" fxLayoutAlign="end end">{{law.parliamentarian.ranking[0].scoreTotal}}
+                                pts
+                            </div>
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="start start" class="message">
+                            {{ law.parliamentarian.position }} {{ law.parliamentarian.party.prefix }}
+                            - {{law.parliamentarian.state.prefix}}
+                            <div>
+                                Votou
+                                <span style="font-weight: bold;; font-size: 20px"
+                                      [ngStyle]="{'color': law.lawStatus.id === 1 ? 'green' : 'red'}">
+                            {{law.lawStatus.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <ng-template #noVotes>
+            <div class="conversation">
+
+                <div class="content"
+                     style="padding-bottom: 30px"
+                >
+                    Ninguém escolheu essa opção de voto.
+                </div>
+
+            </div>
+        </ng-template>
+
+    </ng-container>
+    <div [ngStyle.lt-md]="{'height': '50px'}" style="width: 100%"></div>
+    <ng-template #skeleton>
+        <app-skeleton-msg-list [index]="5"></app-skeleton-msg-list>
+    </ng-template>
+</div>

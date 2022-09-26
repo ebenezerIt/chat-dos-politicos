@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { PoliticosService } from './politicos/politicos.service';
 import {  ParliamentarianListResponse } from './politicos/ParlamentarianResponseDtos';
-import {  setList } from './stores/parliamentarians/parliamentarians.actions';
+import { setLawList, setList } from './stores/parliamentarians/parliamentarians.actions';
 import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from './stores/parliamentarians/parliamentarians.reducer';
 import { filter } from 'rxjs';
@@ -33,6 +33,11 @@ export class AppComponent {
                 store.dispatch(setList({list: resp}))
             });
         this.setUpAnalytics();
+
+        this.politicosService.getLawList().subscribe(response => {
+            const resp = response.data
+            store.dispatch(setLawList({lawList: resp}))
+        })
     }
 
 

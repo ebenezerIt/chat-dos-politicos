@@ -188,6 +188,7 @@ export interface ParliamentarianRanking {
   parliamentarianQuotaMaxYear: number;
   parliamentarianQuotaTotal: number;
   active: boolean;
+  processes: Processes[];
 }
 
 export interface StateQuota {
@@ -241,6 +242,14 @@ export class ParliamentarianDataResponse {
   parliamentarianRanking: ParliamentarianRanking;
   stateQuota: StateQuota;
   staffQuota: StaffQuota;
+}
+
+export class Processes {
+  processText: string;
+  number: string;
+  processUrl: string;
+  processStatus: string;
+  score: string;
 }
 
 export class ParliamentarianListResponse {

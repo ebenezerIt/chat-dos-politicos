@@ -53,6 +53,18 @@ export class PoliticosRepository {
         return this.politicosClient.getParliamentarianVotesById(id);
     }
 
+    getLawList(): Observable<any> {
+        return this.politicosClient.getLawList();
+    }
+
+    getLawVotesById(lawId: number): Observable<any> {
+        return this.politicosClient.getLawVotesById(lawId);
+    }
+
+    getLawById(lawId: number): Observable<any> {
+        return this.politicosClient.getLawById(lawId);
+    }
+
     getExpenditureById(id: number): Observable<Expenditure> {
         const observableReturn = new Subject<Expenditure>();
         this.politicosClient.getParliamentarianQuotasById(id)
@@ -88,6 +100,7 @@ export class PoliticosRepository {
     }
 
     private static shrinkParliamentarian(parliamentarian: Parliamentarian): Parliamentarian {
+        console.log("PARLIA", parliamentarian)
         const shrink = new Parliamentarian();
         shrink.id = parliamentarian.id;
         shrink.photo = parliamentarian.photo;

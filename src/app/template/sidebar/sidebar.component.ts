@@ -5,12 +5,17 @@ import { SwitchFilterEnum } from '../../constants/switch-filter-enum';
 import { RadioFilterEnum } from '../../constants/radio-filter-enum';
 import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from '../../stores/parliamentarians/parliamentarians.reducer';
-import { setCurrentConversation } from '../../stores/parliamentarians/parliamentarians.actions';
+import {
+    setChatListType,
+    setCurrentConversation,
+    setCurrentLaw
+} from '../../stores/parliamentarians/parliamentarians.actions';
 import { Router } from '@angular/router';
 import { RouteEnum } from '../../constants/route-enum';
 import { Filter, FilterStorageService } from '../../services/filter-storage.service';
 import { RoutesReducerInterface } from '../../stores/routes/route.reducer';
 import { ESTADOS } from '../../constants/estados-constant';
+import { ChatListType } from '../../constants/chat-list-type';
 
 type FilterFunction = {
     (data: ParliamentarianDataResponse[]): ParliamentarianDataResponse[]
@@ -26,6 +31,7 @@ export class SidebarComponent {
     @Output() conversationClicked: EventEmitter<any> = new EventEmitter();
     @Input() loading: boolean = false
     conversations: ParliamentarianDataResponse[];
+    laws: any[];
     listSize = 20;
     RadioFilterEnum = RadioFilterEnum;
     selectedSwitchFilterEnum: SwitchFilterEnum = SwitchFilterEnum.POLITICIANS;
@@ -36,6 +42,10 @@ export class SidebarComponent {
     filter: Filter
     selectedRoute: RouteEnum;
     states = ESTADOS;
+    chatListType: ChatListType;
+
+
+    CHAT_LIST_TYPE = ChatListType;
 
     filterFunctions: FilterFunction[] = [
         this.filterByState(),
@@ -50,7 +60,10 @@ export class SidebarComponent {
 
         store.select('parliamentarians').subscribe(parliamentarians => {
             this.conversations = parliamentarians.list;
+            this.laws = parliamentarians.lawList;
+            this.chatListType = parliamentarians.chatListType;
         });
+
         store.select('route').subscribe(route => {
             this.selectedRoute = route.selectedRoute;
         });
@@ -131,6 +144,22 @@ export class SidebarComponent {
             });
     }
 
+    handleLawClicked(law: any): void {
+        this.conversationClicked.emit();
+        this.router.navigate([`/${RouteEnum.LAW_VOTES}`],
+            {
+                queryParams: {lawId: law.id}
+            });
+        this.politicosService.getLawVotesById(law.id)
+            .subscribe((lawResponse: any) => {
+            const currentLaw = {
+                law: law,
+                lawVoteList: lawResponse.data
+            }
+                this.store.dispatch(setCurrentLaw({currentLaw: currentLaw}));
+            });
+    }
+
     onScroll(): void {
         this.listSize += 10;
     }
@@ -168,5 +197,58 @@ export class SidebarComponent {
     clearSearchText(): void {
         this.filter.searchText = '';
         this.onChangeSearchText();
+    }
+
+    changeListType(): void {
+        if (this.chatListType === ChatListType.VOTE) {
+            this.store.dispatch(setChatListType({chatListType: ChatListType.LAW}));
+        } else {
+            this.store.dispatch(setChatListType({chatListType: ChatListType.VOTE}));
+        }
+    }
+
+    getProgressBar(resumes) {
+
+        let total = 0
+
+        resumes.forEach( resume => {
+            total += resume.count
+        })
+
+        const newResumes = resumes.map(resume => {
+
+            let color;
+            let vote;
+            const percent = Math.round(100 * resume.count / total);
+
+
+            switch (resume.lawStatusId) {
+                case 1:
+                    color = 'green';
+                    vote = 'Sim';
+                    break;
+                case 2:
+                    color = 'red';
+                    vote = 'Não';
+                    break;
+                default:
+                    color = 'orange';
+                    vote = 'Não Votou'
+            }
+
+
+            return {...resume, percent: percent ? percent : 1, color, vote, total}
+        })
+        if (newResumes.length > 3) {
+            return [...newResumes.filter( resume => resume.color != 'orange'),
+                ...this.returnNoVotes(newResumes.filter((resume) => resume.color === 'orange'))]
+        }
+     return newResumes
+    }
+
+    returnNoVotes(newResumes): any[] {
+        let percent = 0
+        newResumes.map(resume => percent = percent + resume.percent)
+        return [{...newResumes[0], percent}]
     }
 }

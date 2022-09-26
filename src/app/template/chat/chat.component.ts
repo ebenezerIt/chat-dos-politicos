@@ -1,10 +1,14 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ParliamentarianDataResponse} from '../../politicos/ParlamentarianResponseDtos';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ParliamentarianDataResponse } from '../../politicos/ParlamentarianResponseDtos';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { parliamentariansReducerInterface } from '../../stores/parliamentarians/parliamentarians.reducer';
 import { RouteEnum } from '../../constants/route-enum';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChatListType } from '../../constants/chat-list-type';
+import { LawVoteType } from '../../constants/law-vote-type';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../components/dialog-component/dialog-component.component';
 
 @Component({
   selector: 'app-chat',
@@ -19,21 +23,44 @@ export class ChatComponent implements OnInit {
   message = '';
   paramsSubscription: Subscription;
   RouteEnum = RouteEnum;
+  currentLaw;
+  currentChat: ChatListType;
+  vt;
+
+  CHAT_LIST_TYPE = ChatListType;
+  LAW_VOTE_TYPE = LawVoteType;
 
   constructor(private route: ActivatedRoute,
               store: Store<{ parliamentarians: parliamentariansReducerInterface }>,
-              private router: Router) {
+              private router: Router,
+              public dialog: MatDialog) {
 
     store.select('parliamentarians').subscribe(parliamentarians => {
       this.conversation = parliamentarians.currentConversation;
+      this.currentLaw = parliamentarians.currentLaw;
     });
   }
   ngOnInit(): void {
 
     this.paramsSubscription = this.route.queryParams.subscribe((params) => {
-      if (!params.id) {
+      if (!params.id && !params.lawId) {
         this.clickBack();
+      } else {
+        this.currentChat = params.id ? ChatListType.VOTE : ChatListType.LAW;
       }
+      if (params.vt) {
+        this.vt = parseInt(params.vt);
+      }
+
+    });
+  }
+
+  openDialog(law: any): void {
+    this.dialog.open(DialogComponent, {
+      data: {
+        message: law.description,
+        title: law.number,
+      },
     });
   }
 
@@ -58,7 +85,7 @@ export class ChatComponent implements OnInit {
 
   clickBack(): void {
     this.onClickBack.emit();
-    this.paramsSubscription.unsubscribe();
+    this.paramsSubscription?.unsubscribe();
   }
 
   selectSwitchChat(routeEnum: RouteEnum): void {

@@ -1,9 +1,22 @@
 .container {
-  width: 70%;
-  height: 300px;
+  max-width: 540px;
+}
+
+
+.content {
+  flex-grow: 1;
+  padding: 15px;
+  height: auto;
   border-radius: 15px;
   background-color: white;
   font-size: 17px;
+  margin-bottom: 15px;
+
+  .process {
+    font-size: 20px;
+    border-radius: 15px;
+    padding: 5px 0;
+  }
 }
 
 .mobile {

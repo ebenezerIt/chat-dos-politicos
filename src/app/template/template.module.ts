@@ -23,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SkeletonUserListComponent } from '../components/skeleton-user-list/skeleton-user-list.component';
 import { SkeletonMessageListComponent } from '../components/skeleton-message-list/skeleton-message-list.component';
 import { ShareButtonComponent } from '../components/share-button/share-button.component';
+import { LawVotesComponent } from './chat/law-votes/law-votes.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { ShareButtonComponent } from '../components/share-button/share-button.co
         StoryComponent,
         SkeletonUserListComponent,
         SkeletonMessageListComponent,
-        ShareButtonComponent
+        ShareButtonComponent,
+        LawVotesComponent
     ],
     imports: [
         CommonModule,

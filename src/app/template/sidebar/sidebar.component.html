@@ -4,29 +4,24 @@
         <div class="sidebarHeader">
             <app-story-component></app-story-component>
         </div>
-        <div class="searchBox">
-            <img class="search icon" width="19" alt="search" src="../../../assets/images/searchIcon.svg"/>
-            <img *ngIf="filter.searchText" (click)="clearSearchText()" class="close icon" width="19"
-                 alt="close" src="../../../assets/images/closeIcon.svg"/>
-            <input
-                    [(ngModel)]="filter.searchText"
-                    type="text"
-                    placeholder="Pesquisar..."
-                    (ngModelChange)="onChangeSearchText()"
-            />
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="searchBox">
+                <img class="search icon" width="19" alt="search" src="../../../assets/images/searchIcon.svg"/>
+                <img *ngIf="filter.searchText" (click)="clearSearchText()" class="close icon" width="19"
+                     alt="close" src="../../../assets/images/closeIcon.svg"/>
+                <input
+                        [(ngModel)]="filter.searchText"
+                        type="text"
+                        placeholder="Pesquisar..."
+                        (ngModelChange)="onChangeSearchText()"
+                />
+            </div>
+            <div fxLayoutAlign="center center" (click)="changeListType()"
+                 style="cursor: pointer; height: 100%; background-color: #fbfbfb; border-bottom: 1px solid #e1e4e5;">
+                <span style="background-color: #137f36; padding: 5px 15px; color: white; border-radius: 25px">{{chatListType === CHAT_LIST_TYPE.LAW ?  'Votações' : 'Parlamentares'}}</span>
+            </div>
         </div>
         <div class="filter" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-            <!--           @TODO  -->
-            <!--            <div class="switch">-->
-            <!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.POLITICIANS}"-->
-            <!--                     (click)="selectSwitchFilter(SwitchFilterEnum.POLITICIANS)"><span>Dos</span> <span>Politicos</span>-->
-            <!--                </div>-->
-            <!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.PARTIES}"-->
-            <!--                     (click)="selectSwitchFilter(SwitchFilterEnum.PARTIES)"><span>Dos</span> <span>Partidos</span></div>-->
-            <!--                <div class="option" [ngClass]="{selected: selectedSwitchFilterEnum === SwitchFilterEnum.STATES}"-->
-            <!--                     (click)="selectSwitchFilter(SwitchFilterEnum.STATES)"><span>Dos</span> <span>Estados</span></div>-->
-            <!--            </div>-->
-
             <div fxLayout="column" style="color: #137f36">
                 <select style="border: 2px solid #137f36; padding: 3px; border-radius: 20px; color: #137f36 "
                         [(ngModel)]="filter.state"
@@ -78,11 +73,58 @@
          [scrollWindow]="false"
          fxLayout="column"
     >
-        <ng-container *ngIf="filteredConversations.length && !loading; else isLoading">
+        <ng-container *ngIf="chatListType === CHAT_LIST_TYPE.LAW; else parliamentarianList">
+            <app-skeleton-user-list *ngIf="!laws.length"></app-skeleton-user-list>
+            <ng-container *ngFor="let law of laws">
+                <div class="conversation"
+                     (click)="handleLawClicked(law)">
+                <div class="picture">
+                    {{law.house === 'Senado' ? 'S' : 'C'}}
+                </div>
+                <div class="content">
+                    <div class="conversationHeader">
+                        <div fxLayout="column" class="w-100">
+                            <div class="name"> {{ law.number }} </div>
+                            <div fxLayout="column" class="w-100">
+                                <div fxLayout="row"
+                                     class="progress">
+                                    <ng-container *ngFor="let resume of getProgressBar(law.lawResumes)">
+                                        <div style="height: 100%;"
+                                             [ngStyle]="{'width': resume.percent + '%', 'background-color': resume.color}">
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div fxLayout="row" style="padding-top: 10px">
+                                    <ng-container
+                                            *ngFor="let resume of getProgressBar(law.lawResumes); let last = last">
+
+                                        <div class="" fxLayoutAlign="start center">
+                                            <div style="height: 12px; width: 12px; border-radius: 12px"
+                                                 [ngStyle]="{'background-color': resume.color}">
+                                            </div>
+                                            <span style="margin: 0 10px 0 5px; font-size: 12px">
+                                                                {{resume.percent + '% ' + resume.vote}}
+                                                            </span>
+                                        </div>
+                                        <ng-container *ngIf="last">
+                                            <div class="" fxLayoutAlign="end end" style="font-size: 14px; flex: 1">
+                                                {{resume.total + ' votos'}}
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    </ng-container>
+    </ng-container>
+    <ng-template #parliamentarianList>
+        <app-skeleton-user-list *ngIf="!filteredConversations.length"></app-skeleton-user-list>
+        <ng-container *ngFor="let conversation of filteredConversations">
             <div class="conversation"
-                 *ngFor="let conversation of filteredConversations"
-                 (click)="handleConversationClicked(conversation)"
-            >
+                 (click)="handleConversationClicked(conversation)">
                 <div class="picture">
                     <img alt="photo" src="{{conversation.parliamentarian.photo}}"/>
                     <div class="score"
@@ -94,10 +136,11 @@
                     <div class="conversationHeader">
                         <div fxLayout="column">
                             <div class="name"> {{ conversation.parliamentarian.nickname }} </div>
-                            <div *ngIf="conversation.parliamentarian.isReelection" class="chip">CANDIDATO A REELEIÇÃO
+                            <div *ngIf="conversation.parliamentarian.isReelection" class="chip">CANDIDATO A
+                                REELEIÇÃO
                             </div>
                         </div>
-                        <div class="time">{{conversation.scoreTotal}}</div>
+                        <div class="time" fxLayoutAlign="end end">{{conversation.scoreTotal}} pts</div>
                     </div>
                     <div class="message">
                         <img alt="unread"
@@ -118,9 +161,7 @@
                 </div>
             </div>
         </ng-container>
-        <ng-template #isLoading>
-            <app-skeleton-user-list></app-skeleton-user-list>
-        </ng-template>
-    </div>
-    <app-share-button fxHide.gt-sm [bottom]="'60px'"></app-share-button>
+    </ng-template>
+</div>
+<app-share-button fxHide.gt-sm [bottom]="'60px'"></app-share-button>
 </div>

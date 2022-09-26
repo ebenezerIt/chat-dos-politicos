@@ -51,7 +51,7 @@ export class StoryComponent implements OnInit, AfterViewInit {
     },{
         story: {
             name: "Tutorial",
-            logo: 'assets/images/t1.png'
+            logo: 'assets/images/story_logo_2.png'
         },
         stories: [
             {

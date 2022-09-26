@@ -1,31 +1,50 @@
-<div fxLayout="column-reverse" fxLayoutGap="15px">
-    <ng-container *ngIf="!loading; else skeleton">
-        <div fxLayoutAlign="center start"
-             class="container"
-             ngClass.lt-md="mobile">
-            <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="10px"
-                 style="height: 100%; text-align: center; padding: 15px">
-                <span style="font-size: 20px">
-                    Essa funcionalidade está sendo desenvolvida!
+<ng-container *ngIf="processes; else skeleton">
+    <ng-container *ngIf="processes.length; else noProcesses">
+        <div class="container">
+        <ng-container *ngFor="let process of processes">
+            <div fxLayoutAlign="start start"
+                 class="content"
+                 ngClass.lt-md="mobile">
+                <div class="w-100" fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="10px"
+                     style="height: 100%; text-align: left">
+                <span class="process">
+                    {{process.processText}}
                 </span>
-                <span>
-                    Você pode ficar por dentro de todas as funcionalidades que ainda serão lançada
-                        Se tornando um apoiador!
-                </span>
-                <div fxLayout="column" fxLayoutGap="10px">
-                <span>
-                    Acesse nosso canal no Telegram!
-                </span>
-                    <span style="padding: 5px 10px; border-radius: 25px; background-color: #137f36">
-                    <a style="color: white" target="_blank" href="https://t.me/+45m9OuxYWCNkNjlh">Telegram</a>
-                </span>
+                    <div fxLayout="column">
+                        <span style="padding: 10px 15px; border-radius: 25px; background-color: #137f36">
+                            <a style="color: white" target="_blank" [href]="process.processUrl">Link do Processo</a>
+                        </span>
+                    </div>
+                    <div class="w-100" fxLayoutAlign="end end">
+                         <span>
+                           {{process.processStatus}}
+                        </span>
+                    </div>
                 </div>
             </div>
+        </ng-container>
         </div>
     </ng-container>
 
-    <div [ngStyle.lt-md]="{'height': '30px'}" style="width: 100%"></div>
-    <ng-template #skeleton>
-        <app-skeleton-msg-list [index]="3"></app-skeleton-msg-list>
+    <ng-template #noProcesses>
+        <div>
+            <div fxLayoutAlign="center start"
+                 class="content"
+                 ngClass.lt-md="mobile">
+                <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="10px"
+                     style="height: 100%; text-align: center">
+
+                        <span>
+                           Não há processos judiciais para esse parlamentar
+                        </span>
+
+                </div>
+            </div>
+        </div>
     </ng-template>
-</div>
+</ng-container>
+
+<div [ngStyle.lt-md]="{'height': '30px'}" style="width: 100%"></div>
+<ng-template #skeleton>
+    <app-skeleton-msg-list [index]="3"></app-skeleton-msg-list>
+</ng-template>

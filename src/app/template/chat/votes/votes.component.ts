@@ -49,4 +49,5 @@ export class VotesComponent {
           return 0;
         });
   }
+
 }

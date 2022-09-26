@@ -11,6 +11,7 @@ import { LOCALE_ID } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
 import { routeReducer } from './stores/routes/route.reducer';
+import { MatDialogModule } from '@angular/material/dialog';
 registerLocaleData(localePt)
 
 
@@ -21,6 +22,7 @@ registerLocaleData(localePt)
         BrowserAnimationsModule,
         HttpClientModule,
         AppRoutingModule,
+        MatDialogModule,
         StoreModule.forRoot({parliamentarians: parliamentariansReducer, route: routeReducer})
     ],
     providers: [{

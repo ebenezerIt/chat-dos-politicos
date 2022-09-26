@@ -9,29 +9,32 @@
                     (conversationClicked)="onConversationSelected()"
             ></app-sidebar>
             <div id="chat-web" class="chat">
-                <app-intro *ngIf="!conversation"></app-intro>
+                <app-intro *ngIf="!conversation && !currentLaw"></app-intro>
 
-                <app-chat (onClickBack)="onClickBack()" *ngIf="conversation"></app-chat>
+                <app-chat (onClickBack)="onClickBack()" *ngIf="conversation || currentLaw"></app-chat>
             </div>
         </div>
     </ng-container>
     <ng-template #mobile>
         <div>
+
             <app-sidebar *ngIf="!showChat && !welcomeIntro"
                          [loading]="loading"
-                         (conversationClicked)="onConversationSelected()"
-            ></app-sidebar>
-            <div class="chatPlaceholder" *ngIf="!conversation && welcomeIntro">
+                         (conversationClicked)="onConversationSelected()"></app-sidebar>
+
+            <div class="chatPlaceholder" *ngIf="!conversation && !currentLaw && welcomeIntro">
                 <app-intro></app-intro>
             </div>
+
             <div id="chat-mobile" *ngIf="showChat" class="chat">
 
                 <ng-container *ngIf="welcomeIntro; else chat">
                     <app-intro></app-intro>
 
                 </ng-container>
+
                 <ng-template #chat>
-                    <app-chat (onClickBack)="onClickBack()" *ngIf="conversation"></app-chat>
+                    <app-chat (onClickBack)="onClickBack()" *ngIf="conversation || currentLaw"></app-chat>
                 </ng-template>
             </div>
         </div>

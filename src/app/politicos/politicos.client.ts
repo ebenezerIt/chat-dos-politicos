@@ -11,8 +11,9 @@ export class PoliticosClient {
 
   baseUrl = 'https://apirest.politicos.org.br/api/';
   listParliamentariansUrl = `${this.baseUrl}parliamentarianranking`;
+  listLawUrl = `${this.baseUrl}law`;
+  lawVoteUrl = `${this.baseUrl}parliamentarianlawvote`;
   listParliamentarianVotesUrl = `${this.listParliamentariansUrl}/parliamentarian`;
-
   constructor(private httpClient: HttpClient) { }
 
   listParliamentarians(searchParams: HttpParams): Observable<ParliamentarianListResponse> {
@@ -30,8 +31,7 @@ export class PoliticosClient {
       .append('ParliamentarianId',  id)
       .append('Year',  0)
       .append('IsParliamentarianPage',  true)
-      .append('Include',  'Parliamentarian.LawVotes.Law')
-      .append('Include',  'Parliamentarian.LawVotes.LawStatus');
+      .append('Include',  'Parliamentarian.LawVotes.Law,Parliamentarian.LawVotes.LawStatus,Parliamentarian.Processes')
 
     const httpOptions = {
       headers: new HttpHeaders({ Accept: 'application/json' }),
@@ -41,6 +41,63 @@ export class PoliticosClient {
     return this.httpClient.get<ParliamentarianSingleResponse>(this.listParliamentarianVotesUrl, httpOptions)
         .pipe(
             map(list => list),
+            retry(2),
+            catchError(this.handleError)
+        );
+  }
+
+  getLawList(): Observable<any> {
+    const searchParams = new HttpParams()
+      .append('Take',  200)
+      .append('Skip',  0)
+      .append('OrderBy',  'DateVoting+desc')
+      .append('StatusId',  1)
+      .append('Include',  'LawResumes.LawStatus')
+
+    const httpOptions = {
+      headers: new HttpHeaders({ Accept: 'application/json' }),
+      params: searchParams
+    };
+
+    return this.httpClient.get<any>(this.listLawUrl, httpOptions)
+        .pipe(
+            map(list => list),
+            retry(2),
+            catchError(this.handleError)
+        );
+  }
+
+
+  getLawVotesById(lawId: number): Observable<any> {
+    const searchParams = new HttpParams()
+        .append('lawId', lawId)
+        .append('take', 513)
+        .append('Include',  'Parliamentarian.Ranking,Parliamentarian.State,Parliamentarian.Party,LawStatus')
+        .append('Orderby', 'Parliamentarian.Nickname')
+    const httpOptions = {
+      headers: new HttpHeaders({ Accept: 'application/json' }),
+      params: searchParams
+    };
+
+    return this.httpClient.get<any>(this.lawVoteUrl, httpOptions)
+        .pipe(
+            retry(2),
+            catchError(this.handleError)
+        );
+  }
+
+
+  getLawById(lawId: number): Observable<any> {
+    const searchParams = new HttpParams()
+        .append('id', lawId)
+        .append('Include',  'LawResumes.LawStatus')
+    const httpOptions = {
+      headers: new HttpHeaders({ Accept: 'application/json' }),
+      params: searchParams
+    };
+
+    return this.httpClient.get<any>(this.listLawUrl, httpOptions)
+        .pipe(
             retry(2),
             catchError(this.handleError)
         );

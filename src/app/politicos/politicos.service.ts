@@ -15,6 +15,17 @@ export class PoliticosService {
     return this.politicosRepository.listParliamentarians();
   }
 
+  getLawList(): Observable<any> {
+    return this.politicosRepository.getLawList();
+  }
+
+  getLawVotesById(lawId: number): Observable<any> {
+    return this.politicosRepository.getLawVotesById(lawId);
+  }
+  getLawById(lawId: number): Observable<any> {
+    return this.politicosRepository.getLawById(lawId);
+  }
+
   getParliamentarianVotesById(id: number): Observable<any> {
     const subject = new Subject<any>();
 

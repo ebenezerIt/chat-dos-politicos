@@ -100,7 +100,6 @@ export class PoliticosRepository {
     }
 
     private static shrinkParliamentarian(parliamentarian: Parliamentarian): Parliamentarian {
-        console.log("PARLIA", parliamentarian)
         const shrink = new Parliamentarian();
         shrink.id = parliamentarian.id;
         shrink.photo = parliamentarian.photo;

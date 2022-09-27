@@ -91,16 +91,20 @@
             <div class="switch">
                 <div class="option" [ngClass]="{'selected': vt === LAW_VOTE_TYPE.SIM}"
                      [routerLink]="'/'+RouteEnum.LAW_VOTES"
-                     [queryParams]="{vt: LAW_VOTE_TYPE.SIM}" queryParamsHandling="merge"><span>SIM</span>
+                     [queryParams]="{vt: vt === LAW_VOTE_TYPE.SIM ? '' : LAW_VOTE_TYPE.SIM}"
+                     queryParamsHandling="merge">
+                    <span>SIM</span>
                 </div>
                 <div class="option"  [ngClass]="{'selected': vt === LAW_VOTE_TYPE.NAO}"
-                     [routerLink]="'/'+RouteEnum.LAW_VOTES" [queryParams]="{vt: LAW_VOTE_TYPE.NAO}"
+                     [routerLink]="'/'+RouteEnum.LAW_VOTES"
+                     [queryParams]="{vt: vt === LAW_VOTE_TYPE.NAO ? '' : LAW_VOTE_TYPE.NAO}"
                      queryParamsHandling="merge"
                 ><span>NÃO</span>
                 </div>
                 <div class="option"  [ngClass]="{'selected': vt === LAW_VOTE_TYPE.NAO_VOTOU}"
                      [routerLink]="'/'+RouteEnum.LAW_VOTES"
-                     [queryParams]="{vt: LAW_VOTE_TYPE.NAO_VOTOU}" queryParamsHandling="merge">
+                     [queryParams]="{vt: vt === LAW_VOTE_TYPE.NAO_VOTOU ? '' : LAW_VOTE_TYPE.NAO_VOTOU}"
+                     queryParamsHandling="merge">
                     <span>NÃO VOTOU</span>
                 </div>
             </div>

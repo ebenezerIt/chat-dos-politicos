@@ -43,6 +43,8 @@ export class LawVotesComponent implements OnInit {
         this.route.queryParams.subscribe(params => {
             if (params.vt) {
                 this.vt = parseInt(params.vt);
+            } else {
+                this.vt = null;
             }
             this.filter = this.filterStorageService.userFilters;
         })

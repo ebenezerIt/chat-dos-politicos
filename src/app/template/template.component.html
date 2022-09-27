@@ -18,24 +18,24 @@
     <ng-template #mobile>
         <div>
 
-            <app-sidebar *ngIf="!showChat && !welcomeIntro"
+            <app-sidebar *ngIf="!showChat"
                          [loading]="loading"
                          (conversationClicked)="onConversationSelected()"></app-sidebar>
 
-            <div class="chatPlaceholder" *ngIf="!conversation && !currentLaw && welcomeIntro">
-                <app-intro></app-intro>
-            </div>
+<!--            <div class="chatPlaceholder" *ngIf="!conversation && !currentLaw && welcomeIntro">-->
+<!--                <app-intro></app-intro>-->
+<!--            </div>-->
 
             <div id="chat-mobile" *ngIf="showChat" class="chat">
 
-                <ng-container *ngIf="welcomeIntro; else chat">
-                    <app-intro></app-intro>
+<!--                <ng-container *ngIf="welcomeIntro; else chat">-->
+<!--                    <app-intro></app-intro>-->
 
-                </ng-container>
+<!--                </ng-container>-->
 
-                <ng-template #chat>
+                <ng-container #chat>
                     <app-chat (onClickBack)="onClickBack()" *ngIf="conversation || currentLaw"></app-chat>
-                </ng-template>
+                </ng-container>
             </div>
         </div>
     </ng-template>

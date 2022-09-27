@@ -18,7 +18,7 @@
             </div>
             <div fxLayoutAlign="center center" (click)="changeListType()"
                  style="cursor: pointer; height: 100%; background-color: #fbfbfb; border-bottom: 1px solid #e1e4e5;">
-                <span style="background-color: #137f36; padding: 5px 15px; color: white; border-radius: 25px">{{chatListType === CHAT_LIST_TYPE.LAW ?  'Votações' : 'Parlamentares'}}</span>
+                <span style="background-color: #137f36; padding: 5px 15px; color: white; border-radius: 25px">{{chatListType === CHAT_LIST_TYPE.LAW ? 'Votações' : 'Parlamentares'}}</span>
             </div>
         </div>
         <div class="filter" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
@@ -31,23 +31,24 @@
                         <option [value]="option.sigla">{{option.sigla}}</option>
                     </ng-container>
                 </select>
+                <ng-container *ngIf="chatListType === CHAT_LIST_TYPE.VOTE">
 
-                <div style="padding-top: 10px; cursor: pointer" (click)="changeBestWorst()">
+                    <div style="padding-top: 10px; cursor: pointer" (click)="changeBestWorst()">
 
-                    <ng-container *ngIf="filter.fromBestToWorse else fromWorst">
+                        <ng-container *ngIf="filter.fromBestToWorse else fromWorst">
                      <span style="color: green">
                     Do <strong>MELHOR</strong> Para Pior ⬇
                     </span>
-                    </ng-container>
+                        </ng-container>
 
-                    <ng-template #fromWorst>
+                        <ng-template #fromWorst>
                     <span style="color: #d10202">
                         Do <strong>PIOR</strong> Para Melhor ⬆
                     </span>
-                    </ng-template>
+                        </ng-template>
 
-                </div>
-
+                    </div>
+                </ng-container>
             </div>
             <div fxLayout="column" fxLayoutGap="5px">
                 <div class="radio-option" (click)="selectRadioFilter(RadioFilterEnum.CHAMBER)">
@@ -74,94 +75,94 @@
          fxLayout="column"
     >
         <ng-container *ngIf="chatListType === CHAT_LIST_TYPE.LAW; else parliamentarianList">
-            <app-skeleton-user-list *ngIf="!laws.length"></app-skeleton-user-list>
-            <ng-container *ngFor="let law of laws">
+            <app-skeleton-user-list *ngIf="!laws?.length || loading"></app-skeleton-user-list>
+            <ng-container *ngFor="let law of filteredLaws">
                 <div class="conversation"
                      (click)="handleLawClicked(law)">
-                <div class="picture">
-                    {{law.house === 'Senado' ? 'S' : 'C'}}
-                </div>
-                <div class="content">
-                    <div class="conversationHeader">
-                        <div fxLayout="column" class="w-100">
-                            <div class="name"> {{ law.number }} </div>
+                    <div class="picture">
+                        {{law.house === 'Senado' ? 'S' : 'C'}}
+                    </div>
+                    <div class="content">
+                        <div class="conversationHeader">
                             <div fxLayout="column" class="w-100">
-                                <div fxLayout="row"
-                                     class="progress">
-                                    <ng-container *ngFor="let resume of getProgressBar(law.lawResumes)">
-                                        <div style="height: 100%;"
-                                             [ngStyle]="{'width': resume.percent + '%', 'background-color': resume.color}">
-                                        </div>
-                                    </ng-container>
-                                </div>
-                                <div fxLayout="row" style="padding-top: 10px">
-                                    <ng-container
-                                            *ngFor="let resume of getProgressBar(law.lawResumes); let last = last">
-
-                                        <div class="" fxLayoutAlign="start center">
-                                            <div style="height: 12px; width: 12px; border-radius: 12px"
-                                                 [ngStyle]="{'background-color': resume.color}">
-                                            </div>
-                                            <span style="margin: 0 10px 0 5px; font-size: 12px">
-                                                                {{resume.percent + '% ' + resume.vote}}
-                                                            </span>
-                                        </div>
-                                        <ng-container *ngIf="last">
-                                            <div class="" fxLayoutAlign="end end" style="font-size: 14px; flex: 1">
-                                                {{resume.total + ' votos'}}
+                                <div class="name"> {{ law.myRankingTitle }} </div>
+                                <div fxLayout="column" class="w-100">
+                                    <div fxLayout="row"
+                                         class="progress">
+                                        <ng-container *ngFor="let resume of getProgressBar(law.lawResumes)">
+                                            <div style="height: 100%;"
+                                                 [ngStyle]="{'width': resume.percent + '%', 'background-color': resume.color}">
                                             </div>
                                         </ng-container>
-                                    </ng-container>
+                                    </div>
+                                    <div fxLayout="row" style="padding-top: 10px">
+                                        <ng-container
+                                                *ngFor="let resume of getProgressBar(law.lawResumes); let last = last">
+
+                                            <div class="" fxLayoutAlign="start center">
+                                                <div style="height: 12px; width: 12px; border-radius: 12px"
+                                                     [ngStyle]="{'background-color': resume.color}">
+                                                </div>
+                                                <span style="margin: 0 10px 0 5px; font-size: 12px">
+                                                                {{resume.percent + '% ' + resume.vote}}
+                                                            </span>
+                                            </div>
+                                            <ng-container *ngIf="last">
+                                                <div class="" fxLayoutAlign="end end" style="font-size: 14px; flex: 1">
+                                                    {{resume.total + ' votos'}}
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-    </div>
-    </ng-container>
-    </ng-container>
-    <ng-template #parliamentarianList>
-        <app-skeleton-user-list *ngIf="!filteredConversations.length"></app-skeleton-user-list>
-        <ng-container *ngFor="let conversation of filteredConversations">
-            <div class="conversation"
-                 (click)="handleConversationClicked(conversation)">
-                <div class="picture">
-                    <img alt="photo" src="{{conversation.parliamentarian.photo}}"/>
-                    <div class="score"
-                         [ngClass]="{'good': conversation.scoreRanking <= 150, 'regular': conversation.scoreRanking > 150 && conversation.scoreRanking <= 350, 'bad': conversation.scoreRanking > 350 }">
-                        <h2>{{conversation.scoreRanking}}º</h2>
-                    </div>
-                </div>
-                <div class="content">
-                    <div class="conversationHeader">
-                        <div fxLayout="column">
-                            <div class="name"> {{ conversation.parliamentarian.nickname }} </div>
-                            <div *ngIf="conversation.parliamentarian.isReelection" class="chip">CANDIDATO A
-                                REELEIÇÃO
-                            </div>
-                        </div>
-                        <div class="time" fxLayoutAlign="end end">{{conversation.scoreTotal}} pts</div>
-                    </div>
-                    <div class="message">
-                        <img alt="unread"
-                             *ngIf="!conversation.parliamentarian.latestMessageRead"
-                             src="../../../assets/images/doubleTick.svg"
-                        />
-                        <img alt="read"
-                             *ngIf="conversation.parliamentarian.latestMessageRead"
-                             src="../../../assets/images/doubleTickBlue.svg"
-                        />
-                        <span *ngIf="conversation.parliamentarian.latestLawStatusId === 1"
-                              style="font-weight: bold;color: green">SIM</span>
-                        <span *ngIf="conversation.parliamentarian.latestLawStatusId === 2"
-                              style="font-weight: bold;color: red">NÃO</span>
-                        {{ conversation.parliamentarian.position }} {{ conversation.parliamentarian.party.prefix }}
-                        - {{conversation.parliamentarian.state.prefix}}
-                    </div>
-                </div>
-            </div>
+            </ng-container>
         </ng-container>
-    </ng-template>
-</div>
-<app-share-button fxHide.gt-sm [bottom]="'60px'"></app-share-button>
+        <ng-template #parliamentarianList>
+            <app-skeleton-user-list *ngIf="!filteredConversations?.length || loading"></app-skeleton-user-list>
+            <ng-container *ngFor="let conversation of filteredConversations">
+                <div class="conversation"
+                     (click)="handleConversationClicked(conversation)">
+                    <div class="picture">
+                        <img alt="photo" src="{{conversation.parliamentarian.photo}}"/>
+                        <div class="score"
+                             [ngClass]="{'good': conversation.scoreRanking <= 150, 'regular': conversation.scoreRanking > 150 && conversation.scoreRanking <= 350, 'bad': conversation.scoreRanking > 350 }">
+                            <h2>{{conversation.scoreRanking}}º</h2>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="conversationHeader">
+                            <div fxLayout="column">
+                                <div class="name"> {{ conversation.parliamentarian.nickname }} </div>
+                                <div *ngIf="conversation.parliamentarian.isReelection" class="chip">CANDIDATO A
+                                    REELEIÇÃO
+                                </div>
+                            </div>
+                            <div class="time" fxLayoutAlign="end end">{{conversation.scoreTotal}} pts</div>
+                        </div>
+                        <div class="message">
+                            <img alt="unread"
+                                 *ngIf="!conversation.parliamentarian.latestMessageRead"
+                                 src="../../../assets/images/doubleTick.svg"
+                            />
+                            <img alt="read"
+                                 *ngIf="conversation.parliamentarian.latestMessageRead"
+                                 src="../../../assets/images/doubleTickBlue.svg"
+                            />
+                            <span *ngIf="conversation.parliamentarian.latestLawStatusId === 1"
+                                  style="font-weight: bold;color: green">SIM</span>
+                            <span *ngIf="conversation.parliamentarian.latestLawStatusId === 2"
+                                  style="font-weight: bold;color: red">NÃO</span>
+                            {{ conversation.parliamentarian.position }} {{ conversation.parliamentarian.party.prefix }}
+                            - {{conversation.parliamentarian.state.prefix}}
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-template>
+    </div>
+    <app-share-button fxHide.gt-sm [bottom]="'60px'"></app-share-button>
 </div>

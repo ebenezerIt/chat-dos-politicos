@@ -12,7 +12,6 @@ export class LocalStorage {
     }
 
     set(key: string, value: any): boolean {
-        console.log('storing', key);
         if (this.storage) {
             this.storage.setItem(key, JSON.stringify(value));
             return true;

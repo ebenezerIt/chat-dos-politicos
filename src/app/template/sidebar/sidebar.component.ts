@@ -123,7 +123,6 @@ export class SidebarComponent {
             if (!this.filter.searchText) return list?.slice(0, this.listSize);
 
             return list.filter((data) => {
-                console.log("DAATa", data, this.filter);
                 return (
                     data.myRankingTitle
                         ?.toLowerCase()

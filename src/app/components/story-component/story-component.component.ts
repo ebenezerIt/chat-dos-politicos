@@ -226,7 +226,6 @@ export class StoryComponent implements OnInit, AfterViewInit {
         if (this.startSeconds && this.endSeconds) {
             let timeDiff = this.endSeconds.getTime() - this.startSeconds.getTime();
             this.remainingSeconds = this.remainingSeconds - timeDiff;
-            console.log('remainingSeconds')
             return this.remainingSeconds
         }
         return 0

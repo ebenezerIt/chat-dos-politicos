@@ -58,6 +58,8 @@ export class ChatComponent implements OnInit {
             }
             if (params.vt) {
                 this.vt = parseInt(params.vt);
+            } else {
+                this.vt = null;
             }
 
         });

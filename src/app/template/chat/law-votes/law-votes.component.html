@@ -2,14 +2,14 @@
 
     <ng-container *ngIf="currentLaw; else skeleton">
 
-        <ng-container *ngIf="filteredLawVotes.length; else noVotes"
+        <ng-container *ngIf="filteredLawVotes?.length; else noVotes"
         >
             <ng-container
                     *ngFor="let law of filteredLawVotes"
             >
-                <div class="conversation"
-                     (click)="handleParliamentarianClicked(law.parliamentarian)">
-                    <div class="picture">
+                <div class="conversation">
+                    <div class="picture"
+                         (click)="handleParliamentarianClicked(law.parliamentarian)">
                         <img alt="photo" src="{{law.parliamentarian.photo}}"/>
                         <div class="score"
                              [ngClass]="{'good': law.parliamentarian.ranking[0].scoreRanking <= 150,
@@ -21,7 +21,10 @@
                     <div class="content">
                         <div class="conversationHeader">
                             <div fxLayout="column" fxLayoutGap="5px">
-                                <div class="name"> {{ law.parliamentarian.nickname }} </div>
+                                <div class="name"
+                                     (click)="handleParliamentarianClicked(law.parliamentarian)">
+                                        {{ law.parliamentarian.nickname }}
+                                </div>
                                 <div *ngIf="law.parliamentarian.isReelection" class="chip">CANDIDATO A
                                     REELEIÇÃO
                                 </div>

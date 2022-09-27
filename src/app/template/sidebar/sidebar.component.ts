@@ -52,6 +52,10 @@ export class SidebarComponent {
         this.filterByPosition(),
         this.filterBySearchText(),
     ];
+    filterLawFunctions: FilterFunction[] = [
+        this.filterLawByPosition(),
+        this.filterLawBySearchText(),
+    ];
 
     constructor(private politicosService: PoliticosService,
                 private router: Router,
@@ -83,6 +87,16 @@ export class SidebarComponent {
         return list;
     }
 
+    get filteredLaws(): any[] {
+        let list = [...this.laws];
+
+        this.filterLawFunctions.forEach((filter: FilterFunction) => {
+            list = filter(list);
+        });
+
+        return list;
+    }
+
     filterBySearchText(): FilterFunction {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
@@ -102,6 +116,26 @@ export class SidebarComponent {
         };
     }
 
+    filterLawBySearchText(): FilterFunction {
+
+        return (list: any[]): any[] => {
+
+            if (!this.filter.searchText) return list?.slice(0, this.listSize);
+
+            return list.filter((data) => {
+                console.log("DAATa", data, this.filter);
+                return (
+                    data.myRankingTitle
+                        ?.toLowerCase()
+                        .includes(this.filter.searchText.toLowerCase()) ||
+                    data.myRankingTitle
+                        ?.toLowerCase()
+                        .includes(this.filter.searchText.toLowerCase())
+                );
+            });
+        };
+    }
+
     filterByPosition(): FilterFunction {
 
         return (list: ParliamentarianDataResponse[]): ParliamentarianDataResponse[] => {
@@ -114,6 +148,24 @@ export class SidebarComponent {
 
             if (this.filter.senate) return list.filter(data => {
                 return data.parliamentarian.position === 'Senador';
+            });
+
+            return list;
+        }
+    }
+
+    filterLawByPosition(): FilterFunction {
+
+        return (list: any[]): any[] => {
+
+            if (this.filter.chamber && this.filter.senate) return list;
+
+            if (this.filter.chamber) return list.filter(data => {
+                return data.house === 'Câmara';
+            });
+
+            if (this.filter.senate) return list.filter(data => {
+                return data.house === 'Senado';
             });
 
             return list;
@@ -152,10 +204,10 @@ export class SidebarComponent {
             });
         this.politicosService.getLawVotesById(law.id)
             .subscribe((lawResponse: any) => {
-            const currentLaw = {
-                law: law,
-                lawVoteList: lawResponse.data
-            }
+                const currentLaw = {
+                    law: law,
+                    lawVoteList: lawResponse.data
+                }
                 this.store.dispatch(setCurrentLaw({currentLaw: currentLaw}));
             });
     }
@@ -191,7 +243,12 @@ export class SidebarComponent {
 
     onChangeState(): void {
         this.filterStorageService.setUserFilters(this.filter);
-
+        if (this.chatListType === ChatListType.LAW) {
+            this.router.navigate([`/${RouteEnum.LAW_VOTES}`], {
+                queryParams: {s: this.filter.state},
+                queryParamsHandling: 'merge'
+            });
+        }
     }
 
     clearSearchText(): void {
@@ -211,7 +268,7 @@ export class SidebarComponent {
 
         let total = 0
 
-        resumes.forEach( resume => {
+        resumes.forEach(resume => {
             total += resume.count
         })
 
@@ -240,10 +297,10 @@ export class SidebarComponent {
             return {...resume, percent: percent ? percent : 1, color, vote, total}
         })
         if (newResumes.length > 3) {
-            return [...newResumes.filter( resume => resume.color != 'orange'),
+            return [...newResumes.filter(resume => resume.color != 'orange'),
                 ...this.returnNoVotes(newResumes.filter((resume) => resume.color === 'orange'))]
         }
-     return newResumes
+        return newResumes
     }
 
     returnNoVotes(newResumes): any[] {

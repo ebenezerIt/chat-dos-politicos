@@ -72,7 +72,16 @@
                     <div class="nameSection">{{currentLaw?.law?.myRankingTitle}}</div>
                 </div>
             </div>
-
+        </div>
+        <div fxHide.gt-sm class="w-100" fxLayoutAlign="center center" style="background-color: #137f36; margin: -10px 0 0; padding-bottom: 10px">
+            <select style="border: 2px solid #137f36; padding: 3px; border-radius: 20px; color: #137f36 "
+                    [(ngModel)]="filter.state"
+                    (ngModelChange)="onChangeState()">
+                <option value="">Todos Estados</option>
+                <ng-container *ngFor="let option of states">
+                    <option [value]="option.sigla">{{option.sigla}}</option>
+                </ng-container>
+            </select>
         </div>
         <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
             <router-outlet></router-outlet>

@@ -58,6 +58,13 @@
     }
   }
 
+  .chatListType{
+    img{
+     position: absolute;
+     margin-block-start: -3px;
+    }
+  }
+
   #noConversations {
     padding-top: 30px;
     text-align: center;
@@ -208,7 +215,9 @@
         }
       }
     }
+  
   }
+
 }
 
 .mobile-height {
@@ -334,3 +343,4 @@
   overflow: hidden;
   margin-top: 10px;
 }
+

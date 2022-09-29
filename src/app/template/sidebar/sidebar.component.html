@@ -18,9 +18,14 @@
             </div>
             <div fxLayoutAlign="center center" (click)="changeListType()"
                  style="cursor: pointer; height: 100%; background-color: #fbfbfb; border-bottom: 1px solid #e1e4e5;">
-                <span style="background-color: #137f36; padding: 5px 15px; color: white; border-radius: 25px">{{chatListType === CHAT_LIST_TYPE.LAW ? 'Votações' : 'Parlamentares'}}</span>
+                <span class="chatListType" style="background-color: #137f36; padding: 5px 25px; color: white; border-radius: 25px;    margin: 10px;" > 
+                    {{chatListType === CHAT_LIST_TYPE.LAW ? 'Votações' : 'Parlamentares'}}
+                        <img src="../../../assets/images/chevron-down.png" alt="chevron-down">               
+                </span> 
+                
             </div>
         </div>
+       
         <div class="filter" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
             <div fxLayout="column" style="color: #137f36">
                 <select style="border: 2px solid #137f36; padding: 3px; border-radius: 20px; color: #137f36 "
@@ -172,3 +177,4 @@
     </div>
     <app-share-button fxHide.gt-sm [bottom]="'60px'"></app-share-button>
 </div>
+

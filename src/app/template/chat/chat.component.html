@@ -11,7 +11,7 @@
                     </picture>
                 </div>
                 <div class="picture">
-                    <img alt="photo" src="{{ conversation?.parliamentarianRanking.parliamentarian.photo }}"/>
+                    <img alt="photo" src="{{getThumbnail(conversation?.parliamentarianRanking.parliamentarianId)}}"/>
 
                     <div class="score"
                          [ngClass]="{'good': conversation.parliamentarianRanking.scoreRanking <= 150, 'regular': conversation.parliamentarianRanking.scoreRanking > 150 && conversation.parliamentarianRanking.scoreRanking <= 350, 'bad': conversation.parliamentarianRanking.scoreRanking > 350 }">

@@ -10,7 +10,7 @@
                 <div class="conversation">
                     <div class="picture"
                          (click)="handleParliamentarianClicked(law.parliamentarian)">
-                        <img alt="photo" src="{{law.parliamentarian.photo}}"/>
+                        <img alt="photo" src="{{getThumbnail(law.parliamentarianId)}}"/>
                         <div class="score"
                              [ngClass]="{'good': law.parliamentarian.ranking[0].scoreRanking <= 150,
                           'regular': law.parliamentarian.ranking[0].scoreRanking > 150 && law.parliamentarian.ranking[0].scoreRanking <= 350,

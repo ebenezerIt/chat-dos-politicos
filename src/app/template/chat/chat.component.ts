@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../components/dialog-component/dialog-component.component';
 import { Filter, FilterStorageService } from '../../services/filter-storage.service';
 import { ESTADOS } from '../../constants/estados-constant';
+import { ConfigEnum } from '../../constants/config-enum';
 
 @Component({
     selector: 'app-chat',
@@ -32,6 +33,7 @@ export class ChatComponent implements OnInit {
     states = ESTADOS;
     CHAT_LIST_TYPE = ChatListType;
     LAW_VOTE_TYPE = LawVoteType;
+    configEnum = ConfigEnum;
 
     constructor(private route: ActivatedRoute,
                 store: Store<{ parliamentarians: parliamentariansReducerInterface }>,
@@ -108,5 +110,7 @@ export class ChatComponent implements OnInit {
 
     }
 
-
+    getThumbnail(parliamentarianId: number): string {
+        return this.configEnum.CHAT_API_THUMBNAIL + parliamentarianId + '.jpg';
+    }
 }

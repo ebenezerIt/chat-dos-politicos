@@ -81,7 +81,13 @@ export class LawVotesComponent implements OnInit {
         return (list: any[]): any[] => {
 
             if (!this.vt) {
-                return list;
+                return [...list.filter(law => {
+                    return law.lawStatus.id === LawVoteType.SIM
+                }), ...list.filter(law => {
+                    return law.lawStatus.id !== LawVoteType.NAO && law.lawStatus.id !== LawVoteType.SIM
+                }), ...list.filter(law => {
+                    return law.lawStatus.id === LawVoteType.NAO
+                })];
             }
 
             if (this.vt === LawVoteType.SIM) {

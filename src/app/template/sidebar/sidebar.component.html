@@ -132,7 +132,7 @@
                     <div class="conversation"
                          (click)="handleConversationClicked(conversation)">
                         <div class="picture">
-                            <img alt="photo" src="{{conversation.parliamentarian.photo}}"/>
+                            <img alt="photo" src="{{ getThumbnail(conversation.parliamentarianId)}}"/>
                             <div class="score"
                                  [ngClass]="{'good': conversation.scoreRanking <= 150, 'regular': conversation.scoreRanking > 150 && conversation.scoreRanking <= 350, 'bad': conversation.scoreRanking > 350 }">
                                 <h2>{{conversation.scoreRanking}}º</h2>

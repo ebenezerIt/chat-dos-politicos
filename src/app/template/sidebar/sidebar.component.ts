@@ -16,11 +16,13 @@ import { Filter, FilterStorageService } from '../../services/filter-storage.serv
 import { RoutesReducerInterface } from '../../stores/routes/route.reducer';
 import { ESTADOS } from '../../constants/estados-constant';
 import { ChatListType } from '../../constants/chat-list-type';
+import { ConfigEnum } from '../../constants/config-enum';
 
 type FilterFunction = {
     (data: ParliamentarianDataResponse[]): ParliamentarianDataResponse[]
 };
 
+type configEnum = ConfigEnum;
 
 @Component({
     selector: 'app-sidebar',
@@ -29,7 +31,7 @@ type FilterFunction = {
 })
 export class SidebarComponent {
     @Output() conversationClicked: EventEmitter<any> = new EventEmitter();
-    @Input() loading: boolean = false
+    @Input() loading: boolean = false;
     conversations: ParliamentarianDataResponse[];
     laws: any[];
     listSize = 20;
@@ -39,13 +41,13 @@ export class SidebarComponent {
     selectedRadioSenateEnum = true;
     fromBestToWorst = true;
     selectedState = '';
-    filter: Filter
+    filter: Filter;
     selectedRoute: RouteEnum;
     states = ESTADOS;
     chatListType: ChatListType;
 
-
     CHAT_LIST_TYPE = ChatListType;
+    CHAT_API_THUMBNAIL = ConfigEnum.CHAT_API_THUMBNAIL;
 
     filterFunctions: FilterFunction[] = [
         this.filterByState(),
@@ -299,12 +301,16 @@ export class SidebarComponent {
             return [...newResumes.filter(resume => resume.color != 'orange'),
                 ...this.returnNoVotes(newResumes.filter((resume) => resume.color === 'orange'))]
         }
-        return newResumes
+        return newResumes;
     }
 
     returnNoVotes(newResumes): any[] {
-        let percent = 0
-        newResumes.map(resume => percent = percent + resume.percent)
-        return [{...newResumes[0], percent}]
+        let percent = 0;
+        newResumes.map(resume => percent = percent + resume.percent);
+        return [{...newResumes[0], percent}];
+    }
+
+    getThumbnail(parliamentarianId: number): string {
+        return this.CHAT_API_THUMBNAIL +  parliamentarianId + '.jpg';
     }
 }

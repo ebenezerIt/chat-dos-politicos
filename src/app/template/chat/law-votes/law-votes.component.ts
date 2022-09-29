@@ -9,6 +9,7 @@ import { setCurrentConversation } from '../../../stores/parliamentarians/parliam
 import { ParliamentarianDataResponse } from '../../../politicos/ParlamentarianResponseDtos';
 import { PoliticosService } from '../../../politicos/politicos.service';
 import { Filter, FilterStorageService } from '../../../services/filter-storage.service';
+import { ConfigEnum } from '../../../constants/config-enum';
 
 @Component({
     selector: 'app-law-votes',
@@ -23,7 +24,8 @@ export class LawVotesComponent implements OnInit {
         this.filterLawByState(),
         this.filterLawByVote(),
     ];
-    filter: Filter
+    filter: Filter;
+    configEnum = ConfigEnum;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<{ parliamentarians: parliamentariansReducerInterface }>,
@@ -84,23 +86,22 @@ export class LawVotesComponent implements OnInit {
 
             if (this.vt === LawVoteType.SIM) {
                 return list.filter(law => {
-                    return law.lawStatus.id === LawVoteType.SIM
+                    return law.lawStatus.id === LawVoteType.SIM;
                 });
             } else if (this.vt === LawVoteType.NAO) {
                 return list.filter(law => {
-                    return law.lawStatus.id === LawVoteType.NAO
+                    return law.lawStatus.id === LawVoteType.NAO;
                 });
 
             } else {
                 return list.filter(law => {
-                    return law.lawStatus.id !== LawVoteType.NAO && law.lawStatus.id !== LawVoteType.SIM
+                    return law.lawStatus.id !== LawVoteType.NAO && law.lawStatus.id !== LawVoteType.SIM;
                 });
             }
-        }
+        };
     }
 
-
-    handleParliamentarianClicked(parliamentarian) {
+    handleParliamentarianClicked(parliamentarian): void {
         this.politicosService.getParliamentarianVotesById(parliamentarian.id)
             .subscribe((conversationResponse: ParliamentarianDataResponse) => {
                 this.store.dispatch(setCurrentConversation({currentConversation: conversationResponse}));
@@ -109,5 +110,9 @@ export class LawVotesComponent implements OnInit {
                         queryParams: {id: parliamentarian.id}
                     });
             });
+    }
+
+    getThumbnail(parliamentarianId: number): string {
+        return this.configEnum?.CHAT_API_THUMBNAIL +  parliamentarianId + '.jpg';
     }
 }

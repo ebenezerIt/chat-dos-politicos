@@ -10,7 +10,7 @@ export class ShareButtonComponent{
   clickOutside() {
     if (this.active) this.toggleOptions();
   }
-  @Input() bottom = '90px'
+  @Input() bottom = '150px'
 
   active = false
   constructor(

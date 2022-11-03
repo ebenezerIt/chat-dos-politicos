@@ -132,6 +132,11 @@
     overflow: scroll;
     overflow-x: hidden;
 
+    .mat-button {
+      width: 70%;
+      min-width: "150";
+      min-height: "25";
+    }
   }
 
   .footer {

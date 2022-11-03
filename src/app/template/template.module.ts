@@ -24,6 +24,9 @@ import { SkeletonUserListComponent } from '../components/skeleton-user-list/skel
 import { SkeletonMessageListComponent } from '../components/skeleton-message-list/skeleton-message-list.component';
 import { ShareButtonComponent } from '../components/share-button/share-button.component';
 import { LawVotesComponent } from './chat/law-votes/law-votes.component';
+import { VoiceButtonComponent } from '../components/voice-button/voice-button.component';
+import { ContatosDialogComponent } from '../components/contatos-dialog/contatos-dialog.component';
+
 
 @NgModule({
     declarations: [
@@ -39,7 +42,9 @@ import { LawVotesComponent } from './chat/law-votes/law-votes.component';
         SkeletonUserListComponent,
         SkeletonMessageListComponent,
         ShareButtonComponent,
-        LawVotesComponent
+        VoiceButtonComponent,
+        LawVotesComponent,
+        ContatosDialogComponent
     ],
     imports: [
         CommonModule,

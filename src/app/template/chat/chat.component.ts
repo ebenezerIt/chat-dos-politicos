@@ -12,6 +12,7 @@ import { DialogComponent } from '../../components/dialog-component/dialog-compon
 import { Filter, FilterStorageService } from '../../services/filter-storage.service';
 import { ESTADOS } from '../../constants/estados-constant';
 import { ConfigEnum } from '../../constants/config-enum';
+import { ContatosDialogComponent } from 'src/app/components/contatos-dialog/contatos-dialog.component';
 
 @Component({
     selector: 'app-chat',
@@ -34,6 +35,7 @@ export class ChatComponent implements OnInit {
     CHAT_LIST_TYPE = ChatListType;
     LAW_VOTE_TYPE = LawVoteType;
     configEnum = ConfigEnum;
+    dialogRef: any;
 
     constructor(private route: ActivatedRoute,
                 store: Store<{ parliamentarians: parliamentariansReducerInterface }>,
@@ -113,4 +115,24 @@ export class ChatComponent implements OnInit {
     getThumbnail(parliamentarianId: number): string {
         return this.configEnum.CHAT_API_THUMBNAIL + parliamentarianId + '.jpg';
     }
+
+    openDialog2(){
+        let message = this.dialog.open(ContatosDialogComponent, {
+          width: '200px',
+          data: {
+            nickname: this.conversation.parliamentarianRanking.parliamentarian.nickname,
+            phone: this.conversation.parliamentarianRanking.parliamentarian.phone,
+            email: this.conversation.parliamentarianRanking.parliamentarian.email,
+            facebook: this.conversation.parliamentarianRanking.parliamentarian.facebook,
+            instagram: this.conversation.parliamentarianRanking.parliamentarian.instagram,
+            twitter: this.conversation.parliamentarianRanking.parliamentarian.twitter,
+            youtube: this.conversation.parliamentarianRanking.parliamentarian.youtube,
+    
+          }
+    
+        })};
+    
+        cancel(): void {
+          this.dialogRef.close();
+        }
 }

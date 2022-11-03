@@ -32,9 +32,12 @@
         <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
 
             <app-share-button fxHide.gt-sm></app-share-button>
-
+            <button mat-button (click)="openDialog2()">
+                <app-voice-button fxHide.gt-sm></app-voice-button>
+            </button>
             <router-outlet></router-outlet>
         </div>
+        
         <div ngClass.lt-md="mobile-footer" ngClass.gt-sm="footer">
             <div class="switch">
                 <div class="option"
@@ -82,10 +85,15 @@
                     <option [value]="option.sigla">{{option.sigla}}</option>
                 </ng-container>
             </select>
+            
         </div>
+        
         <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
             <router-outlet></router-outlet>
             <app-share-button fxHide.gt-sm></app-share-button>
+            <button mat-button (click)="openDialog2()">
+                <app-voice-button fxHide.gt-sm></app-voice-button>
+            </button>
         </div>
         <div ngClass.lt-md="mobile-footer" ngClass.gt-sm="footer">
             <div class="switch">

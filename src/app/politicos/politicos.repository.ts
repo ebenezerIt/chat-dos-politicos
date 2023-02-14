@@ -93,7 +93,7 @@ export class PoliticosRepository {
     private static shrinkParliamentariansData(parliamentarianData: ParliamentarianDataResponse): ParliamentarianDataResponse {
         const shrink = new ParliamentarianDataResponse();
         shrink.parliamentarianId = parliamentarianData.parliamentarianId;
-        shrink.scoreRanking = parliamentarianData.scoreRanking;
+        shrink.scoreRanking = parliamentarianData.scoreRankingByPosition;
         shrink.scoreTotal = parliamentarianData.scoreTotal;
         shrink.parliamentarian = PoliticosRepository.shrinkParliamentarian(parliamentarianData.parliamentarian);
         return shrink;

@@ -1,0 +1,12 @@
+{
+  "/static/*": {
+    "target": "https://storage.googleapis.com/chatdospoliticos/static",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/static": ""
+    }
+  }
+}
+

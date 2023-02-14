@@ -36,8 +36,8 @@ export class PoliticosService {
             const lawVotes = parliamentarianRanking.parliamentarian.lawVotes;
             const latestLawVote = lawVotes[0];
             response.data.parliamentarianRanking.parliamentarian.latestMessageRead = true;
-            response.data.parliamentarianRanking.parliamentarian.latestMessage = latestLawVote.law.number;
-            response.data.parliamentarianRanking.parliamentarian.latestMessageTime = latestLawVote.law.dateVoting;
+            response.data.parliamentarianRanking.parliamentarian.latestMessage = latestLawVote?.law?.number;
+            response.data.parliamentarianRanking.parliamentarian.latestMessageTime = latestLawVote?.law?.dateVoting;
             subject.next(response.data);
           }});
     return subject.asObservable();

@@ -1,0 +1,11 @@
+{
+  "/api/*": {
+    "target": "https://apirest.politicos.org.br/api/",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
+

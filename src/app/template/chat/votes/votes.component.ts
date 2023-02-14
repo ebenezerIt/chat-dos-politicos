@@ -40,10 +40,10 @@ export class VotesComponent {
     const sortedVotes = [...this.conversation.parliamentarianRanking.parliamentarian.lawVotes];
     return sortedVotes
         .sort((vote1, vote2) => {
-          if (vote1.law.dateVoting > vote2.law.dateVoting) {
+          if (vote1?.law?.dateVoting > vote2?.law?.dateVoting) {
             return 1;
           }
-          if (vote1.law.dateVoting < vote2.law.dateVoting) {
+          if (vote1?.law?.dateVoting < vote2?.law?.dateVoting) {
             return -1;
           }
           return 0;

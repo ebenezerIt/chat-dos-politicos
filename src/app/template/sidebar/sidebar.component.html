@@ -18,14 +18,14 @@
             </div>
             <div fxLayoutAlign="center center" (click)="changeListType()"
                  style="cursor: pointer; height: 100%; background-color: #fbfbfb; border-bottom: 1px solid #e1e4e5;">
-                <span class="chatListType" style="background-color: #137f36; padding: 5px 25px; color: white; border-radius: 25px;    margin: 10px;" > 
+                <span class="chatListType" style="background-color: #137f36; padding: 5px 25px; color: white; border-radius: 25px;    margin: 10px;" >
                     {{chatListType === CHAT_LIST_TYPE.LAW ? 'Votações' : 'Parlamentares'}}
-                        <img src="../../../assets/images/chevron-down.png" alt="chevron-down">               
-                </span> 
-                
+                        <img src="../../../assets/images/chevron-down.png" alt="chevron-down">
+                </span>
+
             </div>
         </div>
-       
+
         <div class="filter" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
             <div fxLayout="column" style="color: #137f36">
                 <select style="border: 2px solid #137f36; padding: 3px; border-radius: 20px; color: #137f36 "
@@ -95,7 +95,7 @@
                                     <div fxLayout="column" class="w-100">
                                         <div fxLayout="row"
                                              class="progress">
-                                            <ng-container *ngFor="let resume of getProgressBar(law.lawResumes)">
+                                            <ng-container *ngFor="let resume of getProgressBar(law?.lawResumes)">
                                                 <div style="height: 100%;"
                                                      [ngStyle]="{'width': resume.percent + '%', 'background-color': resume.color}">
                                                 </div>
@@ -103,7 +103,7 @@
                                         </div>
                                         <div fxLayout="row" style="padding-top: 10px">
                                             <ng-container
-                                                    *ngFor="let resume of getProgressBar(law.lawResumes); let last = last">
+                                                    *ngFor="let resume of getProgressBar(law?.lawResumes); let last = last">
 
                                                 <div class="" fxLayoutAlign="start center">
                                                     <div style="height: 12px; width: 12px; border-radius: 12px"

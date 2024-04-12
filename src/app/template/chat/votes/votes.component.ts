@@ -31,7 +31,7 @@ export class VotesComponent {
     this.dialog.open(DialogComponent, {
       data: {
         message: law.description,
-        title: law.number,
+        title: law.myRankingTitle || law.number,
       },
     });
   }

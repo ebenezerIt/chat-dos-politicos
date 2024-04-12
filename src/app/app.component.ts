@@ -26,7 +26,7 @@ export class AppComponent {
                 resp.forEach(conversation => {
                     if (!conversation.parliamentarian.latestMessage) {
                         // get by id and enrich
-                        conversation.parliamentarian.latestMessage = 'MPV 1085/2021 | Mudança nos Serviços de Cartórios';
+                        conversation.parliamentarian.latestMessage = '...';
                         conversation.parliamentarian.latestMessageTime = new Date();
                     }
                 });
@@ -52,3 +52,4 @@ export class AppComponent {
             });
     }
 }
+

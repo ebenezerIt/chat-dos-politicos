@@ -23,7 +23,7 @@ describe('AppComponent', () => {
   it(`should have as title 'chat-dos-politicos'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.conversation).toEqual('chat-dos-politicos');
+    expect(app).toEqual('chat-dos-politicos');
   });
 
   it('should render title', () => {

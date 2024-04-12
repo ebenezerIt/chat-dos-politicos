@@ -91,7 +91,7 @@
                         <div class="content">
                             <div class="conversationHeader">
                                 <div fxLayout="column" class="w-100">
-                                    <div class="name"> {{ law.myRankingTitle }} </div>
+                                    <div class="name"> {{ law.myRankingTitle || law.number }} </div>
                                     <div fxLayout="column" class="w-100">
                                         <div fxLayout="row"
                                              class="progress">
@@ -137,10 +137,11 @@
                     <div class="conversation"
                          (click)="handleConversationClicked(conversation)">
                         <div class="picture">
-                            <img alt="photo" src="{{ getThumbnail(conversation.parliamentarianId)}}"/>
+                            <img alt="photo" src="{{ getThumbnail(conversation.parliamentarianId)}}"
+                                 onerror="this.onerror=null; this.src='assets/images/noPic.svg'"/>
                             <div class="score"
-                                 [ngClass]="{'good': conversation.scoreRanking <= 150, 'regular': conversation.scoreRanking > 150 && conversation.scoreRanking <= 350, 'bad': conversation.scoreRanking > 350 }">
-                                <h2>{{conversation.scoreRanking}}º</h2>
+                                 [ngClass]="{'good': conversation.scoreRankingByPosition <= 150, 'regular': conversation.scoreRankingByPosition > 150 && conversation.scoreRankingByPosition <= 350, 'bad': conversation.scoreRankingByPosition > 350 }">
+                                <h2>{{conversation.scoreRankingByPosition}}º</h2>
                             </div>
                         </div>
                         <div class="content">

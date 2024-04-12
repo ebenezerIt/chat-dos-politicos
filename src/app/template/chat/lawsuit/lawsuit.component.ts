@@ -22,17 +22,16 @@ export class LawsuitComponent implements OnInit{
 
     store.select('parliamentarians').subscribe(parliamentarians => {
       this.processes = parliamentarians.currentConversation.parliamentarianRanking.parliamentarian.processes;
-      this.processes.push()
     });
 
     store.dispatch(setSelectedRoute({route: RouteEnum.LAWSUIT}));
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     setTimeout(() => {
-      this.loading = false
-    }, 1000)
+      this.loading = false;
+    }, 1000);
   }
 
 }

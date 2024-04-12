@@ -80,7 +80,18 @@ export class SidebarComponent {
     get filteredConversations(): ParliamentarianDataResponse[] {
         let list = [...this.conversations];
 
-        if (!this.filter.fromBestToWorse) list.reverse();
+        list.sort((a, b) => {
+            const sum = a.scoreRankingByPosition - b.scoreRankingByPosition;
+            if (sum !== 0) {
+                return sum;
+            }
+            // FIXME, considerar processos ou qq outra coisa
+            return a.parliamentarian.nickname.localeCompare(b.parliamentarian.nickname, 'pt-BR', {caseFirst: 'upper'});
+        });
+
+        if (!this.filter.fromBestToWorse) {
+            list.reverse();
+        }
 
         this.filterFunctions.forEach((filter: FilterFunction) => {
             list = filter(list);

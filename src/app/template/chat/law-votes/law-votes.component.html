@@ -10,12 +10,13 @@
                 <div class="conversation">
                     <div class="picture"
                          (click)="handleParliamentarianClicked(law.parliamentarian)">
-                        <img alt="photo" src="{{getThumbnail(law.parliamentarianId)}}"/>
+                        <img alt="photo" src="{{getThumbnail(law.parliamentarianId)}}"
+                             onerror="this.onerror=null; this.src='assets/images/noPic.svg'"/>
                         <div class="score"
-                             [ngClass]="{'good': law.parliamentarian.ranking[0].scoreRanking <= 150,
-                          'regular': law.parliamentarian.ranking[0].scoreRanking > 150 && law.parliamentarian.ranking[0].scoreRanking <= 350,
-                           'bad': law.parliamentarian.ranking[0].scoreRanking > 350 }">
-                            <h2>{{law.parliamentarian.ranking[0].scoreRanking}}º</h2>
+                             [ngClass]="{'good': law.parliamentarian.ranking[0].scoreRankingByPosition <= 150,
+                          'regular': law.parliamentarian.ranking[0].scoreRankingByPosition > 150 && law.parliamentarian.ranking[0].scoreRankingByPosition <= 350,
+                           'bad': law.parliamentarian.ranking[0].scoreRankingByPosition > 350 }">
+                            <h2>{{law.parliamentarian.ranking[0].scoreRankingByPosition}}º</h2>
                         </div>
                     </div>
                     <div class="content">

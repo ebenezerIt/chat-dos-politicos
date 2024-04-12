@@ -9,10 +9,11 @@ import {ParliamentarianListResponse, ParliamentarianSingleResponse} from './Parl
 })
 export class PoliticosClient {
 
-  listParliamentariansUrl = `/api/parliamentarianranking`;
-  listLawUrl = `/api/law`;
-  lawVoteUrl = `/api/parliamentarianlawvote`;
-  listParliamentarianVotesUrl = `/api/parliamentarianranking/parliamentarian`;
+  baseUrl = 'https://apirest.politicos.org.br/api';
+  listParliamentariansUrl = `${this.baseUrl}/parliamentarianranking`;
+  listLawUrl = `${this.baseUrl}/law`;
+  lawVoteUrl = `${this.baseUrl}/parliamentarianlawvote`;
+  listParliamentarianVotesUrl = `${this.baseUrl}/parliamentarianranking/parliamentarian`;
   constructor(private httpClient: HttpClient) { }
 
   listParliamentarians(searchParams: HttpParams): Observable<ParliamentarianListResponse> {

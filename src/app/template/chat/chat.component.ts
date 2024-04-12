@@ -71,7 +71,7 @@ export class ChatComponent implements OnInit {
         this.dialog.open(DialogComponent, {
             data: {
                 message: law.description,
-                title: law.number,
+                title: law.myRankingTitle || law.number,
             },
         });
     }
@@ -112,5 +112,13 @@ export class ChatComponent implements OnInit {
 
     getThumbnail(parliamentarianId: number): string {
         return this.configEnum.CHAT_API_THUMBNAIL + parliamentarianId + '.jpg';
+    }
+
+    getRankingTitleLetter(): string | null {
+        if (!this.currentLaw?.law?.myRankingTitle) {
+            return null;
+        }
+
+        return this.currentLaw.law.myRankingTitle.includes('Câmara') ? 'C' : 'S';
     }
 }

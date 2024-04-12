@@ -3,8 +3,6 @@ import {HttpParams} from '@angular/common/http';
 import {map, Observable, Subject} from 'rxjs';
 import {
     Expenditure,
-    Parliamentarian,
-    ParliamentarianDataResponse,
     ParliamentarianListResponse,
     ParliamentarianSingleResponse
 } from './ParlamentarianResponseDtos';
@@ -30,6 +28,7 @@ export class PoliticosRepository {
             const listResponseObservable = this.requestListParliamentarians();
             this.shrinkParliamentariansList(listResponseObservable)
                 .subscribe(parliamentarians => {
+                    this.fixParliamentariansPosition(parliamentarians);
                     this.localStorage.set('listParliamentarians', parliamentarians);
                     this.localStorage.setLastUpdate();
                     observableReturn.next(parliamentarians);
@@ -40,12 +39,11 @@ export class PoliticosRepository {
 
     private requestListParliamentarians(): Observable<ParliamentarianListResponse> {
         const searchParams = new HttpParams()
-            .append('Year', 0)
-            .append('Take', 1000)
+            .append('Take', 700)
             .append('Skip', 0)
-            .append('OrderBy', 'scoreRanking')
-            .append('Name', '')
-            .append('StatusId', 1);
+            .append('Year', 56)
+            .append('Legislature', 56)
+            .append('OrderBy', 'scoreRanking');
         return this.politicosClient.listParliamentarians(searchParams);
     }
 
@@ -78,39 +76,13 @@ export class PoliticosRepository {
 
     shrinkParliamentariansList(listResponseObservable: Observable<ParliamentarianListResponse>): Observable<ParliamentarianListResponse> {
         return listResponseObservable.pipe(map((parliamentarian: ParliamentarianListResponse) =>
-            this.shrinkParliamentarians(parliamentarian)));
+            this.mapper.shrinkParliamentarians(parliamentarian)));
     }
 
-    private shrinkParliamentarians(parliamentarian: ParliamentarianListResponse): ParliamentarianListResponse {
-        // TODO handle error parliamentarian.success = false;
-        const shrink = new ParliamentarianListResponse();
-        shrink.data = parliamentarian.data;
-        shrink.request = new Date();
-        shrink.data = parliamentarian.data.map(it => PoliticosRepository.shrinkParliamentariansData(it));
-        return shrink;
-    }
-
-    private static shrinkParliamentariansData(parliamentarianData: ParliamentarianDataResponse): ParliamentarianDataResponse {
-        const shrink = new ParliamentarianDataResponse();
-        shrink.parliamentarianId = parliamentarianData.parliamentarianId;
-        shrink.scoreRanking = parliamentarianData.scoreRankingByPosition;
-        shrink.scoreTotal = parliamentarianData.scoreTotal;
-        shrink.parliamentarian = PoliticosRepository.shrinkParliamentarian(parliamentarianData.parliamentarian);
-        return shrink;
-    }
-
-    private static shrinkParliamentarian(parliamentarian: Parliamentarian): Parliamentarian {
-        const shrink = new Parliamentarian();
-        shrink.id = parliamentarian.id;
-        shrink.photo = parliamentarian.photo;
-        shrink.name = parliamentarian.name;
-        shrink.nickname = parliamentarian.nickname;
-        shrink.position = parliamentarian.position;
-        shrink.latestMessage = parliamentarian.latestMessage;
-        shrink.latestMessageRead = parliamentarian.latestMessageRead;
-        shrink.party = parliamentarian.party;
-        shrink.state = parliamentarian.state;
-        shrink.isReelection = parliamentarian.isReelection;
-        return shrink;
+    private fixParliamentariansPosition(parliamentarians: ParliamentarianListResponse): void {
+        let position = 1;
+        parliamentarians.data.forEach(parliamentarianData => {
+            parliamentarianData.scoreRankingByPosition = position++;
+        });
     }
 }

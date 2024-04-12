@@ -1,5 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Expenditure, ParliamentarianSingleResponse} from './ParlamentarianResponseDtos';
+import {
+    Expenditure,
+    Parliamentarian,
+    ParliamentarianDataResponse,
+    ParliamentarianListResponse,
+    ParliamentarianSingleResponse
+} from './ParlamentarianResponseDtos';
 
 @Injectable({
     providedIn: 'root'
@@ -40,5 +46,41 @@ export class PoliticosMapper {
         expenditure.staffQuota = staffQuota;
 
         return expenditure;
+    }
+
+    shrinkParliamentariansData(parliamentarianData: ParliamentarianDataResponse): ParliamentarianDataResponse {
+        const shrink = new ParliamentarianDataResponse();
+        shrink.parliamentarianId = parliamentarianData.parliamentarianId;
+        shrink.scoreRanking = parliamentarianData.scoreRanking;
+        shrink.scoreRankingByPosition = parliamentarianData.scoreRankingByPosition;
+        shrink.scoreTotal = parliamentarianData.scoreTotal;
+        shrink.parliamentarian = this.shrinkParliamentarian(parliamentarianData.parliamentarian);
+        return shrink;
+    }
+
+    shrinkParliamentarian(parliamentarian: Parliamentarian): Parliamentarian {
+        const shrink = new Parliamentarian();
+        shrink.id = parliamentarian.id;
+        // shrink.photo = parliamentarian.photo;
+        shrink.name = parliamentarian.name;
+        shrink.nickname = parliamentarian.nickname;
+        shrink.position = parliamentarian.position;
+        shrink.latestMessage = parliamentarian.latestMessage;
+        shrink.latestMessageRead = parliamentarian.latestMessageRead;
+        shrink.party = parliamentarian.party;
+        shrink.party.photo = undefined;
+        shrink.state = parliamentarian.state;
+        shrink.state.photo = undefined;
+        shrink.isReelection = parliamentarian.isReelection;
+        return shrink;
+    }
+
+    shrinkParliamentarians(parliamentarian: ParliamentarianListResponse): ParliamentarianListResponse {
+        // TODO handle error parliamentarian.success = false;
+        const shrink = new ParliamentarianListResponse();
+        shrink.data = parliamentarian.data;
+        shrink.request = new Date();
+        shrink.data = parliamentarian.data.map(it => this.shrinkParliamentariansData(it));
+        return shrink;
     }
 }

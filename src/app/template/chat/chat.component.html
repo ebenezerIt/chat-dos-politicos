@@ -11,11 +11,15 @@
                     </picture>
                 </div>
                 <div class="picture">
-                    <img alt="photo" src="{{getThumbnail(conversation?.parliamentarianRanking.parliamentarianId)}}"/>
+                    <img alt="photo" src="{{getThumbnail(conversation?.parliamentarianRanking.parliamentarianId)}}"
+                         onerror="this.onerror=null; this.src='assets/images/noPic.svg'"/>
 
                     <div class="score"
-                         [ngClass]="{'good': conversation.parliamentarianRanking.scoreRanking <= 150, 'regular': conversation.parliamentarianRanking.scoreRanking > 150 && conversation.parliamentarianRanking.scoreRanking <= 350, 'bad': conversation.parliamentarianRanking.scoreRanking > 350 }">
-                        <h2>{{conversation?.parliamentarianRanking.scoreRanking}}º</h2>
+                         [ngClass]="{
+                         'good': conversation.parliamentarianRanking.scoreRankingByPosition <= 150,
+                         'regular': conversation.parliamentarianRanking.scoreRankingByPosition > 150 && conversation.parliamentarianRanking.scoreRankingByPosition <= 350,
+                         'bad': conversation.parliamentarianRanking.scoreRankingByPosition > 350 }">
+                        <h2>{{conversation?.parliamentarianRanking.scoreRankingByPosition}}º</h2>
                     </div>
                 </div>
                 <div>
@@ -66,14 +70,15 @@
                     </picture>
                 </div>
                 <div class="picture">
-                    {{ currentLaw?.law?.myRankingTitle.includes('Câmara') ? 'C' : 'S' }}
+                    {{ getRankingTitleLetter() }}
                 </div>
                 <div (click)="openDialog(currentLaw?.law)">
                     <div class="nameSection">{{currentLaw?.law?.myRankingTitle}}</div>
                 </div>
             </div>
         </div>
-        <div fxHide.gt-sm class="w-100" fxLayoutAlign="center center" style="background-color: #137f36; margin: -10px 0 0; padding-bottom: 10px">
+        <div fxHide.gt-sm class="w-100" fxLayoutAlign="center center"
+             style="background-color: #137f36; margin: -10px 0 0; padding-bottom: 10px">
             <select style="border: 2px solid #137f36; padding: 3px; border-radius: 20px; color: #137f36 "
                     [(ngModel)]="filter.state"
                     (ngModelChange)="onChangeState()">
@@ -95,13 +100,13 @@
                      queryParamsHandling="merge">
                     <span>SIM</span>
                 </div>
-                <div class="option"  [ngClass]="{'selected': vt === LAW_VOTE_TYPE.NAO}"
+                <div class="option" [ngClass]="{'selected': vt === LAW_VOTE_TYPE.NAO}"
                      [routerLink]="'/'+RouteEnum.LAW_VOTES"
                      [queryParams]="{vt: vt === LAW_VOTE_TYPE.NAO ? '' : LAW_VOTE_TYPE.NAO}"
                      queryParamsHandling="merge"
                 ><span>NÃO</span>
                 </div>
-                <div class="option"  [ngClass]="{'selected': vt === LAW_VOTE_TYPE.NAO_VOTOU}"
+                <div class="option" [ngClass]="{'selected': vt === LAW_VOTE_TYPE.NAO_VOTOU}"
                      [routerLink]="'/'+RouteEnum.LAW_VOTES"
                      [queryParams]="{vt: vt === LAW_VOTE_TYPE.NAO_VOTOU ? '' : LAW_VOTE_TYPE.NAO_VOTOU}"
                      queryParamsHandling="merge">

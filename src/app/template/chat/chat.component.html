@@ -69,11 +69,11 @@
                         <img alt="back" src="../../../assets/images/chevron-back.svg"/>
                     </picture>
                 </div>
-                <div class="picture">
+<!--                <div class="picture">
                     {{ getRankingTitleLetter() }}
-                </div>
+                </div>-->
                 <div (click)="openDialog(currentLaw?.law)">
-                    <div class="nameSection">{{currentLaw?.law?.myRankingTitle}}</div>
+                    <div class="nameSection">{{currentLaw?.law?.myRankingTitle || currentLaw?.law?.number}}</div>
                 </div>
             </div>
         </div>

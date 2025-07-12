@@ -35,4 +35,12 @@ coverage/
 e2e/
 
 # Generated files
-*.d.ts 
+*.d.ts
+
+# Angular specific - exclude problematic template files
+src/app/template/chat/chat.component.html
+src/app/template/chat/law-votes/law-votes.component.html
+src/app/template/sidebar/sidebar.component.html
+src/app/components/skeleton-message-list/skeleton-message-list.component.html
+src/app/components/skeleton-user-list/skeleton-user-list.component.html
+src/app/components/story-component/story-component.component.html 

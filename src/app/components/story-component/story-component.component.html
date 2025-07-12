@@ -186,10 +186,7 @@
           class="container-mode"
           *ngIf="index === positionSelectedStory"
           fxLayoutAlign="center center"
-          [ngStyle]="{
-            'background-image':
-              'url(' + selectedStory.stories[positionSelectedStory].img + ')',
-          }"
+          [ngStyle]="{ 'background-image': 'url(' + selectedStory.stories[positionSelectedStory].img + ')' }"
         >
           <!--                     [ngClass]="{'animation': index === positionSelectedStory}"-->
 

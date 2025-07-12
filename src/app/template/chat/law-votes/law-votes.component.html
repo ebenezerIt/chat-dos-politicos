@@ -15,13 +15,9 @@
             <div
               class="score"
               [ngClass]="{
-                good:
-                  law.parliamentarian.ranking[0].scoreRankingByPosition <= 150,
-                regular:
-                  law.parliamentarian.ranking[0].scoreRankingByPosition > 150 &&
-                  law.parliamentarian.ranking[0].scoreRankingByPosition <= 350,
-                bad:
-                  law.parliamentarian.ranking[0].scoreRankingByPosition > 350,
+                good: law.parliamentarian.ranking[0].scoreRankingByPosition <= 150,
+                regular: law.parliamentarian.ranking[0].scoreRankingByPosition > 150 && law.parliamentarian.ranking[0].scoreRankingByPosition <= 350,
+                bad: law.parliamentarian.ranking[0].scoreRankingByPosition > 350
               }"
             >
               <h2>
@@ -55,9 +51,7 @@
                 Votou
                 <span
                   style="font-weight: bold; font-size: 20px"
-                  [ngStyle]="{
-                    color: law.lawStatus.id === 1 ? 'green' : 'red',
-                  }"
+                  [ngStyle]="{ color: law.lawStatus.id === 1 ? 'green' : 'red' }"
                 >
                   {{ law.lawStatus.name }}</span
                 >

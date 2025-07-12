@@ -2,28 +2,14 @@
   <ng-container *ngIf="conversation; else skeleton">
     <div class="message" *ngFor="let message of getSortedVotes()">
       <div class="messageContent">
-        <span (click)="openDialog(message?.law)">
-          {{ message?.law?.number }} 👁
-        </span>
+        <span (click)="openDialog(message?.law)"> {{ message?.law?.number }} 👁 </span>
         <div class="time">
           <ng-container *ngIf="message?.lawStatusId != 5">
             Votou
-            <span
-              *ngIf="message?.lawStatusId === 1"
-              style="font-weight: bold; color: green"
-              >SIM</span
-            >
-            <span
-              *ngIf="message?.lawStatusId === 2"
-              style="font-weight: bold; color: red"
-              >NÃO</span
-            >
+            <span *ngIf="message?.lawStatusId === 1" style="font-weight: bold; color: green">SIM</span>
+            <span *ngIf="message?.lawStatusId === 2" style="font-weight: bold; color: red">NÃO</span>
           </ng-container>
-          <span
-            *ngIf="message?.lawStatusId === 5"
-            style="font-weight: bold; color: #ff5a00"
-            >NÃO VOTOU</span
-          >
+          <span *ngIf="message?.lawStatusId === 5" style="font-weight: bold; color: #ff5a00">NÃO VOTOU</span>
           {{ message?.law?.dateVoting | date: 'dd/MM/yyyy' }}
         </div>
       </div>

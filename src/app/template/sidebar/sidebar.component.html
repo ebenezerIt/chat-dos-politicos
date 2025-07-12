@@ -32,32 +32,27 @@
       </div>
       <div
         fxLayoutAlign="center center"
-        (click)="changeListType()"
-        style="
-          cursor: pointer;
-          height: 100%;
-          background-color: #fbfbfb;
-          border-bottom: 1px solid #e1e4e5;
-        "
+        style="cursor: pointer; height: 100%; background-color: #fbfbfb; border-bottom: 1px solid #e1e4e5;"
       >
         <span
-          class="chatListType"
-          style="
-            background-color: #137f36;
-            padding: 5px 25px;
-            color: white;
-            border-radius: 25px;
-            margin: 10px;
-          "
+              class="chatListType"
+              [ngClass]="{ selected: chatListType === CHAT_LIST_TYPE.VOTE }"
+              style="background-color: #137f36; padding: 5px 25px; color: white; border-radius: 25px; margin: 10px; margin-right: 5px;"
+              [style.opacity]="chatListType === CHAT_LIST_TYPE.VOTE ? 1 : 0.5"
+              (click)="setListType(CHAT_LIST_TYPE.VOTE)"
         >
-          {{
-            chatListType === CHAT_LIST_TYPE.LAW ? 'Votações' : 'Parlamentares'
-          }}
-          <img
-            src="../../../assets/images/chevron-down.png"
-            alt="chevron-down"
-          />
+          Parlamentares
         </span>
+        <span
+          class="chatListType"
+          [ngClass]="{ selected: chatListType === CHAT_LIST_TYPE.LAW }"
+          style="background-color: #137f36; padding: 5px 25px; color: white; border-radius: 25px; margin: 10px; margin-left: 5px;"
+          [style.opacity]="chatListType === CHAT_LIST_TYPE.LAW ? 1 : 0.5"
+          (click)="setListType(CHAT_LIST_TYPE.LAW)"
+        >
+          Votações
+        </span>
+
       </div>
     </div>
 
@@ -154,10 +149,7 @@
                       >
                         <div
                           style="height: 100%"
-                          [ngStyle]="{
-                            width: resume.percent + '%',
-                            'background-color': resume.color,
-                          }"
+                          [ngStyle]="{ width: resume.percent + '%', 'background-color': resume.color }"
                         ></div>
                       </ng-container>
                     </div>
@@ -170,11 +162,7 @@
                       >
                         <div class="" fxLayoutAlign="start center">
                           <div
-                            style="
-                              height: 12px;
-                              width: 12px;
-                              border-radius: 12px;
-                            "
+                            style="height: 12px; width: 12px; border-radius: 12px;"
                             [ngStyle]="{ 'background-color': resume.color }"
                           ></div>
                           <span style="margin: 0 10px 0 5px; font-size: 12px">
@@ -223,10 +211,8 @@
                 class="score"
                 [ngClass]="{
                   good: conversation.scoreRankingByPosition <= 150,
-                  regular:
-                    conversation.scoreRankingByPosition > 150 &&
-                    conversation.scoreRankingByPosition <= 350,
-                  bad: conversation.scoreRankingByPosition > 350,
+                  regular: conversation.scoreRankingByPosition > 150 && conversation.scoreRankingByPosition <= 350,
+                  bad: conversation.scoreRankingByPosition > 350
                 }"
               >
                 <h2>{{ conversation.scoreRankingByPosition }}º</h2>

@@ -1,34 +1,20 @@
 <div class="background_header"></div>
 <div class="background_body"></div>
 
-<div
-  class="chatContainer"
-  ngClass.lt-md="sm-content"
-  ngClass.gt-sm="auto-margin"
->
+<div class="chatContainer" ngClass.lt-md="sm-content" ngClass.gt-sm="auto-margin">
   <ng-container *ngIf="currentWindowWidth >= 960; else mobile">
     <div class="web">
-      <app-sidebar
-        [loading]="loading"
-        (conversationClicked)="onConversationSelected()"
-      ></app-sidebar>
+      <app-sidebar [loading]="loading" (conversationClicked)="onConversationSelected()"></app-sidebar>
       <div id="chat-web" class="chat">
         <app-intro *ngIf="!conversation && !currentLaw"></app-intro>
 
-        <app-chat
-          (onClickBack)="onClickBack()"
-          *ngIf="conversation || currentLaw"
-        ></app-chat>
+        <app-chat (onClickBack)="onClickBack()" *ngIf="conversation || currentLaw"></app-chat>
       </div>
     </div>
   </ng-container>
   <ng-template #mobile>
     <div>
-      <app-sidebar
-        *ngIf="!showChat"
-        [loading]="loading"
-        (conversationClicked)="onConversationSelected()"
-      ></app-sidebar>
+      <app-sidebar *ngIf="!showChat" [loading]="loading" (conversationClicked)="onConversationSelected()"></app-sidebar>
 
       <!--            <div class="chatPlaceholder" *ngIf="!conversation && !currentLaw && welcomeIntro">-->
       <!--                <app-intro></app-intro>-->
@@ -41,10 +27,7 @@
         <!--                </ng-container>-->
 
         <ng-container #chat>
-          <app-chat
-            (onClickBack)="onClickBack()"
-            *ngIf="conversation || currentLaw"
-          ></app-chat>
+          <app-chat (onClickBack)="onClickBack()" *ngIf="conversation || currentLaw"></app-chat>
         </ng-container>
       </div>
     </div>

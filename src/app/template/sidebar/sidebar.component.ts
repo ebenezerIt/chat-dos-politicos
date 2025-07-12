@@ -288,6 +288,12 @@ export class SidebarComponent {
     }
   }
 
+  setListType(type: ChatListType): void {
+    if (this.chatListType !== type) {
+      this.store.dispatch(setChatListType({ chatListType: type }));
+    }
+  }
+
   getProgressBar(resumes) {
     let total = 0;
 

@@ -27,17 +27,9 @@
           <div
             class="score"
             [ngClass]="{
-              good:
-                conversation.parliamentarianRanking.scoreRankingByPosition <=
-                150,
-              regular:
-                conversation.parliamentarianRanking.scoreRankingByPosition >
-                  150 &&
-                conversation.parliamentarianRanking.scoreRankingByPosition <=
-                  350,
-              bad:
-                conversation.parliamentarianRanking.scoreRankingByPosition >
-                350,
+              good: conversation.parliamentarianRanking.scoreRankingByPosition <= 150,
+              regular: conversation.parliamentarianRanking.scoreRankingByPosition > 150 && conversation.parliamentarianRanking.scoreRankingByPosition <= 350,
+              bad: conversation.parliamentarianRanking.scoreRankingByPosition > 350
             }"
           >
             <h2>
@@ -150,9 +142,7 @@
           class="option"
           [ngClass]="{ selected: vt === LAW_VOTE_TYPE.SIM }"
           [routerLink]="'/' + RouteEnum.LAW_VOTES"
-          [queryParams]="{
-            vt: vt === LAW_VOTE_TYPE.SIM ? '' : LAW_VOTE_TYPE.SIM,
-          }"
+          [queryParams]="{ vt: vt === LAW_VOTE_TYPE.SIM ? '' : LAW_VOTE_TYPE.SIM }"
           queryParamsHandling="merge"
         >
           <span>SIM</span>
@@ -161,9 +151,7 @@
           class="option"
           [ngClass]="{ selected: vt === LAW_VOTE_TYPE.NAO }"
           [routerLink]="'/' + RouteEnum.LAW_VOTES"
-          [queryParams]="{
-            vt: vt === LAW_VOTE_TYPE.NAO ? '' : LAW_VOTE_TYPE.NAO,
-          }"
+          [queryParams]="{ vt: vt === LAW_VOTE_TYPE.NAO ? '' : LAW_VOTE_TYPE.NAO }"
           queryParamsHandling="merge"
         >
           <span>NÃO</span>
@@ -172,9 +160,7 @@
           class="option"
           [ngClass]="{ selected: vt === LAW_VOTE_TYPE.NAO_VOTOU }"
           [routerLink]="'/' + RouteEnum.LAW_VOTES"
-          [queryParams]="{
-            vt: vt === LAW_VOTE_TYPE.NAO_VOTOU ? '' : LAW_VOTE_TYPE.NAO_VOTOU,
-          }"
+          [queryParams]="{ vt: vt === LAW_VOTE_TYPE.NAO_VOTOU ? '' : LAW_VOTE_TYPE.NAO_VOTOU }"
           queryParamsHandling="merge"
         >
           <span>NÃO VOTOU</span>

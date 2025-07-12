@@ -12,7 +12,6 @@
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
 
-
   .picture {
     flex-basis: 73px;
     height: 100%;
@@ -44,31 +43,31 @@
 
   .good {
     background: linear-gradient(
-                    to top,
-                    rgb(19, 127, 54) 14%,
-                    rgb(19, 127, 54) 25%,
-                    transparent 10%,
-                    transparent 90%
+      to top,
+      rgb(19, 127, 54) 14%,
+      rgb(19, 127, 54) 25%,
+      transparent 10%,
+      transparent 90%
     );
   }
 
   .regular {
     background: linear-gradient(
-                    to top,
-                    #ebbc02 14%,
-                    #ebbc02 25%,
-                    transparent 10%,
-                    transparent 90%
+      to top,
+      #ebbc02 14%,
+      #ebbc02 25%,
+      transparent 10%,
+      transparent 90%
     );
   }
 
   .bad {
     background: linear-gradient(
-                    to top,
-                    #d10202 14%,
-                    #d10202 25%,
-                    transparent 10%,
-                    transparent 90%
+      to top,
+      #d10202 14%,
+      #d10202 25%,
+      transparent 10%,
+      transparent 90%
     );
   }
 
@@ -98,10 +97,7 @@
         color: #040404;
         overflow: hidden;
         text-overflow: ellipsis;
-
-
       }
-
 
       .chip {
         width: 91px;
@@ -157,7 +153,6 @@
 }
 
 @media (max-width: 600px) {
-
   .sidebar .sidebarHeader {
     background-color: rgb(19, 127, 54);
     padding-bottom: 5px;
@@ -165,7 +160,6 @@
   .sidebar .row1 .searchBox {
     background-color: rgb(19, 127, 54);
   }
-
 }
 
 @media (min-width: 601px) {
@@ -204,7 +198,6 @@
     .selected {
       background-color: #137f36;
       color: white;
-
     }
   }
 
@@ -226,7 +219,6 @@
       border: 2px solid #137f36;
       position: relative;
       display: inline-block;
-
     }
 
     .selected {
@@ -240,7 +232,7 @@
       height: 40%;
       width: 2px;
       background-color: white;
-      content: "";
+      content: '';
       transform: translateX(10px) rotate(-45deg);
       transform-origin: left bottom;
     }
@@ -252,7 +244,7 @@
       height: 2px;
       width: 70%;
       background-color: white;
-      content: "";
+      content: '';
       transform: translateX(10px) rotate(-45deg);
       transform-origin: left bottom;
     }
@@ -266,4 +258,3 @@
   overflow: hidden;
   margin-top: 10px;
 }
-

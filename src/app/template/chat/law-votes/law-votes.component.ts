@@ -8,117 +8,124 @@ import { RouteEnum } from '../../../constants/route-enum';
 import { setCurrentConversation } from '../../../stores/parliamentarians/parliamentarians.actions';
 import { ParliamentarianDataResponse } from '../../../politicos/ParlamentarianResponseDtos';
 import { PoliticosService } from '../../../politicos/politicos.service';
-import { Filter, FilterStorageService } from '../../../services/filter-storage.service';
+import {
+  Filter,
+  FilterStorageService,
+} from '../../../services/filter-storage.service';
 import { ConfigEnum } from '../../../constants/config-enum';
 
 @Component({
-    selector: 'app-law-votes',
-    templateUrl: './law-votes.component.html',
-    styleUrls: ['./law-votes.component.scss']
+  selector: 'app-law-votes',
+  templateUrl: './law-votes.component.html',
+  styleUrls: ['./law-votes.component.scss'],
 })
 export class LawVotesComponent implements OnInit {
-    paramsSubscription: Subscription;
-    currentLaw;
-    vt;
-    filterLawFunctions: any[] = [
-        this.filterLawByState(),
-        this.filterLawByVote(),
-    ];
-    filter: Filter;
-    configEnum = ConfigEnum;
+  paramsSubscription: Subscription;
+  currentLaw;
+  vt;
+  filterLawFunctions: any[] = [this.filterLawByState(), this.filterLawByVote()];
+  filter: Filter;
+  configEnum = ConfigEnum;
 
-    constructor(private route: ActivatedRoute,
-                private store: Store<{ parliamentarians: parliamentariansReducerInterface }>,
-                private router: Router,
-                private politicosService: PoliticosService,
-                private filterStorageService: FilterStorageService) {
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<{
+      parliamentarians: parliamentariansReducerInterface;
+    }>,
+    private router: Router,
+    private politicosService: PoliticosService,
+    private filterStorageService: FilterStorageService
+  ) {
+    this.store.select('parliamentarians').subscribe(parliamentarians => {
+      this.currentLaw = parliamentarians.currentLaw;
+    });
 
-        this.store.select('parliamentarians').subscribe(parliamentarians => {
-            this.currentLaw = parliamentarians.currentLaw;
+    this.filter = this.filterStorageService.userFilters;
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params.vt) {
+        this.vt = parseInt(params.vt);
+      } else {
+        this.vt = null;
+      }
+      this.filter = this.filterStorageService.userFilters;
+    });
+  }
+
+  get filteredLawVotes(): any[] {
+    let list = [...this.currentLaw.lawVoteList];
+
+    this.filterLawFunctions.forEach((filter: any) => {
+      list = filter(list);
+    });
+
+    return list;
+  }
+
+  filterLawByState(): any {
+    return (list: any[]): any[] => {
+      if (!this.filter.state) return list;
+
+      return list.filter(data => {
+        return data.parliamentarian.state.prefix === this.filter.state;
+      });
+    };
+  }
+
+  filterLawByVote(): any {
+    return (list: any[]): any[] => {
+      if (!this.vt) {
+        return [
+          ...list.filter(law => {
+            return law.lawStatus.id === LawVoteType.SIM;
+          }),
+          ...list.filter(law => {
+            return (
+              law.lawStatus.id !== LawVoteType.NAO &&
+              law.lawStatus.id !== LawVoteType.SIM
+            );
+          }),
+          ...list.filter(law => {
+            return law.lawStatus.id === LawVoteType.NAO;
+          }),
+        ];
+      }
+
+      if (this.vt === LawVoteType.SIM) {
+        return list.filter(law => {
+          return law.lawStatus.id === LawVoteType.SIM;
         });
-
-        this.filter = this.filterStorageService.userFilters;
-
-    }
-
-    ngOnInit(): void {
-        this.route.queryParams.subscribe(params => {
-            if (params.vt) {
-                this.vt = parseInt(params.vt);
-            } else {
-                this.vt = null;
-            }
-            this.filter = this.filterStorageService.userFilters;
-        })
-    }
-
-    get filteredLawVotes(): any[] {
-        let list = [...this.currentLaw.lawVoteList];
-
-        this.filterLawFunctions.forEach((filter: any) => {
-            list = filter(list);
+      } else if (this.vt === LawVoteType.NAO) {
+        return list.filter(law => {
+          return law.lawStatus.id === LawVoteType.NAO;
         });
+      } else {
+        return list.filter(law => {
+          return (
+            law.lawStatus.id !== LawVoteType.NAO &&
+            law.lawStatus.id !== LawVoteType.SIM
+          );
+        });
+      }
+    };
+  }
 
-        return list;
+  handleParliamentarianClicked(parliamentarian): void {
+    this.politicosService
+      .getParliamentarianVotesById(parliamentarian.id)
+      .subscribe((conversationResponse: ParliamentarianDataResponse) => {
+        this.store.dispatch(
+          setCurrentConversation({ currentConversation: conversationResponse })
+        );
+        this.router.navigate([`/${RouteEnum.VOTES}`], {
+          queryParams: { id: parliamentarian.id },
+        });
+      });
+  }
 
-    }
-
-    filterLawByState(): any {
-
-        return (list: any[]): any[] => {
-
-            if (!this.filter.state) return list;
-
-            return list.filter(data => {
-                return data.parliamentarian.state.prefix === this.filter.state;
-            });
-        }
-    }
-
-
-    filterLawByVote(): any {
-
-        return (list: any[]): any[] => {
-
-            if (!this.vt) {
-                return [...list.filter(law => {
-                    return law.lawStatus.id === LawVoteType.SIM
-                }), ...list.filter(law => {
-                    return law.lawStatus.id !== LawVoteType.NAO && law.lawStatus.id !== LawVoteType.SIM
-                }), ...list.filter(law => {
-                    return law.lawStatus.id === LawVoteType.NAO
-                })];
-            }
-
-            if (this.vt === LawVoteType.SIM) {
-                return list.filter(law => {
-                    return law.lawStatus.id === LawVoteType.SIM;
-                });
-            } else if (this.vt === LawVoteType.NAO) {
-                return list.filter(law => {
-                    return law.lawStatus.id === LawVoteType.NAO;
-                });
-
-            } else {
-                return list.filter(law => {
-                    return law.lawStatus.id !== LawVoteType.NAO && law.lawStatus.id !== LawVoteType.SIM;
-                });
-            }
-        };
-    }
-
-    handleParliamentarianClicked(parliamentarian): void {
-        this.politicosService.getParliamentarianVotesById(parliamentarian.id)
-            .subscribe((conversationResponse: ParliamentarianDataResponse) => {
-                this.store.dispatch(setCurrentConversation({currentConversation: conversationResponse}));
-                this.router.navigate([`/${RouteEnum.VOTES}`],
-                    {
-                        queryParams: {id: parliamentarian.id}
-                    });
-            });
-    }
-
-    getThumbnail(parliamentarianId: number): string {
-        return this.configEnum?.CHAT_API_THUMBNAIL +  parliamentarianId + '.jpg';
-    }
+  getThumbnail(parliamentarianId: number): string {
+    return this.configEnum?.CHAT_API_THUMBNAIL + parliamentarianId + '.jpg';
+  }
 }

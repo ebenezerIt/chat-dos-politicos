@@ -17,7 +17,7 @@
   border: none;
   cursor: pointer;
   z-index: 10;
-  transition: outline .25s;
+  transition: outline 0.25s;
   background-color: green;
   box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   outline: none;
@@ -33,7 +33,7 @@
 .item {
   position: absolute;
   list-style: none;
-  transition: transform .5s;
+  transition: transform 0.5s;
   left: 0;
   bottom: -34px;
   transition-delay: var(--d);
@@ -46,7 +46,6 @@
 .wrapper.active .item:nth-child(1) {
   transform: translateY(-60px);
   box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
-
 }
 
 .wrapper.active .item:nth-child(2) {
@@ -58,4 +57,3 @@
   transform: translateY(-180px);
   box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
-

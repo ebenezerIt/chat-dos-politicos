@@ -10,22 +10,25 @@ import { RouteEnum } from '../../../constants/route-enum';
 @Component({
   selector: 'app-lawsuit',
   templateUrl: './lawsuit.component.html',
-  styleUrls: ['./lawsuit.component.scss']
+  styleUrls: ['./lawsuit.component.scss'],
 })
-export class LawsuitComponent implements OnInit{
-
+export class LawsuitComponent implements OnInit {
   loading = true;
   processes: Processes[];
 
-  constructor(public dialog: MatDialog,
-              private store: Store<{ parliamentarians: parliamentariansReducerInterface, route: RoutesReducerInterface }>) {
-
+  constructor(
+    public dialog: MatDialog,
+    private store: Store<{
+      parliamentarians: parliamentariansReducerInterface;
+      route: RoutesReducerInterface;
+    }>
+  ) {
     store.select('parliamentarians').subscribe(parliamentarians => {
-      this.processes = parliamentarians.currentConversation.parliamentarianRanking.parliamentarian.processes;
+      this.processes =
+        parliamentarians.currentConversation.parliamentarianRanking.parliamentarian.processes;
     });
 
-    store.dispatch(setSelectedRoute({route: RouteEnum.LAWSUIT}));
-
+    store.dispatch(setSelectedRoute({ route: RouteEnum.LAWSUIT }));
   }
 
   ngOnInit(): void {
@@ -33,5 +36,4 @@ export class LawsuitComponent implements OnInit{
       this.loading = false;
     }, 1000);
   }
-
 }

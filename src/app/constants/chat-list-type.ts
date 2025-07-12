@@ -1,4 +1,4 @@
 export enum ChatListType {
-    LAW,
-    VOTE
+  LAW,
+  VOTE,
 }

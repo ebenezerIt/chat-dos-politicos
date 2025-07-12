@@ -1,4 +1,4 @@
 export enum RadioFilterEnum {
-    CHAMBER,
-    SENATE
+  CHAMBER,
+  SENATE,
 }

@@ -1,5 +1,5 @@
 export enum SwitchFilterEnum {
-    POLITICIANS,
-    PARTIES,
-    STATES
+  POLITICIANS,
+  PARTIES,
+  STATES,
 }

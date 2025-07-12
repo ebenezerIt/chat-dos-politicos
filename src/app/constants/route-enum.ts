@@ -1,6 +1,6 @@
 export enum RouteEnum {
-    VOTES = 'votos',
-    LAW_VOTES = 'votacao',
-    EXPENDITURE = 'gastos',
-    LAWSUIT = 'processos'
+  VOTES = 'votos',
+  LAW_VOTES = 'votacao',
+  EXPENDITURE = 'gastos',
+  LAWSUIT = 'processos',
 }

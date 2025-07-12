@@ -19,7 +19,6 @@
     width: 370px;
     height: 660px;
   }
-
 }
 
 .mbl-mode {
@@ -66,9 +65,10 @@
 
   .story-style {
     //border: 3px solid yellow;
-    background: radial-gradient(hsl(0 0% 0% / 12%) 60%, transparent 0),
-    radial-gradient(deeppink 65%, transparent 0),
-    linear-gradient(to top right, deeppink, orange);
+    background:
+      radial-gradient(hsl(0 0% 0% / 12%) 60%, transparent 0),
+      radial-gradient(deeppink 65%, transparent 0),
+      linear-gradient(to top right, deeppink, orange);
     cursor: pointer;
     border-radius: 50%;
     display: flex;
@@ -86,7 +86,6 @@
       clip-path: circle(45%);
     }
   }
-
 }
 
 .name {

@@ -50,37 +50,35 @@
         align-self: center;
       }
 
-
       .good {
         background: linear-gradient(
-                        to top,
-                        rgb(19, 127, 54) 14%,
-                        rgb(19, 127, 54) 25%,
-                        transparent 10%,
-                        transparent 90%
+          to top,
+          rgb(19, 127, 54) 14%,
+          rgb(19, 127, 54) 25%,
+          transparent 10%,
+          transparent 90%
         );
       }
 
       .regular {
         background: linear-gradient(
-                        to top,
-                        #ebbc02 14%,
-                        #ebbc02 25%,
-                        transparent 10%,
-                        transparent 90%
+          to top,
+          #ebbc02 14%,
+          #ebbc02 25%,
+          transparent 10%,
+          transparent 90%
         );
       }
 
       .bad {
         background: linear-gradient(
-                        to top,
-                        #d10202 14%,
-                        #d10202 25%,
-                        transparent 10%,
-                        transparent 90%
+          to top,
+          #d10202 14%,
+          #d10202 25%,
+          transparent 10%,
+          transparent 90%
         );
       }
-
 
       h2 {
         margin: 0;
@@ -131,7 +129,6 @@
     padding: 20px 20px 0 10px;
     overflow: scroll;
     overflow-x: hidden;
-
   }
 
   .footer {
@@ -142,10 +139,9 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #E7DFDC;
+    background-color: #e7dfdc;
     padding: 10px 0;
   }
-
 
   .switch {
     height: 30px;
@@ -179,12 +175,16 @@
       border: none !important;
     }
   }
-
-
 }
 
 .mobile-height {
-  position: fixed; top: 0; left: 0; height: 100%; min-height: 100vh;   min-height: -webkit-fill-available;  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  width: 100vw;
 }
 
 .tooltip {
@@ -212,7 +212,7 @@
 }
 
 .tooltip .tooltiptext::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 100%;
   left: 50%;
@@ -228,7 +228,7 @@
 }
 @media (max-width: 600px) {
   .container .header {
-    background-color: #137F36FF;
+    background-color: #137f36ff;
 
     .avatarSection .nameSection {
       color: #fff;

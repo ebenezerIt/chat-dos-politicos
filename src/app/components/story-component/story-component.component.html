@@ -1,111 +1,267 @@
-<div class="mb-2 hidden-scroll story-container w-100"
-     fxLayout="row" fxLayoutAlign="start start"
-     fxLayoutGap="7px">
-    <ng-container *ngIf="!loading else skeleton">
-        <ng-container *ngFor="let story of stories; let index = index">
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <div class="story-style shadow-sm"
-                     (click)="onClickStory(story, index)">
-                    <img [src]="story.story.logo" alt="">
-                </div>
-                <div class="name">
-                    <span>{{story.story.name}}</span>
-                </div>
-            </div>
-        </ng-container>
+<div
+  class="mb-2 hidden-scroll story-container w-100"
+  fxLayout="row"
+  fxLayoutAlign="start start"
+  fxLayoutGap="7px"
+>
+  <ng-container *ngIf="!loading; else skeleton">
+    <ng-container *ngFor="let story of stories; let index = index">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <div class="story-style shadow-sm" (click)="onClickStory(story, index)">
+          <img [src]="story.story.logo" alt="" />
+        </div>
+        <div class="name">
+          <span>{{ story.story.name }}</span>
+        </div>
+      </div>
     </ng-container>
-    <ng-template #skeleton>
-        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
-        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
-        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
-        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
-        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
-        <ngx-skeleton-loader [theme]=skeletonStory></ngx-skeleton-loader>
-    </ng-template>
+  </ng-container>
+  <ng-template #skeleton>
+    <ngx-skeleton-loader [theme]="skeletonStory"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="skeletonStory"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="skeletonStory"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="skeletonStory"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="skeletonStory"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="skeletonStory"></ngx-skeleton-loader>
+  </ng-template>
 </div>
 
 <div
-        style="position: fixed; top: 0; left: 0; height: 100%; min-height: 100vh;   min-height: -webkit-fill-available;  width: 100vw; background-color: black; z-index: 100;"
-        *ngIf="showStory" fxLayoutAlign="center center">
-    <div class="story-mode" ngClass.gt-sm="dsk-mode" ngClass.lt-md="mbl-mode">
-        <div style="z-index: 200; width: 100%; margin: 0 5px; position: absolute; top: 5px;">
-            <ng-container *ngFor="let storyPositions of selectedStory.stories; let index = index">
-                <div fxFlex style="height: 5px; margin-right: 5px; border-radius: 20px; background-color: #b1b1b1"
-                     [ngClass]="{'current-story': positionSelectedStory > index}">
-                    <div [ngClass]="{'progress-value': positionSelectedStory === index}"></div>
-                </div>
-            </ng-container>
+  style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    width: 100vw;
+    background-color: black;
+    z-index: 100;
+  "
+  *ngIf="showStory"
+  fxLayoutAlign="center center"
+>
+  <div class="story-mode" ngClass.gt-sm="dsk-mode" ngClass.lt-md="mbl-mode">
+    <div
+      style="
+        z-index: 200;
+        width: 100%;
+        margin: 0 5px;
+        position: absolute;
+        top: 5px;
+      "
+    >
+      <ng-container
+        *ngFor="let storyPositions of selectedStory.stories; let index = index"
+      >
+        <div
+          fxFlex
+          style="
+            height: 5px;
+            margin-right: 5px;
+            border-radius: 20px;
+            background-color: #b1b1b1;
+          "
+          [ngClass]="{ 'current-story': positionSelectedStory > index }"
+        >
+          <div
+            [ngClass]="{ 'progress-value': positionSelectedStory === index }"
+          ></div>
         </div>
-
-        <div style="z-index: 200; color: white; position: absolute; top: 25px; left: 10px; cursor: pointer"
-             (click)="onCloseStories()">
-            <mat-icon>close</mat-icon>
-        </div>
-        <div style="position: relative; height: 100%; width: 100%" fxLayoutAlign="center center">
-            <div *ngIf="!isStoryPaused"
-                 style="z-index: 200; color: white; position: absolute; top: 25px; right: 10px"
-                 (click)="onPauseStories()">
-                <mat-icon>pause</mat-icon>
-            </div>
-            <div *ngIf="isStoryPaused"
-                 style="z-index: 200; color: white; position: absolute; top: 25px; right: 10px"
-                 (click)="onPlayStories()">
-                <mat-icon>play_arrow</mat-icon>
-            </div>
-            <ng-container style="color: white; font-size: 21px">
-                <div  fxHide.lt-lg style="z-index: 200; position: absolute; top: 50%; width: 500px; cursor: pointer" fxLayout="row"
-                     fxLayoutAlign="space-between center">
-                    <div (click)="previousStory()"
-                         style="background-color: #979797; border-radius: 50%; width: 45px; height: 45px; margin-top: 7px; color: #040404; cursor: pointer"
-                         fxLayoutAlign="center center">
-                        <mat-icon>chevron_left</mat-icon>
-                    </div>
-                    <div (click)="nextStory()"
-                         style="background-color: #979797; border-radius: 50%; width: 45px; height: 45px; margin-top: 7px; color: #040404; cursor: pointer"
-                         fxLayoutAlign="center center">
-                        <mat-icon>chevron_right</mat-icon>
-                    </div>
-                </div>
-                <div style="position: absolute; top: 50%; width: 650px" fxLayout="row"
-                     fxLayoutAlign="space-between center">
-                    <div (click)="previousStory(true)" style="z-index: 200; width: 50px; height: 50px; cursor: pointer"
-                         fxLayoutAlign="center center">
-                        <mat-icon style="font-size: 35px">first_page</mat-icon>
-                    </div>
-                    <div (click)="nextStory(true)" style="z-index: 200; width: 50px; height: 50px; cursor: pointer"
-                         fxLayoutAlign="center center">
-                        <mat-icon style="font-size: 35px">last_page</mat-icon>
-                    </div>
-                </div>
-            </ng-container>
-            <ng-container *ngFor="let story of selectedStory.stories; let index = index">
-
-                <div class="container-mode "
-                     *ngIf="index === positionSelectedStory"
-                     fxLayoutAlign="center center"
-                     [ngStyle]="{'background-image': 'url(' + selectedStory.stories[positionSelectedStory].img + ')'}">
-                    <!--                     [ngClass]="{'animation': index === positionSelectedStory}"-->
-
-
-                    <ng-container
-                            *ngIf="selectedStory.stories[positionSelectedStory].title || selectedStory.stories[positionSelectedStory].description">
-                        <div style="height: 100%; width: 100vw; color: white;   text-shadow: 1px 1px black; line-height: 200%; text-align: center; white-space: pre-line;"
-                             fxLayoutAlign="start end">
-                            <div style="padding: 100px 10px 70px; width: 100%;background: rgb(0,0,0, 1);background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.7) 35%,  rgba(0,0,0,0.5) 60%,  rgba(0,0,0,0.2) 90%, rgba(0,0,0,0) 100%);"
-                                 fxLayout="column">
-                                <h3>{{selectedStory.stories[positionSelectedStory].title}}</h3>
-                                <span>
-                            {{selectedStory.stories[positionSelectedStory].description}}</span>
-                            </div>
-                        </div>
-                    </ng-container>
-
-                </div>
-            </ng-container>
-            <div style="position: fixed; left: 0; bottom: 0;  width: 50%; height: 85%; z-index: 500"
-                 (click)="previousStory()"></div>
-            <div style="position: fixed; right: 0; bottom:0;  width: 50%; height: 85%; z-index: 500"
-                 (click)="nextStory()"></div>
-        </div>
+      </ng-container>
     </div>
+
+    <div
+      style="
+        z-index: 200;
+        color: white;
+        position: absolute;
+        top: 25px;
+        left: 10px;
+        cursor: pointer;
+      "
+      (click)="onCloseStories()"
+    >
+      <mat-icon>close</mat-icon>
+    </div>
+    <div
+      style="position: relative; height: 100%; width: 100%"
+      fxLayoutAlign="center center"
+    >
+      <div
+        *ngIf="!isStoryPaused"
+        style="
+          z-index: 200;
+          color: white;
+          position: absolute;
+          top: 25px;
+          right: 10px;
+        "
+        (click)="onPauseStories()"
+      >
+        <mat-icon>pause</mat-icon>
+      </div>
+      <div
+        *ngIf="isStoryPaused"
+        style="
+          z-index: 200;
+          color: white;
+          position: absolute;
+          top: 25px;
+          right: 10px;
+        "
+        (click)="onPlayStories()"
+      >
+        <mat-icon>play_arrow</mat-icon>
+      </div>
+      <ng-container style="color: white; font-size: 21px">
+        <div
+          fxHide.lt-lg
+          style="
+            z-index: 200;
+            position: absolute;
+            top: 50%;
+            width: 500px;
+            cursor: pointer;
+          "
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+        >
+          <div
+            (click)="previousStory()"
+            style="
+              background-color: #979797;
+              border-radius: 50%;
+              width: 45px;
+              height: 45px;
+              margin-top: 7px;
+              color: #040404;
+              cursor: pointer;
+            "
+            fxLayoutAlign="center center"
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </div>
+          <div
+            (click)="nextStory()"
+            style="
+              background-color: #979797;
+              border-radius: 50%;
+              width: 45px;
+              height: 45px;
+              margin-top: 7px;
+              color: #040404;
+              cursor: pointer;
+            "
+            fxLayoutAlign="center center"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </div>
+        </div>
+        <div
+          style="position: absolute; top: 50%; width: 650px"
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+        >
+          <div
+            (click)="previousStory(true)"
+            style="z-index: 200; width: 50px; height: 50px; cursor: pointer"
+            fxLayoutAlign="center center"
+          >
+            <mat-icon style="font-size: 35px">first_page</mat-icon>
+          </div>
+          <div
+            (click)="nextStory(true)"
+            style="z-index: 200; width: 50px; height: 50px; cursor: pointer"
+            fxLayoutAlign="center center"
+          >
+            <mat-icon style="font-size: 35px">last_page</mat-icon>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngFor="let story of selectedStory.stories; let index = index"
+      >
+        <div
+          class="container-mode"
+          *ngIf="index === positionSelectedStory"
+          fxLayoutAlign="center center"
+          [ngStyle]="{
+            'background-image':
+              'url(' + selectedStory.stories[positionSelectedStory].img + ')',
+          }"
+        >
+          <!--                     [ngClass]="{'animation': index === positionSelectedStory}"-->
+
+          <ng-container
+            *ngIf="
+              selectedStory.stories[positionSelectedStory].title ||
+              selectedStory.stories[positionSelectedStory].description
+            "
+          >
+            <div
+              style="
+                height: 100%;
+                width: 100vw;
+                color: white;
+                text-shadow: 1px 1px black;
+                line-height: 200%;
+                text-align: center;
+                white-space: pre-line;
+              "
+              fxLayoutAlign="start end"
+            >
+              <div
+                style="
+                  padding: 100px 10px 70px;
+                  width: 100%;
+                  background: rgb(0, 0, 0, 1);
+                  background: linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.8) 0%,
+                    rgba(0, 0, 0, 0.7) 35%,
+                    rgba(0, 0, 0, 0.5) 60%,
+                    rgba(0, 0, 0, 0.2) 90%,
+                    rgba(0, 0, 0, 0) 100%
+                  );
+                "
+                fxLayout="column"
+              >
+                <h3>
+                  {{ selectedStory.stories[positionSelectedStory].title }}
+                </h3>
+                <span>
+                  {{
+                    selectedStory.stories[positionSelectedStory].description
+                  }}</span
+                >
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <div
+        style="
+          position: fixed;
+          left: 0;
+          bottom: 0;
+          width: 50%;
+          height: 85%;
+          z-index: 500;
+        "
+        (click)="previousStory()"
+      ></div>
+      <div
+        style="
+          position: fixed;
+          right: 0;
+          bottom: 0;
+          width: 50%;
+          height: 85%;
+          z-index: 500;
+        "
+        (click)="nextStory()"
+      ></div>
+    </div>
+  </div>
 </div>

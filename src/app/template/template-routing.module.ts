@@ -7,16 +7,15 @@ import { LawsuitComponent } from './chat/lawsuit/lawsuit.component';
 import { LawVotesComponent } from './chat/law-votes/law-votes.component';
 
 const routes: Routes = [
-    {path: RouteEnum.VOTES, component: VotesComponent},
-    {path: RouteEnum.LAW_VOTES, component: LawVotesComponent},
-    {path: RouteEnum.EXPENDITURE, component: ExpenditureComponent},
-    {path: RouteEnum.LAWSUIT, component: LawsuitComponent},
-    {path: '**', redirectTo: '/'}
+  { path: RouteEnum.VOTES, component: VotesComponent },
+  { path: RouteEnum.LAW_VOTES, component: LawVotesComponent },
+  { path: RouteEnum.EXPENDITURE, component: ExpenditureComponent },
+  { path: RouteEnum.LAWSUIT, component: LawsuitComponent },
+  { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class TemplateRoutingModule {
-}
+export class TemplateRoutingModule {}

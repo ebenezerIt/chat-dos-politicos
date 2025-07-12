@@ -1,119 +1,185 @@
 <ng-container
-        *ngIf="currentChat === CHAT_LIST_TYPE.VOTE && conversation; else lawList">
-
-    <div class="container" ngClass.lt-md="mobile-height">
-        <div class="header">
-            <div class="avatarSection">
-                <div fxHide.gt-sm (click)="clickBack()">
-                    <picture>
-                        <source media="(max-width:600px)" srcset="../../../assets/imagesMobile/chevron.png">
-                        <img alt="back" src="../../../assets/images/chevron-back.svg"/>
-                    </picture>
-                </div>
-                <div class="picture">
-                    <img alt="photo" src="{{getThumbnail(conversation?.parliamentarianRanking.parliamentarianId)}}"
-                         onerror="this.onerror=null; this.src='assets/images/noPic.svg'"/>
-
-                    <div class="score"
-                         [ngClass]="{
-                         'good': conversation.parliamentarianRanking.scoreRankingByPosition <= 150,
-                         'regular': conversation.parliamentarianRanking.scoreRankingByPosition > 150 && conversation.parliamentarianRanking.scoreRankingByPosition <= 350,
-                         'bad': conversation.parliamentarianRanking.scoreRankingByPosition > 350 }">
-                        <h2>{{conversation?.parliamentarianRanking.scoreRankingByPosition}}º</h2>
-                    </div>
-                </div>
-                <div>
-                    <div class="nameSection">{{ conversation?.parliamentarianRanking.parliamentarian.nickname }}</div>
-                    <div class="chip" *ngIf="conversation?.parliamentarianRanking.parliamentarian.isReelection">
-                        CANDIDATO A
-                        REELEIÇÃO
-                    </div>
-
-                </div>
-            </div>
-
+  *ngIf="currentChat === CHAT_LIST_TYPE.VOTE && conversation; else lawList"
+>
+  <div class="container" ngClass.lt-md="mobile-height">
+    <div class="header">
+      <div class="avatarSection">
+        <div fxHide.gt-sm (click)="clickBack()">
+          <picture>
+            <source
+              media="(max-width:600px)"
+              srcset="../../../assets/imagesMobile/chevron.png"
+            />
+            <img alt="back" src="../../../assets/images/chevron-back.svg" />
+          </picture>
         </div>
-        <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
+        <div class="picture">
+          <img
+            alt="photo"
+            src="{{
+              getThumbnail(
+                conversation?.parliamentarianRanking.parliamentarianId
+              )
+            }}"
+            onerror="this.onerror=null; this.src='assets/images/noPic.svg'"
+          />
 
-            <app-share-button fxHide.gt-sm></app-share-button>
-
-            <router-outlet></router-outlet>
+          <div
+            class="score"
+            [ngClass]="{
+              good:
+                conversation.parliamentarianRanking.scoreRankingByPosition <=
+                150,
+              regular:
+                conversation.parliamentarianRanking.scoreRankingByPosition >
+                  150 &&
+                conversation.parliamentarianRanking.scoreRankingByPosition <=
+                  350,
+              bad:
+                conversation.parliamentarianRanking.scoreRankingByPosition >
+                350,
+            }"
+          >
+            <h2>
+              {{ conversation?.parliamentarianRanking.scoreRankingByPosition }}º
+            </h2>
+          </div>
         </div>
-        <div ngClass.lt-md="mobile-footer" ngClass.gt-sm="footer">
-            <div class="switch">
-                <div class="option"
-                     routerLinkActive="selected"
-                     [routerLink]="'/'+RouteEnum.VOTES" queryParamsHandling="preserve"><span>Votos</span>
-                </div>
-                <div class="option"
-                     routerLinkActive="selected"
-                     [routerLink]="'/'+RouteEnum.EXPENDITURE" queryParamsHandling="preserve"><span>Gastos</span>
-                </div>
-                <div class="option"
-                     routerLinkActive="selected"
-                     [routerLink]="'/'+RouteEnum.LAWSUIT" queryParamsHandling="preserve"><span>Processos</span>
-                </div>
-            </div>
-
+        <div>
+          <div class="nameSection">
+            {{ conversation?.parliamentarianRanking.parliamentarian.nickname }}
+          </div>
+          <div
+            class="chip"
+            *ngIf="
+              conversation?.parliamentarianRanking.parliamentarian.isReelection
+            "
+          >
+            CANDIDATO A REELEIÇÃO
+          </div>
         </div>
+      </div>
     </div>
+    <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
+      <app-share-button fxHide.gt-sm></app-share-button>
+
+      <router-outlet></router-outlet>
+    </div>
+    <div ngClass.lt-md="mobile-footer" ngClass.gt-sm="footer">
+      <div class="switch">
+        <div
+          class="option"
+          routerLinkActive="selected"
+          [routerLink]="'/' + RouteEnum.VOTES"
+          queryParamsHandling="preserve"
+        >
+          <span>Votos</span>
+        </div>
+        <div
+          class="option"
+          routerLinkActive="selected"
+          [routerLink]="'/' + RouteEnum.EXPENDITURE"
+          queryParamsHandling="preserve"
+        >
+          <span>Gastos</span>
+        </div>
+        <div
+          class="option"
+          routerLinkActive="selected"
+          [routerLink]="'/' + RouteEnum.LAWSUIT"
+          queryParamsHandling="preserve"
+        >
+          <span>Processos</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>
 <ng-template #lawList>
-
-    <div id="lawList" class="container" ngClass.lt-md="mobile-height">
-        <div class="header">
-            <div class="avatarSection">
-                <div fxHide.gt-sm (click)="clickBack()">
-                    <picture>
-                        <source media="(max-width:600px)" srcset="../../../assets/imagesMobile/chevron.png">
-                        <img alt="back" src="../../../assets/images/chevron-back.svg"/>
-                    </picture>
-                </div>
-<!--                <div class="picture">
+  <div id="lawList" class="container" ngClass.lt-md="mobile-height">
+    <div class="header">
+      <div class="avatarSection">
+        <div fxHide.gt-sm (click)="clickBack()">
+          <picture>
+            <source
+              media="(max-width:600px)"
+              srcset="../../../assets/imagesMobile/chevron.png"
+            />
+            <img alt="back" src="../../../assets/images/chevron-back.svg" />
+          </picture>
+        </div>
+        <!--                <div class="picture">
                     {{ getRankingTitleLetter() }}
                 </div>-->
-                <div (click)="openDialog(currentLaw?.law)">
-                    <div class="nameSection">{{currentLaw?.law?.myRankingTitle || currentLaw?.law?.number}}</div>
-                </div>
-            </div>
+        <div (click)="openDialog(currentLaw?.law)">
+          <div class="nameSection">
+            {{ currentLaw?.law?.myRankingTitle || currentLaw?.law?.number }}
+          </div>
         </div>
-        <div fxHide.gt-sm class="w-100" fxLayoutAlign="center center"
-             style="background-color: #137f36; margin: -10px 0 0; padding-bottom: 10px">
-            <select style="border: 2px solid #137f36; padding: 3px; border-radius: 20px; color: #137f36 "
-                    [(ngModel)]="filter.state"
-                    (ngModelChange)="onChangeState()">
-                <option value="">Todos Estados</option>
-                <ng-container *ngFor="let option of states">
-                    <option [value]="option.sigla">{{option.sigla}}</option>
-                </ng-container>
-            </select>
-        </div>
-        <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
-            <router-outlet></router-outlet>
-            <app-share-button fxHide.gt-sm></app-share-button>
-        </div>
-        <div ngClass.lt-md="mobile-footer" ngClass.gt-sm="footer">
-            <div class="switch">
-                <div class="option" [ngClass]="{'selected': vt === LAW_VOTE_TYPE.SIM}"
-                     [routerLink]="'/'+RouteEnum.LAW_VOTES"
-                     [queryParams]="{vt: vt === LAW_VOTE_TYPE.SIM ? '' : LAW_VOTE_TYPE.SIM}"
-                     queryParamsHandling="merge">
-                    <span>SIM</span>
-                </div>
-                <div class="option" [ngClass]="{'selected': vt === LAW_VOTE_TYPE.NAO}"
-                     [routerLink]="'/'+RouteEnum.LAW_VOTES"
-                     [queryParams]="{vt: vt === LAW_VOTE_TYPE.NAO ? '' : LAW_VOTE_TYPE.NAO}"
-                     queryParamsHandling="merge"
-                ><span>NÃO</span>
-                </div>
-                <div class="option" [ngClass]="{'selected': vt === LAW_VOTE_TYPE.NAO_VOTOU}"
-                     [routerLink]="'/'+RouteEnum.LAW_VOTES"
-                     [queryParams]="{vt: vt === LAW_VOTE_TYPE.NAO_VOTOU ? '' : LAW_VOTE_TYPE.NAO_VOTOU}"
-                     queryParamsHandling="merge">
-                    <span>NÃO VOTOU</span>
-                </div>
-            </div>
-
-        </div>
+      </div>
     </div>
+    <div
+      fxHide.gt-sm
+      class="w-100"
+      fxLayoutAlign="center center"
+      style="background-color: #137f36; margin: -10px 0 0; padding-bottom: 10px"
+    >
+      <select
+        style="
+          border: 2px solid #137f36;
+          padding: 3px;
+          border-radius: 20px;
+          color: #137f36;
+        "
+        [(ngModel)]="filter.state"
+        (ngModelChange)="onChangeState()"
+      >
+        <option value="">Todos Estados</option>
+        <ng-container *ngFor="let option of states">
+          <option [value]="option.sigla">{{ option.sigla }}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
+      <router-outlet></router-outlet>
+      <app-share-button fxHide.gt-sm></app-share-button>
+    </div>
+    <div ngClass.lt-md="mobile-footer" ngClass.gt-sm="footer">
+      <div class="switch">
+        <div
+          class="option"
+          [ngClass]="{ selected: vt === LAW_VOTE_TYPE.SIM }"
+          [routerLink]="'/' + RouteEnum.LAW_VOTES"
+          [queryParams]="{
+            vt: vt === LAW_VOTE_TYPE.SIM ? '' : LAW_VOTE_TYPE.SIM,
+          }"
+          queryParamsHandling="merge"
+        >
+          <span>SIM</span>
+        </div>
+        <div
+          class="option"
+          [ngClass]="{ selected: vt === LAW_VOTE_TYPE.NAO }"
+          [routerLink]="'/' + RouteEnum.LAW_VOTES"
+          [queryParams]="{
+            vt: vt === LAW_VOTE_TYPE.NAO ? '' : LAW_VOTE_TYPE.NAO,
+          }"
+          queryParamsHandling="merge"
+        >
+          <span>NÃO</span>
+        </div>
+        <div
+          class="option"
+          [ngClass]="{ selected: vt === LAW_VOTE_TYPE.NAO_VOTOU }"
+          [routerLink]="'/' + RouteEnum.LAW_VOTES"
+          [queryParams]="{
+            vt: vt === LAW_VOTE_TYPE.NAO_VOTOU ? '' : LAW_VOTE_TYPE.NAO_VOTOU,
+          }"
+          queryParamsHandling="merge"
+        >
+          <span>NÃO VOTOU</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>

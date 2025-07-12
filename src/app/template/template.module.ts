@@ -26,39 +26,34 @@ import { ShareButtonComponent } from '../components/share-button/share-button.co
 import { LawVotesComponent } from './chat/law-votes/law-votes.component';
 
 @NgModule({
-    declarations: [
-        TemplateComponent,
-        SidebarComponent,
-        ChatComponent,
-        DialogComponent,
-        ExpenditureComponent,
-        VotesComponent,
-        LawsuitComponent,
-        IntroComponent,
-        StoryComponent,
-        SkeletonUserListComponent,
-        SkeletonMessageListComponent,
-        ShareButtonComponent,
-        LawVotesComponent
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        PickerModule,
-        FlexLayoutModule,
-        InfiniteScrollModule,
-        MatDialogModule,
-        MatButtonModule,
-        TemplateRoutingModule,
-        NgxSkeletonLoaderModule,
-        MatIconModule
-    ],
-    providers: [
-        FilterStorageService
-    ],
-    entryComponents: [
-        DialogComponent
-    ]
+  declarations: [
+    TemplateComponent,
+    SidebarComponent,
+    ChatComponent,
+    DialogComponent,
+    ExpenditureComponent,
+    VotesComponent,
+    LawsuitComponent,
+    IntroComponent,
+    StoryComponent,
+    SkeletonUserListComponent,
+    SkeletonMessageListComponent,
+    ShareButtonComponent,
+    LawVotesComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    PickerModule,
+    FlexLayoutModule,
+    InfiniteScrollModule,
+    MatDialogModule,
+    MatButtonModule,
+    TemplateRoutingModule,
+    NgxSkeletonLoaderModule,
+    MatIconModule,
+  ],
+  providers: [FilterStorageService],
+  entryComponents: [DialogComponent],
 })
-export class TemplateModule {
-}
+export class TemplateModule {}

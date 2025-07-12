@@ -1,18 +1,21 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import {Expenditure, ParliamentarianListResponse} from './ParlamentarianResponseDtos';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import {
+  Expenditure,
+  ParliamentarianListResponse,
+} from './ParlamentarianResponseDtos';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatDosPoliticosClient {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   listParliamentarians(): Observable<ParliamentarianListResponse> {
-    return this.httpClient.get<ParliamentarianListResponse>('/static/parliamentarians-sidebar.json')
+    return this.httpClient
+      .get<ParliamentarianListResponse>('/static/parliamentarians-sidebar.json')
       .pipe(catchError(this.handleError));
   }
 
@@ -29,8 +32,13 @@ export class ChatDosPoliticosClient {
     return throwError(() => errorMessage);
   }
 
-  getExpenditureByParliamentarianIdId(parliamentarianId: number): Observable<Expenditure> {
-    return this.httpClient.get<Expenditure>(`/static/parliamentarians/expenditure/${parliamentarianId}`)
-        .pipe(catchError(this.handleError));
+  getExpenditureByParliamentarianIdId(
+    parliamentarianId: number
+  ): Observable<Expenditure> {
+    return this.httpClient
+      .get<Expenditure>(
+        `/static/parliamentarians/expenditure/${parliamentarianId}`
+      )
+      .pipe(catchError(this.handleError));
   }
 }

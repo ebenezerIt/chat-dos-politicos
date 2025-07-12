@@ -1,3 +1,3 @@
 export enum StorageEnum {
-    FILTER = 'FILTER_STORAGE'
+  FILTER = 'FILTER_STORAGE',
 }

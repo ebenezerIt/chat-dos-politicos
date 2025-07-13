@@ -8,16 +8,17 @@
   "bracketSpacing": true,
   "arrowParens": "avoid",
   "endOfLine": "lf",
-  "htmlWhitespaceSensitivity": "css",
+  "htmlWhitespaceSensitivity": "strict",
   "overrides": [
     {
       "files": "*.html",
       "options": {
         "parser": "html",
         "printWidth": 120,
-        "htmlWhitespaceSensitivity": "css",
+        "htmlWhitespaceSensitivity": "strict",
         "singleQuote": false,
-        "bracketSameLine": true
+        "bracketSameLine": false,
+        "proseWrap": "preserve"
       }
     }
   ]

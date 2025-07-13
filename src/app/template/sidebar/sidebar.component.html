@@ -7,7 +7,7 @@
     <div class="sidebarHeader">
       <app-story-component></app-story-component>
     </div>
-    <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxHide.lt-md>
       <div class="searchBox">
         <img
           class="search icon"
@@ -53,6 +53,57 @@
           Votações
         </span>
 
+      </div>
+    </div>
+
+    <!-- Mobile Layout -->
+    <div fxLayout="column" fxLayoutGap="10px" fxHide.gt-md>
+      <!-- Search Row -->
+      <div class="searchBox" style="width: 100%;">
+        <img
+          class="search icon"
+          width="19"
+          alt="search"
+          src="../../../assets/images/searchIcon.svg"
+        />
+        <img
+          *ngIf="filter.searchText"
+          (click)="clearSearchText()"
+          class="close icon"
+          width="19"
+          alt="close"
+          src="../../../assets/images/closeIcon.svg"
+        />
+        <input
+          [(ngModel)]="filter.searchText"
+          type="text"
+          placeholder="Pesquisar..."
+          (ngModelChange)="onChangeSearchText()"
+        />
+      </div>
+      <!-- Chips Row -->
+      <div
+        fxLayoutAlign="start center"
+        style="cursor: pointer; background-color: #fbfbfb; border-bottom: 1px solid #e1e4e5; padding: 5px 0;"
+      >
+        <span
+              class="chatListType"
+              [ngClass]="{ selected: chatListType === CHAT_LIST_TYPE.VOTE }"
+              style="background-color: #137f36; padding: 5px 25px; color: white; border-radius: 25px; margin: 0 5px;"
+              [style.opacity]="chatListType === CHAT_LIST_TYPE.VOTE ? 1 : 0.5"
+              (click)="setListType(CHAT_LIST_TYPE.VOTE)"
+        >
+          Parlamentares
+        </span>
+        <span
+          class="chatListType"
+          [ngClass]="{ selected: chatListType === CHAT_LIST_TYPE.LAW }"
+          style="background-color: #137f36; padding: 5px 25px; color: white; border-radius: 25px; margin: 0 5px;"
+          [style.opacity]="chatListType === CHAT_LIST_TYPE.LAW ? 1 : 0.5"
+          (click)="setListType(CHAT_LIST_TYPE.LAW)"
+        >
+          Votações
+        </span>
       </div>
     </div>
 

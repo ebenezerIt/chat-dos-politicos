@@ -21,19 +21,19 @@
                 conversation?.parliamentarianRanking.parliamentarianId
               )
             }}"
-            onerror="this.onerror=null; this.src='assets/images/noPic.svg'"
+            (error)="handleImageError($event, conversation?.parliamentarianRanking?.parliamentarian?.photo, conversation?.parliamentarianRanking?.parliamentarianId)"
           />
 
           <div
             class="score"
             [ngClass]="{
-              good: conversation.parliamentarianRanking.scoreRankingByPosition <= 150,
-              regular: conversation.parliamentarianRanking.scoreRankingByPosition > 150 && conversation.parliamentarianRanking.scoreRankingByPosition <= 350,
-              bad: conversation.parliamentarianRanking.scoreRankingByPosition > 350
+              good: conversation.scoreRankingByPosition <= 150,
+              regular: conversation.scoreRankingByPosition > 150 && conversation.scoreRankingByPosition <= 350,
+              bad: conversation.scoreRankingByPosition > 350
             }"
           >
             <h2>
-              {{ conversation?.parliamentarianRanking.scoreRankingByPosition }}º
+              {{ conversation?.scoreRankingByPosition }}º
             </h2>
           </div>
         </div>
@@ -52,7 +52,13 @@
         </div>
       </div>
     </div>
-    <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
+    <div
+      id="body"
+      #bodyScroll
+      [scrollTop]="
+        currentChat === CHAT_LIST_TYPE.VOTE ? bodyScroll.scrollHeight : 0
+      "
+    >
       <app-share-button fxHide.gt-sm></app-share-button>
 
       <router-outlet></router-outlet>
@@ -132,7 +138,13 @@
         </ng-container>
       </select>
     </div>
-    <div id="body" #bodyScroll [scrollTop]="bodyScroll.scrollHeight">
+    <div
+      id="body"
+      #bodyScroll
+      [scrollTop]="
+        currentChat === CHAT_LIST_TYPE.VOTE ? bodyScroll.scrollHeight : 0
+      "
+    >
       <router-outlet></router-outlet>
       <app-share-button fxHide.gt-sm></app-share-button>
     </div>

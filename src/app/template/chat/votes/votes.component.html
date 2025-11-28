@@ -1,6 +1,9 @@
 <div id="body" ngClass.lt-md="mobile-padding-msg">
   <ng-container *ngIf="conversation; else skeleton">
-    <div class="message" *ngFor="let message of getSortedVotes()">
+    <div
+      class="message"
+      *ngFor="let message of sortedVotes; trackBy: trackByLawVote"
+    >
       <div class="messageContent">
         <span (click)="openDialog(message?.law)"> {{ message?.law?.number }} 👁 </span>
         <div class="time">

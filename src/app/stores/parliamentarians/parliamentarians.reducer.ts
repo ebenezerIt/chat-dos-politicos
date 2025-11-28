@@ -39,10 +39,14 @@ export const parliamentariansReducer = createReducer(
   on(setChatListType, (state, { chatListType }) => ({
     ...state,
     chatListType: chatListType,
+    currentConversation:
+      chatListType === ChatListType.LAW ? null : state.currentConversation,
+    currentLaw: chatListType === ChatListType.VOTE ? null : state.currentLaw,
   })),
   on(setCurrentLaw, (state, { currentLaw }) => ({
     ...state,
     currentLaw: currentLaw,
+    currentConversation: null,
     chatListType: ChatListType.LAW,
   })),
   on(setCurrentConversation, (state, { currentConversation }) => {
@@ -68,6 +72,7 @@ export const parliamentariansReducer = createReducer(
       ...state,
       currentConversation: currentConversation,
       list: newList,
+      currentLaw: null,
       chatListType: ChatListType.VOTE,
     };
   })

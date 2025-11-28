@@ -48,6 +48,7 @@ export class ChatComponent implements OnInit {
     store.select('parliamentarians').subscribe(parliamentarians => {
       this.conversation = parliamentarians.currentConversation;
       this.currentLaw = parliamentarians.currentLaw;
+      this.currentChat = parliamentarians.chatListType;
     });
 
     this.filter = this.filterStorageService.userFilters;
@@ -57,8 +58,6 @@ export class ChatComponent implements OnInit {
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       if (!params.id && !params.lawId) {
         this.clickBack();
-      } else {
-        this.currentChat = params.id ? ChatListType.VOTE : ChatListType.LAW;
       }
       if (params.vt) {
         this.vt = parseInt(params.vt);
@@ -117,6 +116,40 @@ export class ChatComponent implements OnInit {
 
   getThumbnail(parliamentarianId: number): string {
     return this.configEnum.CHAT_API_THUMBNAIL + parliamentarianId + '.jpg';
+  }
+
+  handleImageError(event: any, fallbackPhotoUrl?: string, parliamentarianId?: number): void {
+    const img = event.target as HTMLImageElement;
+    
+    // If we already tried the fallback or image is already noPic, use default image
+    if (img.src === fallbackPhotoUrl || img.src.includes('noPic.svg')) {
+      img.src = 'assets/images/noPic.svg';
+      img.onerror = null; // Prevent infinite loop
+      return;
+    }
+    
+    console.log(`Parliamentarian ${parliamentarianId || 'unknown'} does not have thumbnail at ${img.src}`);
+    
+    // If fallback photo URL is available, use it
+    if (fallbackPhotoUrl) {
+      img.src = fallbackPhotoUrl;
+      return;
+    }
+    
+    // If no fallback URL but we have parliamentarianId, fetch from API
+    if (parliamentarianId) {
+      // Import PoliticosService if needed - but we might not have it here
+      // For now, just fall back to noPic if no fallback URL
+      console.log(`No fallback photo URL available for parliamentarian ${parliamentarianId}`);
+      img.src = 'assets/images/noPic.svg';
+      img.onerror = null;
+      return;
+    }
+    
+    // Final fallback
+    console.log(`No fallback available for parliamentarian ${parliamentarianId || 'unknown'}`);
+    img.src = 'assets/images/noPic.svg';
+    img.onerror = null;
   }
 
   getRankingTitleLetter(): string | null {

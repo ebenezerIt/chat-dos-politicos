@@ -1,7 +1,7 @@
 <div id="body" ngClass.lt-md="mobile-padding-msg">
   <ng-container *ngIf="currentLaw; else skeleton">
     <ng-container *ngIf="filteredLawVotes?.length; else noVotes">
-      <ng-container *ngFor="let law of filteredLawVotes">
+      <ng-container *ngFor="let law of filteredLawVotes; trackBy: trackByLawVote">
         <div class="conversation">
           <div
             class="picture"
@@ -10,7 +10,7 @@
             <img
               alt="photo"
               src="{{ getThumbnail(law.parliamentarianId) }}"
-              onerror="this.onerror=null; this.src='assets/images/noPic.svg'"
+              (error)="handleImageError($event, law?.parliamentarian?.photo, law.parliamentarianId)"
             />
             <div
               class="score"

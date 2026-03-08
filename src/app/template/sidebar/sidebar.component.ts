@@ -342,4 +342,52 @@ export class SidebarComponent {
   getThumbnail(parliamentarianId: number): string {
     return this.CHAT_API_THUMBNAIL + parliamentarianId + '.jpg';
   }
+
+  handleImageError(event: any, fallbackPhotoUrl?: string, parliamentarianId?: number): void {
+    const img = event.target as HTMLImageElement;
+    
+    // If we already tried the fallback or image is already noPic, use default image
+    if (img.src === fallbackPhotoUrl || img.src.includes('noPic.svg')) {
+      img.src = 'assets/images/noPic.svg';
+      img.onerror = null; // Prevent infinite loop
+      return;
+    }
+    
+    console.log(`Parliamentarian ${parliamentarianId || 'unknown'} does not have thumbnail at ${img.src}`);
+    
+    // If fallback photo URL is available, use it
+    if (fallbackPhotoUrl) {
+      img.src = fallbackPhotoUrl;
+      return;
+    }
+    
+    // If no fallback URL but we have parliamentarianId, fetch from API
+    if (parliamentarianId) {
+      this.politicosService
+        .getParliamentarianVotesById(parliamentarianId)
+        .subscribe({
+          next: (response: ParliamentarianDataResponse) => {
+            const photoUrl = response?.parliamentarianRanking?.parliamentarian?.photo;
+            if (photoUrl) {
+              img.src = photoUrl;
+            } else {
+              console.log(`Parliamentarian ${parliamentarianId} does not have photo in API response`);
+              img.src = 'assets/images/noPic.svg';
+              img.onerror = null;
+            }
+          },
+          error: () => {
+            console.log(`Failed to fetch photo for parliamentarian ${parliamentarianId} from API`);
+            img.src = 'assets/images/noPic.svg';
+            img.onerror = null;
+          }
+        });
+      return;
+    }
+    
+    // Final fallback
+    console.log(`No fallback available for parliamentarian ${parliamentarianId || 'unknown'}`);
+    img.src = 'assets/images/noPic.svg';
+    img.onerror = null;
+  }
 }

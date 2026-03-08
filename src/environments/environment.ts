@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  // Use Angular dev proxy in development to avoid CORS issues
+  // Make sure to restart dev server after changing this
+  camaraApiUrl: '/camara-api/api/v2'
 };
 
 /*

@@ -46,11 +46,14 @@ export class PoliticosRepository {
 
   private requestListParliamentarians(): Observable<ParliamentarianListResponse> {
     const searchParams = new HttpParams()
-      .append('Take', 700)
-      .append('Skip', 0)
-      .append('Year', 56)
-      .append('Legislature', 56)
-      .append('OrderBy', 'scoreRanking');
+      .append('Include', 'Parliamentarian.State')
+      .append('Include', 'Parliamentarian.Party')
+      .append('Include', 'Parliamentarian.Organ')
+      .append('Include', 'Parliamentarian')
+      .append('take', 700)
+      .append('StatusId', 1)
+      .append('OrderBy', 'scoreRanking')
+      .append('Year', 2025);
     return this.politicosClient.listParliamentarians(searchParams);
   }
 
@@ -71,7 +74,7 @@ export class PoliticosRepository {
   getLawById(lawId: number): Observable<any> {
     return this.politicosClient.getLawById(lawId);
   }
-
+  
   getExpenditureById(id: number): Observable<Expenditure> {
     const observableReturn = new Subject<Expenditure>();
     this.politicosClient

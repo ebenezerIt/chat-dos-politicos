@@ -16,7 +16,7 @@ import {
   providedIn: 'root',
 })
 export class PoliticosClient {
-  baseUrl = 'https://apirest.politicos.org.br/api';
+  baseUrl = 'https://apirest2.politicos.org.br/api';
   listParliamentariansUrl = `${this.baseUrl}/parliamentarianranking`;
   listLawUrl = `${this.baseUrl}/law`;
   lawVoteUrl = `${this.baseUrl}/parliamentarianlawvote`;

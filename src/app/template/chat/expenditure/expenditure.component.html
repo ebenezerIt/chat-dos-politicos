@@ -39,6 +39,256 @@
     </div>
   </div>
   <div [ngStyle.lt-md]="{ height: '30px' }" style="width: 100%"></div>
+  
+  <!-- Tabela Comparativa - Show first when data is available -->
+  <div *ngIf="showComparativeTable && camaraDespesas.length > 0 && !loadingReceipts" 
+       fxLayout="column" 
+       fxLayoutGap="10px"
+       style="background-color: white; padding: 15px; border-radius: 15px; margin-top: 15px;">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <h3 style="color: #767676; margin: 0;">Tabela Comparativa - Despesas por Tipo</h3>
+        <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end center">
+          <button (click)="openCamaraComparativeTable()" 
+                  style="background-color: #007bff; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;">
+            Ver no Site da Câmara
+          </button>
+        </div>
+      </div>
+      
+
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <thead>
+            <tr style="background-color: #f5f5f5; border-bottom: 2px solid #ddd;">
+              <th style="padding: 10px; text-align: left; color: #040404; font-weight: bold;">Tipo de Despesa</th>
+              <th style="padding: 10px; text-align: right; color: #040404; font-weight: bold;">Valor (R$)</th>
+              <th style="padding: 10px; text-align: right; color: #040404; font-weight: bold;">Percentual</th>
+              <th style="padding: 10px; text-align: center; color: #040404; font-weight: bold;">Quantidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of comparativeTableData; let i = index" 
+                [style.background-color]="i % 2 === 0 ? '#fafafa' : 'white'"
+                style="border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 10px; color: #040404;">{{ item.tipoDespesa }}</td>
+              <td style="padding: 10px; text-align: right; color: #d10202; font-weight: bold;">
+                {{ item.valor | currency:'BRL':'symbol':'1.2-2' }}
+              </td>
+              <td style="padding: 10px; text-align: right; color: #767676;">
+                {{ item.percentual | number:'1.2-2' }}%
+              </td>
+              <td style="padding: 10px; text-align: center; color: #767676;">
+                {{ item.quantidade }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr style="background-color: #f5f5f5; border-top: 2px solid #ddd; font-weight: bold;">
+              <td style="padding: 10px; color: #040404;">Total</td>
+              <td style="padding: 10px; text-align: right; color: #d10202;">
+                {{ totalExpenses | currency:'BRL':'symbol':'1.2-2' }}
+              </td>
+              <td style="padding: 10px; text-align: right; color: #040404;">100%</td>
+              <td style="padding: 10px; text-align: center; color: #040404;">{{ totalReceipts }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      
+      <div style="margin-top: 10px; padding: 10px; background-color: #f9f9f9; border-radius: 5px;">
+        <span style="font-size: 16px; color: #040404; font-weight: bold;">
+          <strong>Período:</strong> {{ selectedYear }}
+          <span *ngIf="selectedMonth"> - {{ months[selectedMonth - 1]?.label }}</span>
+          <span *ngIf="!selectedMonth"> - Todos os meses</span>
+        </span>
+      </div>
+  </div>
+
+  <!-- Seção de Despesas da Câmara -->
+  <div fxLayout="column" 
+       fxLayoutGap="15px"
+       style="background-color: white; padding: 15px; border-radius: 15px; margin-top: 15px;">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h3 style="color: #767676; margin: 0;">Recibos e Despesas da Câmara dos Deputados</h3>
+    </div>
+
+    <!-- Filtros -->
+    <div data-filter-bar fxLayout="column" fxLayoutGap="15px" style="padding: 15px; background-color: #f9f9f9; border-radius: 5px; margin-top: 10px;">
+      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" style="flex-wrap: wrap;">
+        <div fxLayout="column" fxLayoutGap="5px">
+          <label style="font-size: 12px; color: #767676; font-weight: bold;">Ano:</label>
+          <select [(ngModel)]="selectedYear" (change)="onYearChange()" 
+                  style="padding: 5px 10px; border: 1px solid #ddd; border-radius: 5px; min-width: 100px;">
+            <option *ngFor="let year of [2025, 2024, 2023, 2022, 2021]" [value]="year">{{ year }}</option>
+          </select>
+        </div>
+        <div fxLayout="column" fxLayoutGap="10px" style="flex: 1;">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <label style="font-size: 12px; color: #767676; font-weight: bold;">Mês:</label>
+            <button *ngIf="selectedMonth" 
+                    (click)="clearMonthFilter()" 
+                    style="background-color: #d10202; color: white; border: none; padding: 4px 8px; border-radius: 5px; cursor: pointer; font-size: 11px;">
+              Limpar
+            </button>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" style="flex-wrap: wrap;">
+            <button *ngFor="let month of months" 
+                    (click)="selectMonth(month.value)"
+                    [style.background-color]="selectedMonth === month.value ? '#ebbc02' : 'white'"
+                    [style.color]="selectedMonth === month.value ? 'white' : '#767676'"
+                    [style.border]="selectedMonth === month.value ? '2px solid #ebbc02' : '1px solid #ddd'"
+                    [style.font-weight]="selectedMonth === month.value ? 'bold' : 'normal'"
+                    style="padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 12px; min-width: 60px; transition: all 0.2s;">
+              {{ month.label }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="selectedMonth || selectedYear" fxLayout="row" fxLayoutAlign="start center" style="padding-top: 10px; border-top: 1px solid #e0e0e0;">
+        <span style="font-size: 18px; color: #040404; font-weight: bold;">
+          <strong>Período selecionado:</strong> 
+          {{ selectedYear }}
+          <span *ngIf="selectedMonth"> - {{ months[selectedMonth - 1]?.label }}</span>
+          <span *ngIf="!selectedMonth"> - Todos os meses</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loadingReceipts" fxLayout="row" fxLayoutAlign="center center" style="padding: 20px;">
+      <span style="color: #767676;">Carregando recibos...</span>
+    </div>
+
+    <!-- Receipts List -->
+    <div *ngIf="!loadingReceipts && camaraDespesas.length > 0" fxLayout="column" fxLayoutGap="10px">
+      <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 10px; background-color: #f5f5f5; border-radius: 5px;">
+        <div fxLayout="column" fxLayoutGap="5px">
+          <span style="font-weight: bold; color: #040404;">Total: {{ totalReceipts }} recibos encontrados</span>
+          <span style="font-size: 14px; color: #d10202; font-weight: bold;">
+            Valor Total: {{ totalExpenses | currency:'BRL':'symbol':'1.2-2' }}
+          </span>
+        </div>
+        <span style="color: #767676; font-size: 12px;">
+          Página {{ currentPage }} de {{ totalPages }}
+        </span>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="8px">
+        <div *ngFor="let despesa of paginatedReceipts" 
+             fxLayout="row" 
+             fxLayoutAlign="space-between start"
+             fxLayoutGap="15px"
+             style="padding: 15px; border-bottom: 1px solid #f0f0f0; flex-wrap: wrap;"
+             [style.background-color]="despesa.urlDocumento ? '#fafafa' : 'white'"
+             [style.opacity]="despesa.urlDocumento ? '1' : '0.7'">
+          <div fxLayout="column" fxLayoutGap="8px" fxFlex="1" style="min-width: 0; padding-right: 10px; flex: 1 1 auto; max-width: none;">
+            <div fxLayout="column" fxLayoutGap="5px">
+              <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start" style="flex-wrap: wrap;">
+                <span style="font-weight: bold; color: #040404; font-size: 14px; line-height: 1.4;">{{ despesa.tipoDespesa }}</span>
+                <span *ngIf="despesa.urlDocumento" 
+                      style="background-color: #ebbc02; color: white; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: bold; white-space: nowrap; align-self: flex-start;">
+                  RECIBO DISPONÍVEL
+                </span>
+              </div>
+            </div>
+            <div fxLayout="column" fxLayoutGap="4px">
+              <span style="font-size: 13px; color: #767676; line-height: 1.4;">
+                <strong>Fornecedor:</strong> {{ despesa.nomeFornecedor }}
+              </span>
+              <span style="font-size: 12px; color: #999; line-height: 1.4;">
+                <strong>CNPJ/CPF:</strong> {{ despesa.cnpjCpfFornecedor }}
+              </span>
+              <span style="font-size: 12px; color: #999; line-height: 1.4;">
+                <strong>Documento:</strong> {{ despesa.numDocumento }} | 
+                <strong>Data:</strong> {{ despesa.dataDocumento | date:'dd/MM/yyyy' }}
+              </span>
+              <span *ngIf="despesa.dataPagamento" style="font-size: 12px; color: #999; line-height: 1.4;">
+                <strong>Pagamento:</strong> {{ despesa.dataPagamento | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="5px" style="min-width: 130px; text-align: right; flex: 0 0 auto;">
+            <span style="font-weight: bold; color: #d10202; font-size: 18px; white-space: nowrap;">
+              {{ (despesa.valor || despesa.valorLiquido || despesa.valorDocumento) | currency:'BRL':'symbol':'1.2-2' }}
+            </span>
+            <span *ngIf="despesa.valorLiquido && despesa.valorLiquido !== despesa.valor" 
+                  style="font-size: 11px; color: #999; white-space: nowrap;">
+              Líquido: {{ despesa.valorLiquido | currency:'BRL':'symbol':'1.2-2' }}
+            </span>
+            <button *ngIf="despesa.urlDocumento" 
+                    (click)="openReceipt(despesa.urlDocumento); $event.stopPropagation()"
+                    style="background-color: #ebbc02; color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; white-space: nowrap;">
+              Ver Recibo
+            </button>
+            <span *ngIf="!despesa.urlDocumento" 
+                  style="font-size: 11px; color: #999; white-space: nowrap;">
+              Recibo não disponível
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div *ngIf="totalPages > 1" 
+           fxLayout="row" 
+           fxLayoutAlign="center center" 
+           fxLayoutGap="10px"
+           style="padding: 20px;">
+        <button (click)="goToPage(currentPage - 1)" 
+                [disabled]="currentPage === 1"
+                [style.opacity]="currentPage === 1 ? '0.5' : '1'"
+                style="background-color: #767676; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">
+          Anterior
+        </button>
+        <span style="color: #767676;">
+          Página {{ currentPage }} de {{ totalPages }}
+        </span>
+        <button (click)="goToPage(currentPage + 1)" 
+                [disabled]="currentPage === totalPages"
+                [style.opacity]="currentPage === totalPages ? '0.5' : '1'"
+                style="background-color: #767676; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">
+          Próxima
+        </button>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="!loadingReceipts && apiError" 
+         fxLayout="column" 
+         fxLayoutAlign="center center" 
+         fxLayoutGap="10px"
+         style="padding: 40px; background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 5px; color: #856404;">
+      <span style="font-size: 14px; font-weight: bold;">⚠️ Erro ao buscar recibos</span>
+      <span style="font-size: 12px; text-align: center;">{{ apiError }}</span>
+      <button (click)="openCamaraSite()" 
+              style="background-color: #ebbc02; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+        Ver no Site da Câmara
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loadingReceipts && !apiError && camaraDespesas.length === 0" 
+         fxLayout="column" 
+         fxLayoutAlign="center center" 
+         fxLayoutGap="10px"
+         style="padding: 40px; color: #767676;">
+      <span style="font-size: 14px; font-weight: bold;">Nenhum recibo encontrado para o período selecionado.</span>
+      <span style="font-size: 12px;">
+        Ano: {{ selectedYear }}
+        <span *ngIf="selectedMonth"> | Mês: {{ months[selectedMonth - 1]?.label }}</span>
+        <span *ngIf="!selectedMonth"> | Todos os meses</span>
+      </span>
+      <span style="font-size: 11px; color: #999; margin-top: 10px;">
+        Tente selecionar um ano ou mês diferente usando os filtros acima.
+      </span>
+      <button (click)="openCamaraSite()" 
+              style="background-color: #ebbc02; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+        Ver no Site da Câmara
+      </button>
+    </div>
+
+  </div>
+  
   <ng-template #skeleton>
     <app-skeleton-msg-list [index]="3"></app-skeleton-msg-list>
   </ng-template>

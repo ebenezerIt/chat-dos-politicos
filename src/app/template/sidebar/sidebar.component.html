@@ -256,7 +256,7 @@
               <img
                 alt="photo"
                 src="{{ getThumbnail(conversation.parliamentarianId) }}"
-                onerror="this.onerror=null; this.src='assets/images/noPic.svg'"
+                (error)="handleImageError($event, conversation?.parliamentarian?.photo, conversation.parliamentarianId)"
               />
               <div
                 class="score"
